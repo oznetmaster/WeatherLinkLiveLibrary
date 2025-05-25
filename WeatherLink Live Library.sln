@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32630.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherLink Live Library", "WeatherLink Live Library\WeatherLink Live Library.csproj", "{BBC80D71-80C0-4CE7-AE44-694D2EE4E05B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherLinkLive Test", "WeattherLinkLive Test\WeatherLinkLive Test.csproj", "{EF633EA3-0F67-485A-A75C-3EBE385EC0A0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BBC80D71-80C0-4CE7-AE44-694D2EE4E05B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBC80D71-80C0-4CE7-AE44-694D2EE4E05B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBC80D71-80C0-4CE7-AE44-694D2EE4E05B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBC80D71-80C0-4CE7-AE44-694D2EE4E05B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF633EA3-0F67-485A-A75C-3EBE385EC0A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF633EA3-0F67-485A-A75C-3EBE385EC0A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF633EA3-0F67-485A-A75C-3EBE385EC0A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF633EA3-0F67-485A-A75C-3EBE385EC0A0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A51A605B-064D-4A41-A2DC-483B02395C0E}
+	EndGlobalSection
+EndGlobal
