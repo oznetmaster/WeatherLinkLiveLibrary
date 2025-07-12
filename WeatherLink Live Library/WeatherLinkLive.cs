@@ -12,6 +12,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WeatherLinkLive
@@ -37,7 +38,7 @@ namespace WeatherLinkLive
 			private JArray jCurrentConditions;
 			private readonly HttpClient client;
 			private int rainSize;
-			private bool _initialized = false;
+			private bool _initialized;
 
 			public float Temperature => EnsureInitializedAndGet (() => GetTemperature ((float?)CurrentConditions?[0]["temp"]));
 			public float Humidity => EnsureInitializedAndGet (() => (float?)CurrentConditions?[0]["hum"] ?? 0);
@@ -81,15 +82,15 @@ namespace WeatherLinkLive
 				client = new HttpClient ();
 				client.DefaultRequestHeaders.Accept.Add (new MediaTypeWithQualityHeaderValue ("application/json"));
 				client.Timeout = TimeSpan.FromMilliseconds (1000);
-				// Do not call RefreshData().Result here! Use async initialization.
+				// Do not call RefreshDataAsync().Result here! Use async initialization.
 				}
 
 			/// <summary>
 			/// Call this method after constructing the object to initialize weather data.
 			/// </summary>
-			public async Task InitializeAsync ()
+			public async Task InitializeAsync (CancellationToken cancellationToken = default)
 				{
-				var data = await RefreshData ().ConfigureAwait (false);
+				var data = await RefreshDataAsync (cancellationToken).ConfigureAwait (false);
 				jCurrentConditions = (JArray)data["data"]["conditions"];
 				rainSize = (int)jCurrentConditions[0]["rain_size"];
 				_initialized = true;
@@ -111,9 +112,9 @@ namespace WeatherLinkLive
 			/// <summary>
 			/// Call this method to refresh weather data asynchronously.
 			/// </summary>
-			public async Task RefreshAsync ()
+			public async Task RefreshAsync (CancellationToken cancellationToken = default)
 				{
-				var data = await RefreshData ().ConfigureAwait (false);
+				var data = await RefreshDataAsync (cancellationToken).ConfigureAwait (false);
 				jCurrentConditions = (JArray)data["data"]["conditions"];
 				// rainSize is assumed not to change after initialization
 				lastRefresh = DateTime.Now;
@@ -143,7 +144,7 @@ namespace WeatherLinkLive
 				get; set;
 				}
 
-			private async Task<JObject> RefreshData ()
+			private async Task<JObject> RefreshDataAsync (CancellationToken cancellationToken = default)
 				{
 				JObject weatherLinkLiveData;
 
@@ -155,7 +156,7 @@ namespace WeatherLinkLive
 					{
 					using (var stream = await client.GetStreamAsync (String.Format (WeatherLinkDataRequest, weatherLinkLiveIP)).ConfigureAwait (false))
 						{
-						weatherLinkLiveData = await JObject.LoadAsync (new JsonTextReader (new StreamReader (stream, Encoding.UTF8))).ConfigureAwait (false);
+						weatherLinkLiveData = await JObject.LoadAsync (new JsonTextReader (new StreamReader (stream, Encoding.UTF8)), cancellationToken).ConfigureAwait (false);
 						_LOGGER.DebugFormat ("WeatherLink Live data received {0} ", weatherLinkLiveData);
 						}
 					}
