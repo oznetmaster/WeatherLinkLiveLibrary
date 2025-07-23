@@ -35,7 +35,7 @@ namespace WeatherLinkLive
 			public readonly TimeSpan refreshInterval;
 			public readonly TimeSpan forceRefreshInterval;
 			private DateTime lastRefresh = DateTime.MinValue;
-			private JArray jCurrentConditions;
+			private JArray? jCurrentConditions;
 			private readonly HttpClient client;
 			private int rainSize;
 			private bool _initialized;
@@ -91,12 +91,12 @@ namespace WeatherLinkLive
 			public async Task InitializeAsync (CancellationToken cancellationToken = default)
 				{
 				var data = await RefreshDataAsync (cancellationToken).ConfigureAwait (false);
-				jCurrentConditions = (JArray)data["data"]["conditions"];
-				rainSize = (int)jCurrentConditions[0]["rain_size"];
+				jCurrentConditions = (JArray?)data?["data"]?["conditions"];
+				rainSize = (int?)jCurrentConditions?[0]?["rain_size"] ?? 0;
 				_initialized = true;
 				}
 
-			private JArray CurrentConditions
+			private JArray? CurrentConditions
 				{
 				get
 					{
@@ -115,7 +115,7 @@ namespace WeatherLinkLive
 			public async Task RefreshAsync (CancellationToken cancellationToken = default)
 				{
 				var data = await RefreshDataAsync (cancellationToken).ConfigureAwait (false);
-				jCurrentConditions = (JArray)data["data"]["conditions"];
+				jCurrentConditions = (JArray?)data?["data"]?["conditions"];
 				// rainSize is assumed not to change after initialization
 				lastRefresh = DateTime.Now;
 				}
