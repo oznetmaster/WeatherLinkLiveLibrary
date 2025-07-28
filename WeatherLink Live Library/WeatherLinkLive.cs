@@ -19,7 +19,7 @@ namespace WeatherLinkLive
 	{
 	public static class WeatherLinkLiveAPI
 		{
-		private static readonly ILog _lOGGER = log4net.LogManager.GetLogger (typeof (WeatherLinkLiveAPI));
+		private static readonly ILog _logger = log4net.LogManager.GetLogger (typeof (WeatherLinkLiveAPI));
 
 		const string _weatherLinkDataRequest = "http://{0}/v1/current_conditions";
 
@@ -36,7 +36,7 @@ namespace WeatherLinkLive
 			private readonly TimeSpan _forceRefreshInterval;
 			private DateTime _lastRefresh = DateTime.MinValue;
 			private JArray? _jCurrentConditions;
-			private readonly HttpClient _client;
+			private HttpClient? _client;
 			private int _rainSize;
 			private bool _initialized;
 
@@ -66,7 +66,7 @@ namespace WeatherLinkLive
 
 			public WeatherLinkLive (IPAddress weatherLinkLiveIP, int refreshIntervalSeconds = 30, int forceRefreshIntervalSeconds = 60, bool celciusTemperature = false, bool metricRain = false, bool metricWind = false, bool metricBarometer = false)
 				{
-				_lOGGER.InfoFormat ("WeatherLink Live API Initialised : IPAddress {0}", weatherLinkLiveIP);
+				_logger.InfoFormat ("WeatherLink Live API Initialised : IPAddress {0}", weatherLinkLiveIP);
 
 				if (refreshIntervalSeconds < 10)
 					throw new ArgumentException ("refreshIntervalSeconds must be >= 10");
@@ -146,21 +146,21 @@ namespace WeatherLinkLive
 				{
 				JObject weatherLinkLiveData;
 
-				_lOGGER.Info ("Updating WeatherLinkLive data");
+				_logger.Info ("Updating WeatherLinkLive data");
 
 				_lastRefresh = DateTime.Now;
 
 				try
 					{
-					using (Stream stream = await _client.GetStreamAsync (string.Format (System.Globalization.CultureInfo.InvariantCulture, _weatherLinkDataRequest, _weatherLinkLiveIP)).ConfigureAwait (false))
+					using (Stream stream = await _client!.GetStreamAsync (string.Format (System.Globalization.CultureInfo.InvariantCulture, _weatherLinkDataRequest, _weatherLinkLiveIP)).ConfigureAwait (false))
 						{
 						weatherLinkLiveData = await JObject.LoadAsync (new JsonTextReader (new StreamReader (stream, Encoding.UTF8)), cancellationToken).ConfigureAwait (false);
-						_lOGGER.DebugFormat ("WeatherLink Live data received {0} ", weatherLinkLiveData);
+						_logger.DebugFormat ("WeatherLink Live data received {0} ", weatherLinkLiveData);
 						}
 					}
 				catch (Exception ex)
 					{
-					_lOGGER.Warn ("Connection error trying to update from WeatherLink Live:", ex);
+					_logger.Warn ("Connection error trying to update from WeatherLink Live:", ex);
 					throw;
 					}
 
@@ -218,7 +218,21 @@ namespace WeatherLinkLive
 						};
 				}
 
-			public void Dispose () => GC.SuppressFinalize (this);
+			public void Dispose ()
+				{
+				if (_client != null)
+					{
+					_client.Dispose ();
+					_client = null;
+					}
+
+				_logger.Info ("WeatherLinkLive API disposed.");
+				_initialized = false;
+				_jCurrentConditions = null;
+				_lastRefresh = DateTime.MinValue;
+
+				GC.SuppressFinalize (this);
+				}
 			}
 		}
 	}
