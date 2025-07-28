@@ -7,6 +7,10 @@
 	  <!-- brings in System.Net.Http -->
 	  <LangVersion>latest</LangVersion>
 	  <Nullable>enable</Nullable>
+	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+	  <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <AnalysisLevel>latest-recommended</AnalysisLevel>
+	  <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.Configuration" />

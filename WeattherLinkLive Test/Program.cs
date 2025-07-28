@@ -9,9 +9,9 @@ namespace WeatherLinkLive_Test
 	{
 	class Program
 		{
-		static async Task Main (string[] args)
+		static async Task Main ()
 			{
-			BasicConfigurator.Configure ();
+			_ = BasicConfigurator.Configure ();
 
 			var wll = new WeatherLinkLiveAPI.WeatherLinkLive ("192.168.8.198", 10, 30, true);
 			await wll.InitializeAsync ();
