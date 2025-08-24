@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <RootNamespace>WeatherLink_Live_Library</RootNamespace>
-	 <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	 <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <TargetFramework>net472</TargetFramework>
 	  <!-- brings in System.Net.Http -->
 	  <LangVersion>latest</LangVersion>
@@ -14,6 +14,16 @@
 	  <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
 	  <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
 	  <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+
+    <!-- Migrated from AssemblyInfo.cs -->
+    <AssemblyTitle>WeatherLink Live Library</AssemblyTitle>
+    <Description></Description>
+    <Company>Nivloc Enterprises Ltd</Company>
+    <Product>WeatherLink Live Library</Product>
+    <Copyright>Copyright © 2025 Nivloc Enterprises Ltd</Copyright>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <ComVisible>false</ComVisible>
   </PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
 		<DebugType>portable</DebugType>
