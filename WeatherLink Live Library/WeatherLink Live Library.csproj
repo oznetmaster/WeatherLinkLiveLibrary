@@ -20,7 +20,7 @@
     <Description></Description>
     <Company>Nivloc Enterprises Ltd</Company>
     <Product>WeatherLink Live Library</Product>
-    <Copyright>Copyright © 2025 Nivloc Enterprises Ltd</Copyright>
+    <Copyright>Copyright ©2025 Nivloc Enterprises Ltd</Copyright>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>1.0.0.0</FileVersion>
     <ComVisible>false</ComVisible>
@@ -28,10 +28,17 @@
 	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
 		<DebugType>portable</DebugType>
 		<DebugSymbols>true</DebugSymbols>
+ <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
 		<DebugType>none</DebugType>
 		<DebugSymbols>false</DebugSymbols>
+ <GenerateDocumentationFile>true</GenerateDocumentationFile>
+ <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+ <!-- Treat missing XML docs as errors in Release -->
+ <WarningsAsErrors>$(WarningsAsErrors);CS1591</WarningsAsErrors>
+ <!-- Disable deterministic so timestamps differ (useful if stamping versions externally) -->
+ <Deterministic>false</Deterministic>
 	</PropertyGroup>
   <ItemGroup>
     <Reference Include="System.Configuration" />
@@ -46,5 +53,26 @@
     <PackageReference Include="log4net" Version="3.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	 <PackageReference Include="System.Net.Http" Version="4.3.4" />
-  </ItemGroup>
+ <!-- Enforce documentation on internal/protected via StyleCop settings -->
+ <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
+ <PrivateAssets>all</PrivateAssets>
+ <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+ </PackageReference>
+ <!-- DocFX to generate API docs/PDF on Release builds -->
+ <PackageReference Include="docfx.console" Version="2.59.4" GeneratePathProperty="true">
+ <PrivateAssets>all</PrivateAssets>
+ </PackageReference>
+ </ItemGroup>
+
+ <!-- Run DocFX after a successful Release build to generate site and PDF. Requires wkhtmltopdf installed for PDF output. -->
+ <Target Name="GenerateDocfxDoc" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+ <PropertyGroup>
+ <DocfxExe>$(Pkgdocfx_console)\tools\docfx.exe</DocfxExe>
+ <DocsDir>$(MSBuildProjectDirectory)\docs</DocsDir>
+ </PropertyGroup>
+ <Message Importance="high" Text="Generating DocFX documentation from $(DocsDir) using $(DocfxExe)" />
+ <Exec Command="&quot;$(DocfxExe)&quot; metadata &quot;$(DocsDir)\docfx.json&quot;" ContinueOnError="true" />
+ <Exec Command="&quot;$(DocfxExe)&quot; build &quot;$(DocsDir)\docfx.json&quot;" ContinueOnError="true" />
+ <Exec Command="&quot;$(DocfxExe)&quot; pdf &quot;$(DocsDir)\docfx.json&quot;" ContinueOnError="true" />
+ </Target>
 </Project>
