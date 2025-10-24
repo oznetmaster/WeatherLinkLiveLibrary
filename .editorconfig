@@ -279,6 +279,9 @@ dotnet_naming_style.underscore_camel_case.capitalization = camel_case
 
 dotnet_diagnostic.IDE0047.severity = none
 
+# Allow underscores in identifiers
+dotnet_diagnostic.CA1707.severity = none
+
 #### Analyzers to disallow single-line statements ####
 # Requires StyleCop.Analyzers package in projects
 # SA1107: Code must not contain multiple statements on one line
