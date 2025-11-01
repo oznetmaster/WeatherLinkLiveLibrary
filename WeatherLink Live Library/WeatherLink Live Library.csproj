@@ -11,7 +11,7 @@
 	  <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
     <AnalysisLevel>latest-recommended</AnalysisLevel>
 	  <EnableNETAnalyzers>true</EnableNETAnalyzers>
-	  <EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
+	  <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	  <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
 	  <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 
@@ -55,10 +55,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 	 <PackageReference Include="System.Net.Http" Version="4.3.4" />
  <!-- Enforce documentation on internal/protected via StyleCop settings -->
- <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
- <PrivateAssets>all</PrivateAssets>
- <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
- </PackageReference>
  <!-- DocFX to generate API docs/PDF on Release builds -->
  </ItemGroup>
 
