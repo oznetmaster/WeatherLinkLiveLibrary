@@ -1,0 +1,27 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "cwd": "..",
+          "files": [ "WeatherLink Live Library.csproj" ],
+          "exclude": [ "**/bin/**", "**/obj/**" ]
+        }
+      ],
+      "dest": "api",
+      "disableGitFeatures": true,
+      "properties": {
+        "Configuration": "Release",
+        "TargetFramework": "net472"
+      }
+    }
+  ],
+  "build": {
+    "content": [
+      { "files": [ "api/**.yml", "api/index.md" ] },
+      { "files": [ "articles/**.md", "toc.yml", "*.md" ] }
+    ],
+    "globalMetadata": { "_appTitle": "WeatherLink Live Library" },
+    "template": [ "default" ]
+  }
+}

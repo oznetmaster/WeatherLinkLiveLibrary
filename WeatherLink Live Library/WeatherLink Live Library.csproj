@@ -1,72 +1,97 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <RootNamespace>WeatherLink_Live_Library</RootNamespace>
-	 <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-    <TargetFramework>net472</TargetFramework>
-	  <!-- brings in System.Net.Http -->
-	  <LangVersion>latest</LangVersion>
-	  <Nullable>enable</Nullable>
-	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-	  <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-    <AnalysisLevel>latest-recommended</AnalysisLevel>
-	  <EnableNETAnalyzers>true</EnableNETAnalyzers>
-	  <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-	  <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
-	  <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+ <PropertyGroup>
+ <OutputType>Library</OutputType>
+ <RootNamespace>WeatherLink_Live_Library</RootNamespace>
+ <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+ <TargetFramework>net472</TargetFramework>
+ <!-- brings in System.Net.Http -->
+ <LangVersion>latest</LangVersion>
+ <Nullable>enable</Nullable>
+ <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+ <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+ <AnalysisLevel>latest-recommended</AnalysisLevel>
+ <EnableNETAnalyzers>true</EnableNETAnalyzers>
+ <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+ <CodeAnalysisTreatWarningsAsErrors>false</CodeAnalysisTreatWarningsAsErrors>
+ <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+ </PropertyGroup>
 
-    <!-- Migrated from AssemblyInfo.cs -->
-    <AssemblyTitle>WeatherLink Live Library</AssemblyTitle>
-    <Description></Description>
-    <Company>Nivloc Enterprises Ltd</Company>
-    <Product>WeatherLink Live Library</Product>
-    <Copyright>Copyright © 2025 Nivloc Enterprises Ltd</Copyright>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>1.0.0.0</FileVersion>
-    <ComVisible>false</ComVisible>
-  </PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-		<DebugType>portable</DebugType>
-		<DebugSymbols>true</DebugSymbols>
+ <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+ <DebugType>portable</DebugType>
+ <DebugSymbols>true</DebugSymbols>
  <GenerateDocumentationFile>true</GenerateDocumentationFile>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
-		<DebugType>none</DebugType>
-		<DebugSymbols>false</DebugSymbols>
+ </PropertyGroup>
+
+ <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+ <DebugType>none</DebugType>
+ <DebugSymbols>false</DebugSymbols>
  <GenerateDocumentationFile>true</GenerateDocumentationFile>
  <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
  <!-- Treat missing XML docs as errors in Release -->
  <WarningsAsErrors>$(WarningsAsErrors);CS1591</WarningsAsErrors>
  <!-- Disable deterministic so timestamps differ (useful if stamping versions externally) -->
  <Deterministic>false</Deterministic>
-	</PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="IsExternalInit" Version="1.0.3">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-	  <PackageReference Include="Hafner.Compatibility.MetaPackage" Version="1.9.0" />
-	  <PackageReference Include="log4net" Version="3.2.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-	 <PackageReference Include="System.Net.Http" Version="4.3.4" />
- <!-- Enforce documentation on internal/protected via StyleCop settings -->
- <!-- DocFX to generate API docs/PDF on Release builds -->
+ </PropertyGroup>
+
+ <ItemGroup>
+ <Reference Include="System.Configuration" />
+ <Reference Include="System.Data.DataSetExtensions" />
+ <Reference Include="Microsoft.CSharp" />
  </ItemGroup>
 
- <!-- Run DocFX after a successful Release build to generate site and PDF. Requires wkhtmltopdf installed for PDF output. -->
- <Target Name="GenerateDocfxDoc" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+ <ItemGroup>
+ <PackageReference Include="IsExternalInit" Version="1.0.3">
+ <PrivateAssets>all</PrivateAssets>
+ <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+ </PackageReference>
+ <PackageReference Include="Hafner.Compatibility.MetaPackage" Version="1.9.0" />
+ <PackageReference Include="log4net" Version="3.2.0" />
+ <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+ <PackageReference Include="System.Net.Http" Version="4.3.4" />
+ </ItemGroup>
+
+ <!-- Detect docfx.exe from docfx.console package or global dotnet tool -->
+ <Choose>
+ <When Condition="Exists('$(Pkgdocfx_console)\tools\docfx.exe')">
  <PropertyGroup>
  <DocfxExe>$(Pkgdocfx_console)\tools\docfx.exe</DocfxExe>
- <DocsDir>$(MSBuildProjectDirectory)\docs</DocsDir>
  </PropertyGroup>
- <Message Importance="high" Text="Generating DocFX documentation from $(DocsDir) using $(DocfxExe)" />
- <Exec Command="&quot;$(DocfxExe)&quot; metadata &quot;$(DocsDir)\docfx.json&quot;" ContinueOnError="true" />
- <Exec Command="&quot;$(DocfxExe)&quot; build &quot;$(DocsDir)\docfx.json&quot;" ContinueOnError="true" />
- <Exec Command="&quot;$(DocfxExe)&quot; pdf &quot;$(DocsDir)\docfx.json&quot;" ContinueOnError="true" />
+ </When>
+ <When Condition="Exists('$(USERPROFILE)\.dotnet\tools\docfx.exe')">
+ <PropertyGroup>
+ <DocfxExe>$(USERPROFILE)\.dotnet\tools\docfx.exe</DocfxExe>
+ </PropertyGroup>
+ </When>
+ <Otherwise>
+ <PropertyGroup>
+ <DocfxExe></DocfxExe>
+ </PropertyGroup>
+ </Otherwise>
+ </Choose>
+
+ <Target Name="GenerateDocfxDoc" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+ <PropertyGroup>
+ <DocsDir>$(MSBuildProjectDirectory)\docs</DocsDir>
+ <SiteOutDir>$(DocsDir)\_site</SiteOutDir>
+ <PdfOutDir>$(DocsDir)\_site_pdf</PdfOutDir>
+ <DocfxConfig>$(DocsDir)\docfx.json</DocfxConfig>
+ </PropertyGroup>
+
+ <Warning Text="DOCFX: DocFX not found. Skipping docs." Condition="'$(DocfxExe)' == ''" />
+ <Warning Text="DOCFX: docfx.json not found at '$(DocfxConfig)'. Skipping docs." Condition="'$(DocfxExe)' != '' and !Exists('$(DocfxConfig)')" />
+
+ <!--1) Metadata -->
+ <Message Importance="high" Text="DOCFX: Generating metadata from $(DocfxConfig)" Condition="'$(DocfxExe)' != '' and Exists('$(DocfxConfig)')" />
+ <Exec Command="&quot;$(DocfxExe)&quot; metadata &quot;$(DocfxConfig)&quot;" ContinueOnError="true" IgnoreExitCode="true" Condition="'$(DocfxExe)' != '' and Exists('$(DocfxConfig)')" />
+
+ <!--2) Build site to docs\_site -->
+ <Message Importance="high" Text="DOCFX: Building site to $(SiteOutDir)" Condition="'$(DocfxExe)' != '' and Exists('$(DocfxConfig)')" />
+ <MakeDir Directories="$(SiteOutDir)" Condition="'$(DocfxExe)' != '' and Exists('$(DocfxConfig)')" />
+ <Exec Command="&quot;$(DocfxExe)&quot; build &quot;$(DocfxConfig)&quot; -o &quot;$(SiteOutDir)&quot;" ContinueOnError="true" IgnoreExitCode="true" Condition="'$(DocfxExe)' != '' and Exists('$(DocfxConfig)')" />
+
+ <!--3) PDF: use built site as input (contains manifest.json) -->
+ <Message Importance="high" Text="DOCFX: Generating PDF from $(SiteOutDir) to $(PdfOutDir)" Condition="'$(DocfxExe)' != '' and Exists('$(SiteOutDir)\manifest.json')" />
+ <MakeDir Directories="$(PdfOutDir)" Condition="'$(DocfxExe)' != '' and Exists('$(SiteOutDir)\manifest.json')" />
+ <Exec Command="&quot;$(DocfxExe)&quot; pdf &quot;$(SiteOutDir)&quot; -o &quot;$(PdfOutDir)&quot;" ContinueOnError="true" IgnoreExitCode="true" Condition="'$(DocfxExe)' != '' and Exists('$(SiteOutDir)\manifest.json')" />
  </Target>
 </Project>

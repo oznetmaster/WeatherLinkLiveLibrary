@@ -3,15 +3,16 @@
     {
       "src": [
         {
+          "src": "bin/Release/net472",
           "files": [
-            "**.csproj"
-          ],
-          "src": "C:\\Projects\\WeatherLink Live Library\\WeatherLink Live Library"
+            "WeatherLink Live Library.dll"
+          ]
         }
       ],
       "dest": "api",
       "disableGitFeatures": false,
-      "disableDefaultFilter": false
+      "disableDefaultFilter": false,
+      "includePrivateMembers": false
     }
   ],
   "build": {
