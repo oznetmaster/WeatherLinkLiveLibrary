@@ -9,11 +9,7 @@
         }
       ],
       "dest": "api",
-      "disableGitFeatures": true,
-      "properties": {
-        "Configuration": "Release",
-        "TargetFramework": "net472"
-      }
+      "disableGitFeatures": true
     }
   ],
   "build": {

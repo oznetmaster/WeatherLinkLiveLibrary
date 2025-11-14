@@ -294,11 +294,8 @@ public static class WeatherLinkLiveAPI
 		/// </summary>
 		public void Dispose ()
 			{
-			if (_client != null)
-				{
-				_client.Dispose ();
-				_client = null;
-				}
+			_client?.Dispose ();
+			_client = null;
 
 			_logger.Info ("WeatherLinkLive API disposed.");
 			_initialized = false;
