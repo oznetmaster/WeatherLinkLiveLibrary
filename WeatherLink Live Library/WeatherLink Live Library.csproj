@@ -50,6 +50,10 @@
  <PackageReference Include="System.Net.Http" Version="4.3.4" />
  </ItemGroup>
 
+ <ItemGroup>
+   <Folder Include="Properties\" />
+ </ItemGroup>
+
  <!-- Detect docfx.exe from docfx.console package or global dotnet tool -->
  <Choose>
  <When Condition="Exists('$(Pkgdocfx_console)\tools\docfx.exe')">
