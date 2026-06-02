@@ -5,13 +5,13 @@
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<TargetFrameworks>net472;net10.0</TargetFrameworks>
 		<IsPackable>true</IsPackable>
-		<PackageId>WeatherLink.Live.Library</PackageId>
+		<PackageId>WeatherLinkLiveLibrary</PackageId>
 		<Authors>Neil Colvin</Authors>
 		<Company>Neil Colvin</Company>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageTags>weather;weatherlink;weatherlink-live;api;library</PackageTags>
-		<RepositoryUrl>https://github.com/oznetmaster/WeatherLink-Live-Library</RepositoryUrl>
-		<PackageProjectUrl>https://github.com/oznetmaster/WeatherLink-Live-Library</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/oznetmaster/WeatherLinkLiveLibrary</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/oznetmaster/WeatherLinkLiveLibrary</PackageProjectUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<Description>Reusable WeatherLink Live API client library for .NET Framework 4.7.2 and .NET 10.</Description>

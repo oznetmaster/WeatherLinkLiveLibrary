@@ -14,3 +14,5 @@
 - Keep `WEATHER_LINK_DATA_REQUEST` as the URL source and avoid inlining the request text in `WeatherLinkLive.cs`.
 - Use standard ASCII double quotes in the MIT license text.
 - Do not publish personal or localized items such as IP strings, tokens, or machine-specific/local file paths.
+- Allow the console test harness to read the WeatherLink Live IP from `WEATHERLINK_LIVE_IP` or a gitignored solution-local file.
+- Only change GitHub- and NuGet-facing names; do not rename the solution or project files.

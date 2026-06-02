@@ -1,13 +1,17 @@
 ﻿using log4net.Config;
 
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 using WeatherLinkLive;
 
 _ = BasicConfigurator.Configure ();
 
-var wll = new WeatherLinkLiveAPI.WeatherLinkLive ("192.168.8.198", 10, 30, true);
+var weatherLinkLiveIp = Environment.GetEnvironmentVariable ("WEATHERLINK_LIVE_IP")
+	?? ReadLocalWeatherLinkIp ();
+
+var wll = new WeatherLinkLiveAPI.WeatherLinkLive (weatherLinkLiveIp, 10, 30, true);
 await wll.InitializeAsync ();
 
 do
@@ -23,4 +27,25 @@ do
 	Console.WriteLine ($"Barometer at sea level = {wll.BarometerAtSeaLevel:F2}\" Hg - {wll.BarometerTrend}");
 	}
 while (Console.ReadKey ().Key != ConsoleKey.Escape);
+
+static string ReadLocalWeatherLinkIp ()
+	{
+	var currentDirectory = new DirectoryInfo (AppContext.BaseDirectory);
+	while (currentDirectory != null)
+		{
+		var solutionLocalIpFile = Path.Combine (currentDirectory.FullName, ".local", "weatherlink-live-ip.txt");
+		if (File.Exists (solutionLocalIpFile))
+			{
+			var ip = File.ReadAllText (solutionLocalIpFile).Trim ();
+			if (!string.IsNullOrWhiteSpace (ip))
+				{
+				return ip;
+				}
+			}
+
+		currentDirectory = currentDirectory.Parent;
+		}
+
+	throw new InvalidOperationException ("Set WEATHERLINK_LIVE_IP or create .local/weatherlink-live-ip.txt with the device IP address before running the test harness.");
+	}
 
