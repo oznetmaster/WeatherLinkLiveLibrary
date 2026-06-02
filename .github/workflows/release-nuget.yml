@@ -124,7 +124,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .\docfx-site\_site
+          path: ${{ env.DOCFX_SITE_DIR }}
 
       - name: Create GitHub release from tag
         if: github.event_name == 'push'
