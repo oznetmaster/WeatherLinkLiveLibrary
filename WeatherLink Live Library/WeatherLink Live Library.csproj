@@ -55,6 +55,10 @@
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.5-beta1" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<None Include="..\README.md" Pack="true" PackagePath="" />
+	</ItemGroup>
+
 	<ItemGroup Condition="'$(TargetFramework)' == 'net472'">
 		<PackageReference Include="IsExternalInit" Version="1.0.3">
 			<PrivateAssets>all</PrivateAssets>
