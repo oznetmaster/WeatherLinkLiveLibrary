@@ -1,16 +1,6 @@
-name: Publish DocFX Site
+name: Legacy Publish DocFX Site
 
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - 'WeatherLink Live Library/**'
-      - 'WeattherLinkLive Test/**'
-      - 'docfx/**'
-      - 'docs/**'
-      - 'WeatherLink Live Library.csproj'
-      - '.github/workflows/publish-docfx.yml'
   workflow_dispatch:
 
 permissions:
@@ -47,14 +37,11 @@ jobs:
       - name: Restore solution
         run: dotnet restore "./WeatherLink Live Library.sln"
 
-      - name: Build Release libraries
-        run: dotnet build "./WeatherLink Live Library.sln" -c Release --no-restore
-
       - name: Generate DocFX metadata
-        run: dotnet tool run docfx metadata ".\WeatherLink Live Library\docfx.json" --logLevel Error
+        run: dotnet tool run docfx metadata ".\WeatherLink Live Library\docs\docfx.json" --logLevel Error
 
       - name: Build DocFX site
-        run: dotnet tool run docfx build ".\WeatherLink Live Library\docfx.json" --output .\docfx-site
+        run: dotnet tool run docfx build ".\WeatherLink Live Library\docs\docfx.json" --output .\docfx-site
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

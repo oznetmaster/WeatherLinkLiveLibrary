@@ -3,9 +3,8 @@
     {
       "src": [
         {
-          "cwd": "..",
-          "files": [ "WeatherLink Live Library.csproj" ],
-          "exclude": [ "**/bin/**", "**/obj/**" ]
+          "cwd": "../bin/Release/net472",
+          "files": [ "WeatherLink Live Library.dll" ]
         }
       ],
       "dest": "api",
