@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration ("")]
 [assembly: AssemblyCompany ("")]
 [assembly: AssemblyProduct ("WeattherLinkLive Test")]
-[assembly: AssemblyCopyright ("Copyright ©  2022")]
+[assembly: AssemblyCopyright ("Copyright © 2026 Neil Colvin")]
 [assembly: AssemblyTrademark ("")]
 [assembly: AssemblyCulture ("")]
 
