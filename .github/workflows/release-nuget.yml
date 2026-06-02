@@ -64,6 +64,10 @@ jobs:
               $packageVersion = $packageVersion.Substring(1)
           }
 
+          if ($packageVersion -match '^(\d+\.\d+\.\d+)([A-Za-z][0-9A-Za-z\.-]*)$') {
+              $packageVersion = "$($Matches[1])-$($Matches[2])"
+          }
+
           if ($packageVersion -notmatch '^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z\.-]+)?$') {
               throw "Version '$packageVersion' is not a supported NuGet semantic version."
           }
