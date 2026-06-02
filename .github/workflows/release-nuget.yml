@@ -76,16 +76,16 @@ jobs:
           "package_version=$packageVersion" >> $env:GITHUB_OUTPUT
 
       - name: Restore
-        run: dotnet restore .\WeatherLink Live Library.sln
+        run: dotnet restore ".\WeatherLink Live Library.sln"
 
       - name: Build Release
-        run: dotnet build .\WeatherLink Live Library.sln -c Release --no-restore -p:ContinuousIntegrationBuild=true
+        run: dotnet build ".\WeatherLink Live Library.sln" -c Release --no-restore -p:ContinuousIntegrationBuild=true
 
       - name: Pack library
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Path "${{ env.ARTIFACT_DIR }}" -Force | Out-Null
-          dotnet pack ${{ env.PROJECT_PATH }} -c Release --no-build -o "${{ env.ARTIFACT_DIR }}" /p:ContinuousIntegrationBuild=true /p:Version=${{ steps.version.outputs.package_version }} /p:PackageVersion=${{ steps.version.outputs.package_version }}
+          dotnet pack "${{ env.PROJECT_PATH }}" -c Release --no-build -o "${{ env.ARTIFACT_DIR }}" /p:ContinuousIntegrationBuild=true /p:Version=${{ steps.version.outputs.package_version }} /p:PackageVersion=${{ steps.version.outputs.package_version }}
 
       - name: Push NuGet package
         shell: pwsh
