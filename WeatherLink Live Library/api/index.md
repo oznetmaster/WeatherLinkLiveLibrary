@@ -1,2 +1,5 @@
-# PLACEHOLDER
-TODO: Add .NET projects to the *src* folder and run `docfx` to generate **REAL** *API Documentation*!
+# API Documentation
+
+This section contains the generated API reference for the WeatherLink Live library.
+
+Start with the [WeatherLinkLive API](xref:WeatherLinkLive.WeatherLinkLiveAPI) and the [WeatherLinkLive class](xref:WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive).
