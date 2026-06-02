@@ -135,8 +135,8 @@ jobs:
           generate_release_notes: true
           prerelease: ${{ contains(steps.version.outputs.package_version, '-') }}
           files: |
-            artifacts/*.nupkg
-            artifacts/*.snupkg
+            ${{ env.ARTIFACT_DIR }}/*.nupkg
+            ${{ env.ARTIFACT_DIR }}/*.snupkg
 
   deploy-docs:
     environment:
