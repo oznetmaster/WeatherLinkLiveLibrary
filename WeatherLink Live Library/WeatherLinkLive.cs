@@ -1,6 +1,7 @@
-// Copyright © 2025 Nivloc Enterprises Ltd.
+// Copyright © 2026 Neil Colvin.
 // Licensed under the MIT License. See LICENSE file in the project root for full license information.
 using System;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -23,6 +24,10 @@ namespace WeatherLinkLive;
 public static class WeatherLinkLiveAPI
 	{
 	private const string WEATHER_LINK_DATA_REQUEST = "http://{0}/v1/current_conditions";
+	#if NET10_0_OR_GREATER
+	private static readonly CompositeFormat _weatherLinkDataRequestCompositeFormat = CompositeFormat.Parse (WEATHER_LINK_DATA_REQUEST);
+	private static string GetCurrentConditionsRequest (IPAddress weatherLinkLiveIP) => string.Format (CultureInfo.InvariantCulture, _weatherLinkDataRequestCompositeFormat, weatherLinkLiveIP);
+	#endif
 	private static readonly ILog _logger = log4net.LogManager.GetLogger (typeof (WeatherLinkLiveAPI));
 	private static readonly string[] _windDirections = [
 	"N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S",
@@ -411,7 +416,17 @@ public static class WeatherLinkLiveAPI
 
 			try
 				{
-				using Stream stream = await _client!.GetStreamAsync (string.Format (System.Globalization.CultureInfo.InvariantCulture, WEATHER_LINK_DATA_REQUEST, _weatherLinkLiveIP)).ConfigureAwait (false);
+				#if NET10_0_OR_GREATER
+				using HttpResponseMessage response = await _client!.GetAsync (GetCurrentConditionsRequest (_weatherLinkLiveIP), HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait (false);
+				#else
+				using HttpResponseMessage response = await _client!.GetAsync (string.Format (CultureInfo.InvariantCulture, WEATHER_LINK_DATA_REQUEST, _weatherLinkLiveIP), HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait (false);
+				#endif
+				response.EnsureSuccessStatusCode ();
+				using Stream stream = await response.Content.ReadAsStreamAsync (
+#if NET10_0_OR_GREATER
+					cancellationToken
+#endif
+					).ConfigureAwait (false);
 				weatherLinkLiveData = await JObject.LoadAsync (new JsonTextReader (new StreamReader (stream, Encoding.UTF8)), cancellationToken).ConfigureAwait (false);
 				_logger.DebugFormat ("WeatherLink Live data received {0} ", weatherLinkLiveData);
 				}

@@ -1,0 +1,40 @@
+### YamlMime:ManagedReference
+items:
+- uid: WeatherLinkLive
+  commentId: N:WeatherLinkLive
+  id: WeatherLinkLive
+  children:
+  - WeatherLinkLive.WeatherLinkLiveAPI
+  - WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive
+  langs:
+  - csharp
+  - vb
+  name: WeatherLinkLive
+  nameWithType: WeatherLinkLive
+  fullName: WeatherLinkLive
+  type: Namespace
+  assemblies:
+  - WeatherLink Live Library
+references:
+- uid: WeatherLinkLive.WeatherLinkLiveAPI
+  commentId: T:WeatherLinkLive.WeatherLinkLiveAPI
+  name: WeatherLinkLiveAPI
+  nameWithType: WeatherLinkLiveAPI
+  fullName: WeatherLinkLive.WeatherLinkLiveAPI
+- uid: WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive
+  commentId: T:WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive
+  name: WeatherLinkLiveAPI.WeatherLinkLive
+  nameWithType: WeatherLinkLiveAPI.WeatherLinkLive
+  fullName: WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive
+  spec.csharp:
+  - uid: WeatherLinkLive.WeatherLinkLiveAPI
+    name: WeatherLinkLiveAPI
+  - name: .
+  - uid: WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive
+    name: WeatherLinkLive
+  spec.vb:
+  - uid: WeatherLinkLive.WeatherLinkLiveAPI
+    name: WeatherLinkLiveAPI
+  - name: .
+  - uid: WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive
+    name: WeatherLinkLive
