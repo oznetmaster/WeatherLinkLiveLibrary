@@ -112,6 +112,9 @@ jobs:
               dotnet nuget push $package.FullName --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
           }
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
       - name: Restore local tools
         run: dotnet tool restore
 
