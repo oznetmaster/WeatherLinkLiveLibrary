@@ -17,4 +17,4 @@ The generated API reference includes the most useful entry points for consumers 
 
 ## Full Reference
 
-For the full type list, use the generated [API Reference](../api/index.html).
+For the full type list, use the generated [API Reference](xref:WeatherLinkLive).

@@ -7,7 +7,7 @@ Welcome to the published API documentation for **WeatherLinkLiveLibrary**.
 - [Getting Started](articles/getting-started.md)
 - [Overview](articles/overview.md)
 - [Key Types](articles/key-types.md)
-- [API Reference](api/index.html)
+- [API Reference](xref:WeatherLinkLive)
 
 ## About This Site
 
