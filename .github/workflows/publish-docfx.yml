@@ -38,15 +38,15 @@ jobs:
         run: dotnet restore "./WeatherLink Live Library.sln"
 
       - name: Generate DocFX metadata
-        run: dotnet tool run docfx metadata ".\WeatherLink Live Library\docs\docfx.json" --logLevel Error
+        run: dotnet tool run docfx metadata ".\WeatherLink Live Library\docfx\docfx.json" --logLevel Error
 
       - name: Build DocFX site
-        run: dotnet tool run docfx build ".\WeatherLink Live Library\docs\docfx.json" --output .\docfx-site
+        run: dotnet tool run docfx build ".\WeatherLink Live Library\docfx\docfx.json" --output .\docfx-site
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .\docfx-site\_site
+          path: .\docfx-site
 
   deploy-docs:
     environment:

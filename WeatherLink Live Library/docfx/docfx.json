@@ -1,0 +1,41 @@
+{
+	"metadata": [
+		{
+			"src": [
+				{
+						"cwd": "../bin/Release/net472",
+					"files": [
+							"WeatherLink Live Library.dll"
+					],
+					"exclude": [
+						"**/bin/**",
+						"**/obj/**"
+					]
+				}
+			],
+			"dest": "api",
+			"disableGitFeatures": false
+		}
+	],
+	"build": {
+		"dest": "../docs",
+		"content": [
+			{ "files": [ "api/**.yml" ] },
+			{ "files": [ "articles/**.md" ] },
+			{ "files": [ "references/**.md" ] },
+			{ "files": [ "index.md" ] },
+			{ "files": [ "toc.yml" ] }
+		],
+		"resource": [
+			{ "files": [ "images/**" ] },
+			{ "files": [ "styles/**" ] }
+		],
+		"globalMetadata": {
+			"_appTitle": "WeatherLink Live API"
+		},
+		"template": [
+			"default",
+			"modern"
+		]
+	}
+}

@@ -1,13 +1,129 @@
 {
-  "source_base_path": "C:/Projects/WeatherLink Live Library/WeatherLink Live Library/docs",
+  "source_base_path": "C:/Projects/WeatherLink Live Library/WeatherLink Live Library/docfx",
   "xrefmap": "xrefmap.yml",
   "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WeatherLinkLive.WeatherLinkLiveAPI.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WeatherLinkLive.WeatherLinkLiveAPI.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/WeatherLinkLive.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/WeatherLinkLive.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html"
+        },
+        ".json": {
+          "relative_path": "api/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/getting-started.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/getting-started.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/key-types.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/key-types.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/overview.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/overview.html"
+        }
+      },
+      "version": ""
+    },
     {
       "type": "Conceptual",
       "source_relative_path": "index.md",
       "output": {
         ".html": {
           "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "references/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "references/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "styles/main.css",
+      "output": {
+        "resource": {
+          "relative_path": "styles/main.css"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "styles/main.js",
+      "output": {
+        "resource": {
+          "relative_path": "styles/main.js"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html"
+        },
+        ".json": {
+          "relative_path": "toc.json"
         }
       },
       "version": ""

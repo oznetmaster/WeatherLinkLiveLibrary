@@ -1,0 +1,1157 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class WeatherLinkLiveAPI.WeatherLinkLive | WeatherLink Live API </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class WeatherLinkLiveAPI.WeatherLinkLive | WeatherLink Live API ">
+      
+      <meta name="description" content="Client for a local WeatherLink Live device. Construct, call , then use the exposed properties to read the latest values.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      
+      
+      
+      
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+  </head>
+
+  <script type="module" src="./../public/docfx.min.js"></script>
+
+  <script>
+    const theme = localStorage.getItem('theme') || 'auto'
+    document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+  </script>
+
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="">
+            
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" style="margin-top: -.65em; margin-left: -.8em" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive">
+
+
+
+  <h1 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive" class="text-break">
+Class WeatherLinkLiveAPI.WeatherLinkLive  
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="WeatherLinkLive.html">WeatherLinkLive</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>WeatherLink Live Library.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Client for a local WeatherLink Live device. Construct, call <a class="xref" href="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.html#WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_InitializeAsync_System_Threading_CancellationToken_">InitializeAsync(CancellationToken)</a>,
+then use the exposed properties to read the latest values.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class WeatherLinkLive : IDisposable</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><span class="xref">Object</span></div>
+      <div><span class="xref">WeatherLinkLiveAPI.WeatherLinkLive</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><span class="xref">IDisposable</span></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <span class="xref">Object.ToString()</span>
+    </div>
+    <div>
+      <span class="xref">Object.Equals(Object)</span>
+    </div>
+    <div>
+      <span class="xref">Object.Equals(Object, Object)</span>
+    </div>
+    <div>
+      <span class="xref">Object.ReferenceEquals(Object, Object)</span>
+    </div>
+    <div>
+      <span class="xref">Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">Object.MemberwiseClone()</span>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive__ctor_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.#ctor*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive__ctor_System_Net_IPAddress_System_Int32_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.#ctor(System.Net.IPAddress,System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+  WeatherLinkLive(IPAddress, Int32, Int32, Boolean, Boolean, Boolean, Boolean)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.html">WeatherLinkLiveAPI.WeatherLinkLive</a> class.
+Initializes a new instance from an <span class="xref">System.Net.IPAddress</span>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public WeatherLinkLive(IPAddress weatherLinkLiveIP, int refreshIntervalSeconds = 30, int forceRefreshIntervalSeconds = 60, bool celciusTemperature = false, bool metricRain = false, bool metricWind = false, bool metricBarometer = false)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>weatherLinkLiveIP</code> <span class="xref">IPAddress</span></dt>
+    <dd><p>The WeatherLink Live device IPv4 address.</p>
+</dd>
+    <dt><code>refreshIntervalSeconds</code> <span class="xref">Int32</span></dt>
+    <dd><p>Minimum seconds between refreshes. Must be greater than or equal to10.</p>
+</dd>
+    <dt><code>forceRefreshIntervalSeconds</code> <span class="xref">Int32</span></dt>
+    <dd><p>Maximum allowed age of cached data before access throws.</p>
+</dd>
+    <dt><code>celciusTemperature</code> <span class="xref">Boolean</span></dt>
+    <dd><p>True to return temperatures in Celsius instead of Fahrenheit.</p>
+</dd>
+    <dt><code>metricRain</code> <span class="xref">Boolean</span></dt>
+    <dd><p>True to return rainfall in metric units.</p>
+</dd>
+    <dt><code>metricWind</code> <span class="xref">Boolean</span></dt>
+    <dd><p>True to return wind speed in metric units.</p>
+</dd>
+    <dt><code>metricBarometer</code> <span class="xref">Boolean</span></dt>
+    <dd><p>True to return barometer in metric units.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><span class="xref">System.ArgumentException</span></dt>
+    <dd><p>Thrown when <code data-dev-comment-type="paramref" class="paramref">refreshIntervalSeconds</code> is less than10.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive__ctor_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.#ctor*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive__ctor_System_String_System_Int32_System_Int32_System_Boolean_System_Boolean_System_Boolean_System_Boolean_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.#ctor(System.String,System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+  WeatherLinkLive(String, Int32, Int32, Boolean, Boolean, Boolean, Boolean)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.html">WeatherLinkLiveAPI.WeatherLinkLive</a> class.
+Initializes a new instance from an IP address string.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public WeatherLinkLive(string iPAddress, int refreshIntervalSeconds = 30, int forceRefreshIntervalSeconds = 60, bool celciusTemperature = false, bool metricRain = false, bool metricWind = false, bool metricBarometer = false)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>iPAddress</code> <span class="xref">String</span></dt>
+    <dd><p>The WeatherLink Live device IPv4 address.</p>
+</dd>
+    <dt><code>refreshIntervalSeconds</code> <span class="xref">Int32</span></dt>
+    <dd><p>Minimum seconds between refreshes. Must be greater than or equal to10.</p>
+</dd>
+    <dt><code>forceRefreshIntervalSeconds</code> <span class="xref">Int32</span></dt>
+    <dd><p>Maximum allowed age of cached data before access throws.</p>
+</dd>
+    <dt><code>celciusTemperature</code> <span class="xref">Boolean</span></dt>
+    <dd><p>True to return temperatures in Celsius instead of Fahrenheit.</p>
+</dd>
+    <dt><code>metricRain</code> <span class="xref">Boolean</span></dt>
+    <dd><p>True to return rainfall in metric units.</p>
+</dd>
+    <dt><code>metricWind</code> <span class="xref">Boolean</span></dt>
+    <dd><p>True to return wind speed in metric units.</p>
+</dd>
+    <dt><code>metricBarometer</code> <span class="xref">Boolean</span></dt>
+    <dd><p>True to return barometer in metric units.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><span class="xref">System.ArgumentException</span></dt>
+    <dd><p>Thrown when <code data-dev-comment-type="paramref" class="paramref">refreshIntervalSeconds</code> is less than10.</p>
+</dd>
+  </dl>
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_BarometerAtSeaLevel_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.BarometerAtSeaLevel*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_BarometerAtSeaLevel" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.BarometerAtSeaLevel">
+  BarometerAtSeaLevel
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the sea-level corrected barometric pressure.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float BarometerAtSeaLevel { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Single</span></dt>
+    <dd><p>Pressure in inches of mercury, or millimeters when <a class="xref" href="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.html#WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_MetricBarometer">MetricBarometer</a> is true.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_BarometerTrend_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.BarometerTrend*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_BarometerTrend" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.BarometerTrend">
+  BarometerTrend
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the textual barometer trend.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string BarometerTrend { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">String</span></dt>
+    <dd><p>A string such as &quot;Rising&quot;, &quot;Falling&quot;, or &quot;Steady&quot;.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_CelciusTemperature_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.CelciusTemperature*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_CelciusTemperature" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.CelciusTemperature">
+  CelciusTemperature
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether temperatures are returned in Celsius (true) or Fahrenheit (false).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CelciusTemperature { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Boolean</span></dt>
+    <dd><p>True for Celsius; otherwise false for Fahrenheit.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_DewPoint_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.DewPoint*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_DewPoint" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.DewPoint">
+  DewPoint
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the dew point.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float DewPoint { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Single</span></dt>
+    <dd><p>Dew point in Fahrenheit, or Celsius when <a class="xref" href="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.html#WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_CelciusTemperature">CelciusTemperature</a> is true.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_HeatIndex_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.HeatIndex*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_HeatIndex" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.HeatIndex">
+  HeatIndex
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the heat index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float HeatIndex { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Single</span></dt>
+    <dd><p>Heat index in Fahrenheit, or Celsius when <a class="xref" href="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.html#WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_CelciusTemperature">CelciusTemperature</a> is true.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_Humidity_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.Humidity*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_Humidity" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.Humidity">
+  Humidity
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the current relative humidity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float Humidity { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Single</span></dt>
+    <dd><p>Relative humidity as a percentage in the range0–100.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_MetricBarometer_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.MetricBarometer*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_MetricBarometer" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.MetricBarometer">
+  MetricBarometer
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether barometric pressure values are returned in metric units.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool MetricBarometer { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Boolean</span></dt>
+    <dd><p>True for metric pressure; otherwise false.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_MetricRain_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.MetricRain*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_MetricRain" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.MetricRain">
+  MetricRain
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether rainfall values are returned in metric units.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool MetricRain { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Boolean</span></dt>
+    <dd><p>True for metric rainfall; otherwise false.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_MetricWind_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.MetricWind*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_MetricWind" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.MetricWind">
+  MetricWind
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets or sets a value indicating whether wind speed values are returned in metric units.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool MetricWind { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Boolean</span></dt>
+    <dd><p>True for metric wind speeds; otherwise false.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_RainfallLast24Hours_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.RainfallLast24Hours*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_RainfallLast24Hours" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.RainfallLast24Hours">
+  RainfallLast24Hours
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the rainfall measured in the last24 hours.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float RainfallLast24Hours { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Single</span></dt>
+    <dd><p>Rainfall in device units; output is metric when <a class="xref" href="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.html#WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_MetricRain">MetricRain</a> is true.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_RainRate_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.RainRate*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_RainRate" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.RainRate">
+  RainRate
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the current rain rate.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float RainRate { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Single</span></dt>
+    <dd><p>Rain rate in device units; output is metric when <a class="xref" href="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.html#WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_MetricRain">MetricRain</a> is true.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_Temperature_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.Temperature*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_Temperature" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.Temperature">
+  Temperature
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the current temperature.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float Temperature { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Single</span></dt>
+    <dd><p>Temperature in Fahrenheit, or Celsius when <a class="xref" href="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.html#WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_CelciusTemperature">CelciusTemperature</a> is true.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_ThswIndex_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.ThswIndex*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_ThswIndex" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.ThswIndex">
+  ThswIndex
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the THSW index (Temperature-Humidity-Sun-Wind).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float ThswIndex { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Single</span></dt>
+    <dd><p>THSW index in Fahrenheit, or Celsius when <a class="xref" href="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.html#WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_CelciusTemperature">CelciusTemperature</a> is true.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_ThwIndex_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.ThwIndex*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_ThwIndex" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.ThwIndex">
+  ThwIndex
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the THW index (Temperature-Humidity-Wind).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float ThwIndex { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Single</span></dt>
+    <dd><p>THW index in Fahrenheit, or Celsius when <a class="xref" href="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.html#WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_CelciusTemperature">CelciusTemperature</a> is true.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_WetBulb_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.WetBulb*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_WetBulb" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.WetBulb">
+  WetBulb
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the wet bulb temperature.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float WetBulb { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Single</span></dt>
+    <dd><p>Wet bulb temperature in Fahrenheit, or Celsius when <a class="xref" href="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.html#WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_CelciusTemperature">CelciusTemperature</a> is true.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_WindChill_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.WindChill*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_WindChill" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.WindChill">
+  WindChill
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the wind chill.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float WindChill { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Single</span></dt>
+    <dd><p>Wind chill in Fahrenheit, or Celsius when <a class="xref" href="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.html#WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_CelciusTemperature">CelciusTemperature</a> is true.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_WindDirectionAverage1Minute_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.WindDirectionAverage1Minute*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_WindDirectionAverage1Minute" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.WindDirectionAverage1Minute">
+  WindDirectionAverage1Minute
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the1 minute scalar average wind direction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float WindDirectionAverage1Minute { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Single</span></dt>
+    <dd><p>Average wind direction in degrees (0–360).</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_WindDirectionAverage1MinuteCompass_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.WindDirectionAverage1MinuteCompass*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_WindDirectionAverage1MinuteCompass" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.WindDirectionAverage1MinuteCompass">
+  WindDirectionAverage1MinuteCompass
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the compass direction string for the1 minute average wind direction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string WindDirectionAverage1MinuteCompass { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">String</span></dt>
+    <dd><p>One of N, NNE, NE, …, N.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_WindDirectionLast_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.WindDirectionLast*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_WindDirectionLast" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.WindDirectionLast">
+  WindDirectionLast
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the last wind direction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float WindDirectionLast { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Single</span></dt>
+    <dd><p>Wind direction in degrees (0–360).</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_WindDirectionLastCompass_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.WindDirectionLastCompass*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_WindDirectionLastCompass" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.WindDirectionLastCompass">
+  WindDirectionLastCompass
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the compass direction string for the last wind direction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string WindDirectionLastCompass { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">String</span></dt>
+    <dd><p>One of N, NNE, NE, …, N.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_WindSpeedHighLast10Minutes_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.WindSpeedHighLast10Minutes*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_WindSpeedHighLast10Minutes" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.WindSpeedHighLast10Minutes">
+  WindSpeedHighLast10Minutes
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the highest wind speed over the last10 minutes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float WindSpeedHighLast10Minutes { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Single</span></dt>
+    <dd><p>Wind speed in MPH, or KPH when <a class="xref" href="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.html#WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_MetricWind">MetricWind</a> is true.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_WindSpeedLast_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.WindSpeedLast*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_WindSpeedLast" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.WindSpeedLast">
+  WindSpeedLast
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets the most recent wind speed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public float WindSpeedLast { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Single</span></dt>
+    <dd><p>Wind speed in MPH, or KPH when <a class="xref" href="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.html#WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_MetricWind">MetricWind</a> is true.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_Dispose_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.Dispose*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_Dispose" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.Dispose">
+  Dispose()
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Releases HTTP and managed resources used by this instance.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_InitializeAsync_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.InitializeAsync*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_InitializeAsync_System_Threading_CancellationToken_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.InitializeAsync(System.Threading.CancellationToken)">
+  InitializeAsync(CancellationToken)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Performs asynchronous initialization by fetching the initial dataset.
+Must be called before accessing any data properties.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task InitializeAsync(CancellationToken cancellationToken = default(CancellationToken))</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>cancellationToken</code> <span class="xref">CancellationToken</span></dt>
+    <dd><p>Optional token to cancel the operation.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Task</span></dt>
+    <dd><p>A task that represents the asynchronous initialization operation.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><span class="xref">System.Net.Http.HttpRequestException</span></dt>
+    <dd><p>Thrown on network errors while contacting the device.</p>
+</dd>
+    <dt><span class="xref">Newtonsoft.Json.JsonException</span></dt>
+    <dd><p>Thrown when the received JSON cannot be parsed.</p>
+</dd>
+  </dl>
+
+
+
+  <a id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_RefreshAsync_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.RefreshAsync*"></a>
+
+  <h3 id="WeatherLinkLive_WeatherLinkLiveAPI_WeatherLinkLive_RefreshAsync_System_Threading_CancellationToken_" data-uid="WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.RefreshAsync(System.Threading.CancellationToken)">
+  RefreshAsync(CancellationToken)
+  
+  </h3>
+
+  <div class="markdown level1 summary"><p>Refreshes the cached data asynchronously.
+Call periodically, or when accessing data becomes stale.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Task RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>cancellationToken</code> <span class="xref">CancellationToken</span></dt>
+    <dd><p>Optional token to cancel the operation.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><span class="xref">Task</span></dt>
+    <dd><p>A task that represents the asynchronous refresh operation.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h4 class="section">Exceptions</h4>
+  <dl class="parameters">
+    <dt><span class="xref">System.Net.Http.HttpRequestException</span></dt>
+    <dd><p>Thrown on network errors while contacting the device.</p>
+</dd>
+    <dt><span class="xref">Newtonsoft.Json.JsonException</span></dt>
+    <dd><p>Thrown when the received JSON cannot be parsed.</p>
+</dd>
+  </dl>
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -26,7 +26,7 @@ jobs:
     env:
       PROJECT_PATH: .\WeatherLink Live Library\WeatherLink Live Library.csproj
       ARTIFACT_DIR: ${{ github.workspace }}\artifacts
-      DOCFX_CONFIG: .\WeatherLink Live Library\docs\docfx.json
+      DOCFX_CONFIG: .\WeatherLink Live Library\docfx\docfx.json
       DOCFX_SITE_DIR: ${{ github.workspace }}\docfx-site
 
     steps:
@@ -135,8 +135,8 @@ jobs:
           generate_release_notes: true
           prerelease: ${{ contains(steps.version.outputs.package_version, '-') }}
           files: |
-            ${{ env.ARTIFACT_DIR }}/*.nupkg
-            ${{ env.ARTIFACT_DIR }}/*.snupkg
+            artifacts/*.nupkg
+            artifacts/*.snupkg
 
   deploy-docs:
     environment:
