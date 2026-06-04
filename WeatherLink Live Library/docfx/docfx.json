@@ -3,14 +3,8 @@
 		{
 			"src": [
 				{
-						"cwd": "../bin/Release/net472",
-					"files": [
-							"WeatherLink Live Library.dll"
-					],
-					"exclude": [
-						"**/bin/**",
-						"**/obj/**"
-					]
+					"files": [ "WeatherLink Live Library/WeatherLink Live Library.csproj" ],
+					"cwd": "../.."
 				}
 			],
 			"dest": "api",
@@ -18,7 +12,6 @@
 		}
 	],
 	"build": {
-		"dest": "_site",
 		"content": [
 			{ "files": [ "api/**.yml" ] },
 			{ "files": [ "articles/**.md" ] },
