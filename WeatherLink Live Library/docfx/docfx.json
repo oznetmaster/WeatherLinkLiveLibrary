@@ -18,6 +18,7 @@
 		}
 	],
 	"build": {
+		"dest": "_site",
 		"content": [
 			{ "files": [ "api/**.yml" ] },
 			{ "files": [ "articles/**.md" ] },

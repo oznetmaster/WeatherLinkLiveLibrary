@@ -123,16 +123,16 @@ jobs:
       - name: Build DocFX site
         shell: pwsh
         run: |
-          $outDir = Join-Path ${{ github.workspace }} "docfx-site"
-          New-Item -ItemType Directory -Path $outDir -Force | Out-Null
-          dotnet tool run docfx build "${{ env.DOCFX_CONFIG }}" --output $outDir
-          Write-Host "Output directory contents:"
-          Get-ChildItem $outDir | Select-Object Name
+          dotnet tool run docfx build "${{ env.DOCFX_CONFIG }}"
+          Write-Host "=== Workspace root ==="
+          Get-ChildItem "$env:GITHUB_WORKSPACE" -Depth 1 | Select-Object FullName
+          Write-Host "=== WeatherLink Live Library folder ==="
+          Get-ChildItem "$env:GITHUB_WORKSPACE\WeatherLink Live Library" -Depth 1 | Select-Object FullName
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ github.workspace }}\docfx-site
+          path: "WeatherLink Live Library\\docfx\\_site"
 
       - name: Create GitHub release from tag
         if: github.event_name == 'push'
