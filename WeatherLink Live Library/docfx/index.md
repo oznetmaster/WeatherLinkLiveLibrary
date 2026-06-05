@@ -1,4 +1,4 @@
-# WeatherLink Live API Documentation
+# WeatherLink Live™ API Documentation
 
 Welcome to the published API documentation for **WeatherLinkLiveLibrary**.
 
@@ -17,3 +17,5 @@ This site is generated from:
 - conceptual documentation content in `docfx/articles/`
 
 For repository-oriented guidance, setup instructions, and release notes, see the main repository documentation in `docs/` and the project `README.md`.
+
+WeatherLink Live is a trademark of Davis Instruments. This project is an independent client library and is not affiliated with or endorsed by Davis Instruments.

@@ -25,3 +25,5 @@ await client.InitializeAsync();
 
 - [Overview](overview.md)
 - [API Reference](../api/WeatherLinkLive.WeatherLinkLiveAPI.yml)
+
+WeatherLink Live is a trademark of Davis Instruments.

@@ -1,6 +1,6 @@
-# WeatherLink Live Library
+# WeatherLink Live™ Library
 
-WeatherLink Live Library is a reusable API client for querying a local WeatherLink Live device.
+WeatherLink Live™ Library is a reusable API client for querying a local WeatherLink Live™ device.
 
 ## Highlights
 
@@ -12,7 +12,7 @@ WeatherLink Live Library is a reusable API client for querying a local WeatherLi
 
 The solution includes `WeattherLinkLive Test`, a small console program for manual smoke testing.
 
-Before running it, provide the WeatherLink Live device IP using one of these local-only options:
+Before running it, provide the WeatherLink Live™ device IP using one of these local-only options:
 
 - `WEATHERLINK_LIVE_IP` environment variable
 - `.local/weatherlink-live-ip.txt` in the solution root, excluded via the repository-local `.git/info/exclude` file
@@ -36,4 +36,7 @@ Releases are prepared through GitHub Actions:
 
 ## Notes
 
+- This project is an independent client library and is not affiliated with or endorsed by Davis Instruments.
 - No personal, localized, or machine-specific values are published in this repository-facing documentation.
+
+WeatherLink Live is a trademark of Davis Instruments.

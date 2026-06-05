@@ -18,3 +18,5 @@ The generated API reference includes the most useful entry points for consumers 
 ## Full Reference
 
 For the full type list, use the generated [API Reference](xref:WeatherLinkLive).
+
+WeatherLink Live is a trademark of Davis Instruments.

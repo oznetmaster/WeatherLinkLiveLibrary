@@ -1,6 +1,6 @@
-# WeatherLink Live API Overview
+# WeatherLink Live™ API Overview
 
-WeatherLinkLive exposes a strongly typed wrapper over the WeatherLink Live device API. The library provides:
+WeatherLinkLive exposes a strongly typed wrapper over the WeatherLink Live™ device API. The library provides:
 
 - `WeatherLinkLiveAPI` as the namespace entry point
 - `WeatherLinkLive` for fetching current conditions and derived weather values
@@ -14,3 +14,5 @@ WeatherLinkLive exposes a strongly typed wrapper over the WeatherLink Live devic
 - [WeatherLinkLive](../api/WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.yml)
 
 Use the navigation panel to browse the conceptual guide and generated API reference.
+
+WeatherLink Live is a trademark of Davis Instruments.
