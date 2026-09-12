@@ -239,6 +239,7 @@
             <summary>
             Performs asynchronous initialization by fetching the initial dataset.
             Must be called before accessing any data properties.
+            Repeated calls within the minimum refresh interval reuse the last successful snapshot.
             </summary>
             <param name="cancellationToken">Optional token to cancel the operation.</param>
             <returns>
@@ -249,8 +250,9 @@
         </member>
         <member name="M:WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.RefreshAsync(System.Threading.CancellationToken)">
             <summary>
-            Refreshes the cached data asynchronously.
-            Call periodically, or when accessing data becomes stale.
+            Refreshes the cached data asynchronously after initialization.
+            Calls within the configured minimum refresh interval reuse the last successful snapshot.
+            Concurrent requests are serialized; a failed request preserves the previous snapshot and its age.
             </summary>
             <param name="cancellationToken">Optional token to cancel the operation.</param>
             <returns>

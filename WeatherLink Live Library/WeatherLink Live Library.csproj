@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 		<RootNamespace>WeatherLink_Live_Library</RootNamespace>
@@ -9,6 +9,8 @@
 		<Authors>Neil Colvin</Authors>
 		<Company>Neil Colvin</Company>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageReleaseNotes>Fix sensor ordering, refresh timing, cache recovery, disposal and metric wind conversion. Add 127 offline and three opt-in live NUnit tests. See CHANGELOG.md for details.</PackageReleaseNotes>
 		<PackageTags>weather;weatherlink;weatherlink-live;api;library</PackageTags>
 		<RepositoryUrl>https://github.com/oznetmaster/WeatherLinkLiveLibrary</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/oznetmaster/WeatherLinkLiveLibrary</PackageProjectUrl>
@@ -16,7 +18,7 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<Description>Reusable WeatherLink Live API client library for .NET Framework 4.7.2 and .NET 10.</Description>
 		<!-- brings in System.Net.Http -->
-		<LangVersion>13.0</LangVersion>
+		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
 		<GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
@@ -51,12 +53,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="log4net" Version="3.3.1" />
+		<PackageReference Include="log4net" Version="3.4.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.5-beta1" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="..\README.md" Pack="true" PackagePath="" />
+		<None Include="..\LICENSE" Pack="true" PackagePath="" />
+		<None Include="..\CHANGELOG.md" Pack="true" PackagePath="" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net472'">
@@ -96,7 +100,7 @@
 		</Otherwise>
 	</Choose>
 
-	<Target Name="GenerateDocfxDoc" AfterTargets="Build" Condition="'$(Configuration)' == 'Release' and '$(TargetFramework)' == 'net472'">
+	<Target Name="GenerateDocfxDoc" AfterTargets="Build" Condition="'$(GenerateApiDocumentation)' != 'false' and '$(Configuration)' == 'Release' and '$(TargetFramework)' == 'net472'">
 		<PropertyGroup>
 			<DocsDir>$(MSBuildProjectDirectory)\docs</DocsDir>
 			<DocfxConfig>$(MSBuildProjectDirectory)\docfx\docfx.json</DocfxConfig>

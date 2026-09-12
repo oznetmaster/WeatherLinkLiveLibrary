@@ -73,7 +73,13 @@ jobs:
         run: dotnet restore ".\WeatherLink Live Library.sln"
 
       - name: Build Release
-        run: dotnet build ".\WeatherLink Live Library.sln" -c Release --no-restore -p:ContinuousIntegrationBuild=true
+        run: dotnet build ".\WeatherLink Live Library.sln" -c Release --no-restore -p:ContinuousIntegrationBuild=true -p:GenerateApiDocumentation=false -p:Version=${{ steps.version.outputs.package_version }}
+
+      - name: Test .NET Framework
+        run: dotnet test WeatherLinkLive.Tests/WeatherLinkLive.Tests.csproj -c Release -f net472 --no-build --settings WeatherLinkLive.Tests/offline.runsettings --filter "TestCategory!=Live"
+
+      - name: Test .NET 10
+        run: dotnet test WeatherLinkLive.Tests/WeatherLinkLive.Tests.csproj -c Release -f net10.0 --no-build --settings WeatherLinkLive.Tests/offline.runsettings --filter "TestCategory!=Live"
 
       - name: Pack library
         shell: pwsh
@@ -129,7 +135,7 @@ jobs:
         with:
           tag_name: ${{ steps.version.outputs.raw_version }}
           name: ${{ steps.version.outputs.raw_version }}
-          generate_release_notes: true
+          body_path: RELEASE_NOTES.md
           prerelease: ${{ contains(steps.version.outputs.package_version, '-') }}
           files: |
             artifacts/*.nupkg

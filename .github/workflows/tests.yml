@@ -1,0 +1,31 @@
+# Copyright (c) 2026 Neil Colvin. Licensed under the MIT License; see LICENSE.
+name: Tests
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  offline:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        framework: [net472, net10.0]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Run offline tests
+        run: dotnet test WeatherLinkLive.Tests/WeatherLinkLive.Tests.csproj -c Release -f ${{ matrix.framework }} -p:GenerateApiDocumentation=false --settings WeatherLinkLive.Tests/offline.runsettings --filter "TestCategory!=Live" --logger trx --results-directory TestResults
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tests-${{ matrix.framework }}
+          path: TestResults/*.trx
