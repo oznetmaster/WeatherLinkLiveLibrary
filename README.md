@@ -85,3 +85,9 @@ See [CHANGELOG.md](CHANGELOG.md) for changes and [GitHub releases](https://githu
 The automated test project uses [NUnit](https://github.com/nunit/nunit), licensed under the MIT license. NUnit is a test dependency and is not required by users of the library.
 
 This independent client library is not affiliated with or endorsed by Davis Instruments. WeatherLink Live is a trademark of Davis Instruments.
+
+## Publishing when local hardware is unavailable
+
+The publish/release workflows support an explicit manual override when the processor or local self-hosted GitHub Actions runner is unavailable. Select `skip_hardware_checks` and provide a single-line `hardware_skip_reason`. Use the workflow's normal source and version controls. The override applies only to that invocation and is recorded with the exact source revision in its warning and job summary; it does not create a passing hardware-test result.
+
+GitHub-hosted validation remains mandatory for the checked-out source, and the normal build, tests and packaging steps still run. Wait for the configured hosted workflows to pass, or run them on the same source revision first. None of these hosted checks needs the local runner or processor. Automatic tag/release-triggered runs retain the normal hardware checks; use a manual invocation of the updated release workflow when an offline override is needed.
