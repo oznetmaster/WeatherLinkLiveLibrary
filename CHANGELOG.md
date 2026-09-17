@@ -1,33 +1,29 @@
 # Changelog
 
-## Offline release workflow option - 2026-09-15 (no package release)
-
-- Allow an explicit manual release when local hardware or the self-hosted runner is unavailable, with the reason and exact source recorded in the workflow summary.
-- Keep hosted source validation mandatory and preserve all build, test and packaging steps. No runtime, API or package-version changes.
-
-## CI validation - 2026-09-15 (no package release)
-
-- Revalidate the current default-branch source after successful release workflows, including version commits created by GitHub Actions.
-- Allow maintainers to configure exact-source, App-specific checks that must pass before publishing through `RELEASE_REQUIRED_CHECKS`; missing, failed or unconfirmed checks block the release.
+This changelog records shipped features, fixes, compatibility and runtime dependency changes. See [development and validation history](DEVELOPMENT-HISTORY.md) for tests, CI, build tooling and work not yet released.
 
 ## [1.0.3] - 2026-09-12
 
 ### Added
 
-- NUnit test project in the existing Visual Studio solution, with 127 offline cases for .NET Framework 4.7.2 and .NET 10.
-- Three opt-in, read-only WeatherLink Live device tests requiring only an IPv4 address, with private JSON settings and an example file.
-- Offline CI and release test gates for both frameworks; live tests are explicitly disabled in CI.
-- Testing and lifecycle documentation, a root MIT license file, and an option to skip DocFX generation during binary-only builds.
+- Add a root MIT license file.
 
 ### Fixed
 
 - Sensor readings are selected by `data_structure_type` instead of fixed response-array positions.
+
 - Metric wind conversion uses the exact 1.609344 km-per-mile factor.
+
 - Refreshes respect the configured minimum interval and serialize concurrent requests.
+
 - Cache age starts at successful response completion. Failed, malformed or API-error responses no longer replace or freshen cached readings.
+
 - Rain collector size refreshes with the sensor data.
+
 - HTTP responses and JSON readers are disposed, and the HTTP timeout covers response-body buffering.
+
 - Disposal prevents further use and an in-flight response cannot restore disposed client state.
+
 - Null device addresses are rejected at construction, and refresh before initialization fails clearly.
 
 Existing public signatures, unit preference properties and unavailable-reading defaults are retained. Refresh timing and error behavior are corrected as described above.

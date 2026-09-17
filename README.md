@@ -1,5 +1,8 @@
 # WeatherLink Live™ Library
 
+For shipped changes, see the [changelog](CHANGELOG.md). Test, CI and build history is recorded separately in [development and validation history](DEVELOPMENT-HISTORY.md).
+
+
 WeatherLink Live™ Library queries the current conditions from a local WeatherLink Live device. It supports .NET Framework 4.7.2 and .NET 10, with compatibility support isolated to the .NET Framework build.
 
 - [Usage](#usage)
