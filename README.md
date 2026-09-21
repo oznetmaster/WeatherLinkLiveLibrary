@@ -6,6 +6,8 @@ For shipped changes, see the [changelog](CHANGELOG.md). Test, CI and build histo
 WeatherLink Live™ Library queries the current conditions from a local WeatherLink Live device. It supports .NET Framework 4.7.2 and .NET 10, with compatibility support isolated to the .NET Framework build.
 
 - [Usage](#usage)
+- [Upgrading to 2.0](docs/migration-v2.md)
+- [Logging](#logging)
 - [Automated tests](#automated-tests)
 - [Live device tests](#live-device-tests)
 - [Console test harness](#console-test-harness)
@@ -26,11 +28,17 @@ Temperatures default to Fahrenheit; `CelciusTemperature` selects Celsius (the ex
 
 The existing non-nullable numeric API returns zero for unavailable readings, so zero alone cannot distinguish missing sensor data from a measured zero. Missing pressure trend returns `Unknown`.
 
+## Logging
+
+Logging is optional and disabled by default. Supply an `ILogger<WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive>` through the new constructor overload to use your application's existing logging provider. The library does not create files, configure global logging or require a console provider. Routine refresh messages use Debug; failures use Warning. Raw sensor responses are not logged.
+
+The console test harness demonstrates Microsoft.Extensions.Logging.Console. Your application can choose a different provider. See the [migration guide](docs/migration-v2.md) for an example and the removal of the former log4net configuration.
+
 ## Automated tests
 
 Open `WeatherLink Live Library.sln` in Visual Studio and use Test Explorer. `WeatherLinkLive.Tests` uses NUnit and its Visual Studio adapter, targeting `net472` and `net10.0`. The test project is not a NuGet package.
 
-The 127 offline cases cover every reading property, unit conversions, rain collector sizes, compass bearings, pressure trends, missing data, culture independence, HTTP and JSON failures, initialization, polling and stale-data timing, cancellation, concurrent requests, disposal, sensor ordering and live-setting validation. The HTTP handler and clock are controlled by the tests; offline cases never contact a weather station.
+The offline tests cover every reading property, unit conversions, rain collector sizes, compass bearings, pressure trends, missing data, culture independence, HTTP and JSON failures, initialization, polling and stale-data timing, cancellation, concurrent requests, disposal, sensor ordering and live-setting validation. The HTTP handler and clock are controlled by the tests; offline cases never contact a weather station.
 
 Run both frameworks on Windows:
 

@@ -11,6 +11,12 @@ See the [product changelog](CHANGELOG.md) for shipped changes. This document pre
 
 <!-- development-history -->
 
+## 2.0.0 - 2026-09-21
+
+- Migrate test fixtures to System.Text.Json, preserving the existing offline and opt-in live coverage.
+- Add regression checks for optional and numeric-string readings, unknown fields, invalid-reading snapshot preservation and host-provided logging without raw response dumps.
+- Build the console consumer alongside the library in CI. Private settings remain excluded from source, build output and packages.
+
 ## Offline release workflow option - 2026-09-15 (no package release)
 
 - Allow an explicit manual release when local hardware or the self-hosted runner is unavailable, with the reason and exact source recorded in the workflow summary.

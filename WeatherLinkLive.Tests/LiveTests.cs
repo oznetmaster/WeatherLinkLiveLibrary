@@ -3,12 +3,13 @@
 
 using System.IO;
 
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace WeatherLinkLive.Tests;
 
 internal sealed class LiveTestSettings
 	{
+	public LiveTestSettings () { }
 	public bool Enabled
 		{
 		get; set;
@@ -65,7 +66,7 @@ internal static class LiveTestSupport
 			{
 			try
 				{
-				settings = JsonConvert.DeserializeObject<LiveTestSettings> (File.ReadAllText (path));
+				settings = JsonSerializer.Deserialize<LiveTestSettings> (File.ReadAllText (path), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 				}
 			catch (JsonException)
 				{

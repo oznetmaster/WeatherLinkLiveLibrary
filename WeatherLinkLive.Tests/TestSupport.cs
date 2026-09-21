@@ -9,7 +9,7 @@ global using System.Net.Http;
 global using System.Threading;
 global using System.Threading.Tasks;
 
-global using Newtonsoft.Json.Linq;
+global using System.Text.Json.Nodes;
 
 global using NUnit.Framework;
 
@@ -64,13 +64,13 @@ internal sealed class DeviceHttp : HttpMessageHandler
 		Disposed = true;
 		base.Dispose (disposing);
 		}
-	internal static JObject Payload () => JObject.Parse ("""
+	internal static JsonObject Payload () => (JsonObject)JsonNode.Parse ("""
 		{"data":{"did":"SYNTHETIC","ts":1767225600,"conditions":[
 		{"data_structure_type":1,"txid":1,"temp":68,"hum":55,"dew_point":50,"wet_bulb":59,"heat_index":77,"wind_chill":41,"thw_index":86,"thsw_index":95,"wind_speed_last":10,"wind_speed_hi_last_10_min":20,"wind_dir_last":90,"wind_dir_scalar_avg_last_1_min":180,"rain_size":2,"rain_rate_last":10,"rainfall_last_24_hr":50},
 		{"data_structure_type":4,"temp_in":72,"hum_in":45},
 		{"data_structure_type":3,"bar_sea_level":30,"bar_trend":0.01}
 		]},"error":null}
-		""");
+		""")!;
 	}
 
 internal sealed class ObservedContent (string body) : StringContent (body)

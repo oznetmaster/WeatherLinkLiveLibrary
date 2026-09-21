@@ -37,7 +37,7 @@ public sealed class ReadingTests
 	[TestCase (0, true, 0)]
 	public async Task RainCounts_RespectCollectorSizeAndUnits (int size, bool metric, double expected)
 		{
-		JObject json = DeviceHttp.Payload ();
+		JsonObject json = DeviceHttp.Payload ();
 		json["data"]!["conditions"]![0]!["rain_size"] = size;
 		using var http = new DeviceHttp ();
 		http.Reply (json.ToString ());
@@ -85,7 +85,7 @@ public sealed class ReadingTests
 	[TestCase (null, "Unknown")]
 	public async Task BarometerTrend_HandlesThresholdsAndMissingValues (double? trend, string expected)
 		{
-		JObject json = DeviceHttp.Payload ();
+		JsonObject json = DeviceHttp.Payload ();
 		json["data"]!["conditions"]![2]!["bar_trend"] = trend;
 		using var http = new DeviceHttp ();
 		http.Reply (json.ToString ());
@@ -104,7 +104,7 @@ public sealed class ReadingTests
 	[TestCase (360, "N")]
 	public async Task BothWindDirections_UseCompassBearings (double degrees, string expected)
 		{
-		JObject json = DeviceHttp.Payload ();
+		JsonObject json = DeviceHttp.Payload ();
 		json["data"]!["conditions"]![0]!["wind_dir_last"] = degrees;
 		json["data"]!["conditions"]![0]!["wind_dir_scalar_avg_last_1_min"] = degrees;
 		using var http = new DeviceHttp ();
@@ -133,7 +133,7 @@ public sealed class ReadingTests
 	[TestCase ("RainfallLast24Hours", "rainfall_last_24_hr")]
 	public async Task NullReadings_PreserveExistingZeroDefault (string property, string field)
 		{
-		JObject json = DeviceHttp.Payload ();
+		JsonObject json = DeviceHttp.Payload ();
 		json["data"]!["conditions"]![0]![field] = null;
 		using var http = new DeviceHttp ();
 		http.Reply (json.ToString ());

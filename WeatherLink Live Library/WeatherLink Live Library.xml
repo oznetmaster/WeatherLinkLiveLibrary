@@ -4,16 +4,6 @@
         <name>WeatherLink Live Library</name>
     </assembly>
     <members>
-        <member name="T:System.Runtime.CompilerServices.IsExternalInit">
-            <summary>
-                Reserved to be used by the compiler for tracking metadata.
-                This class should not be used by developers in source code.
-            </summary>
-            <remarks>
-                This definition is provided by the <i>IsExternalInit</i> NuGet package (https://www.nuget.org/packages/IsExternalInit).
-                Please see https://github.com/manuelroemer/IsExternalInit for more information.
-            </remarks>
-        </member>
         <member name="T:WeatherLinkLive.WeatherLinkLiveAPI">
             <summary>
             Entry point and container for the WeatherLink Live API.
@@ -53,6 +43,28 @@
             <param name="metricWind">True to return wind speed in metric units.</param>
             <param name="metricBarometer">True to return barometer in metric units.</param>
             <exception cref="T:System.ArgumentException">Thrown when <paramref name="refreshIntervalSeconds"/> is less than10.</exception>
+        </member>
+        <member name="M:WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.#ctor(System.String,Microsoft.Extensions.Logging.ILogger{WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive},System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>Creates a local weather client with optional host-supplied logging.</summary>
+            <param name="iPAddress">The device IPv4 address.</param>
+            <param name="logger">Logger supplied by the host; null disables logging.</param>
+            <param name="refreshIntervalSeconds">Minimum refresh interval, at least ten seconds.</param>
+            <param name="forceRefreshIntervalSeconds">Maximum age of cached readings.</param>
+            <param name="celciusTemperature">Return Celsius temperatures.</param>
+            <param name="metricRain">Return metric rainfall.</param>
+            <param name="metricWind">Return metric wind speed.</param>
+            <param name="metricBarometer">Return metric pressure.</param>
+        </member>
+        <member name="M:WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.#ctor(System.Net.IPAddress,Microsoft.Extensions.Logging.ILogger{WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive},System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>Creates a local weather client with optional host-supplied logging.</summary>
+            <param name="weatherLinkLiveIP">The device IPv4 address.</param>
+            <param name="logger">Logger supplied by the host; null disables logging.</param>
+            <param name="refreshIntervalSeconds">Minimum refresh interval, at least ten seconds.</param>
+            <param name="forceRefreshIntervalSeconds">Maximum age of cached readings.</param>
+            <param name="celciusTemperature">Return Celsius temperatures.</param>
+            <param name="metricRain">Return metric rainfall.</param>
+            <param name="metricWind">Return metric wind speed.</param>
+            <param name="metricBarometer">Return metric pressure.</param>
         </member>
         <member name="P:WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.BarometerAtSeaLevel">
             <summary>
@@ -246,7 +258,7 @@
             A task that represents the asynchronous initialization operation.
             </returns>
             <exception cref="T:System.Net.Http.HttpRequestException">Thrown on network errors while contacting the device.</exception>
-            <exception cref="T:Newtonsoft.Json.JsonException">Thrown when the received JSON cannot be parsed.</exception>
+            <exception cref="T:System.IO.InvalidDataException">Thrown when the device response is malformed or reports an API error.</exception>
         </member>
         <member name="M:WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.RefreshAsync(System.Threading.CancellationToken)">
             <summary>
@@ -259,7 +271,7 @@
             A task that represents the asynchronous refresh operation.
             </returns>
             <exception cref="T:System.Net.Http.HttpRequestException">Thrown on network errors while contacting the device.</exception>
-            <exception cref="T:Newtonsoft.Json.JsonException">Thrown when the received JSON cannot be parsed.</exception>
+            <exception cref="T:System.IO.InvalidDataException">Thrown when the device response is malformed or reports an API error.</exception>
         </member>
     </members>
 </doc>

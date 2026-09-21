@@ -1,25 +1,12 @@
-# WeatherLink Live Library v1.0.3
+# WeatherLinkLiveLibrary 2.0.0
 
-This patch corrects sensor selection, cached-data handling and metric wind conversion, and adds an automated NUnit suite for .NET Framework 4.7.2 and .NET 10.
+Weather readings now come from typed System.Text.Json response models. Newtonsoft.Json and log4net are no longer library dependencies. Existing constructors, weather properties, unit conversion and asynchronous methods remain available on net472 and .NET 10.
 
-## Fixes
+This major release changes two integration contracts:
 
-- Select outdoor and barometer records by sensor type, independent of response order.
-- Use the exact miles-to-kilometres conversion for wind speed.
-- Respect the configured minimum refresh interval and serialize concurrent refreshes.
-- Update cache age only after a successful response. Failed or malformed responses preserve the previous readings and their age.
-- Refresh rain collector size with the readings, dispose HTTP and JSON resources, and reject use after disposal.
-- Reject null device addresses and refresh calls made before initialization.
+- Catch System.IO.InvalidDataException for malformed device responses instead of Newtonsoft.Json.JsonException. Failed refreshes preserve the previous valid snapshot and its age.
+- Logging is disabled by default. Pass an ILogger to the new constructor overloads to use the host application's chosen provider. Routine refresh messages use Debug, failures use Warning, and raw sensor responses are omitted.
 
-Public signatures and unit preferences remain unchanged. Refresh calls within the minimum interval now reuse cached data as documented. Invalid responses and use after disposal now fail clearly.
+The console example uses Microsoft.Extensions.Logging.Console; the library requires only its logging abstractions. Rebuild and deploy the full updated dependency set, including System.Text.Json dependencies for .NET Framework applications.
 
-## Tests and documentation
-
-- 127 offline tests passed on each target framework.
-- Three opt-in, read-only live tests passed on each framework against a local WeatherLink Live device.
-- Visual Studio Test Explorer support, example IP-only live settings, and offline CI/release test gates.
-- Updated README, changelog and MIT license file.
-
-Private live settings are excluded from source control and build/package output. Live tests are disabled in CI. The library package has no NUnit runtime dependency.
-
-Install `WeatherLinkLiveLibrary` version `1.0.3` from NuGet. See [the changelog](https://github.com/oznetmaster/WeatherLinkLiveLibrary/blob/v1.0.3/CHANGELOG.md) for the full changes.
+See [migration instructions](https://github.com/oznetmaster/WeatherLinkLiveLibrary/blob/master/docs/migration-v2.md) and the [changelog](https://github.com/oznetmaster/WeatherLinkLiveLibrary/blob/master/CHANGELOG.md).

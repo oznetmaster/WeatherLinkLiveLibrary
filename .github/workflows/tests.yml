@@ -11,6 +11,16 @@ permissions:
   contents: read
 
 jobs:
+  build-console:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Build library and console consumer
+        run: dotnet build "WeatherLink Live Library.sln" -c Release -p:GenerateApiDocumentation=false
+
   offline:
     runs-on: windows-latest
     strategy:

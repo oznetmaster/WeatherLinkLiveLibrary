@@ -18,7 +18,7 @@ public sealed class AdditionalTests
 		using var http = new DeviceHttp ();
 		http.Reply (json);
 		using Client client = http.Create ();
-		Assert.That (async () => await client.InitializeAsync (), Throws.InstanceOf<Newtonsoft.Json.JsonException> ());
+		Assert.That (async () => await client.InitializeAsync (), Throws.InstanceOf<InvalidDataException> ());
 		Assert.That (http.Contents.Single ().Disposed, Is.True);
 		}
 
@@ -127,7 +127,7 @@ public sealed class LiveSettingsTests
 	[TestCase (false, "true")]
 	public void SettingsOrOverride_EnableReadOnlyTests (bool enabled, string enableOverride)
 		{
-		File.WriteAllText (SettingsPath, new JObject { ["enabled"] = enabled, ["ipAddress"] = "192.0.2.10" }.ToString ());
+		File.WriteAllText (SettingsPath, new JsonObject { ["enabled"] = enabled, ["ipAddress"] = "192.0.2.10" }.ToString ());
 		Assert.That (LiveTestSupport.LoadForRun (SettingsPath, enableOverride).IpAddress, Is.EqualTo ("192.0.2.10"));
 		}
 

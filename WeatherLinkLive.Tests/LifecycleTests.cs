@@ -91,7 +91,7 @@ public sealed class LifecycleTests
 	[Test]
 	public void Initialize_RejectsApiErrorEvenWithConditions ()
 		{
-		JObject json = DeviceHttp.Payload ();
+		JsonObject json = DeviceHttp.Payload ();
 		json["error"] = "Device unavailable";
 		using var http = new DeviceHttp ();
 		http.Reply (json.ToString ());
@@ -216,9 +216,9 @@ public sealed class LifecycleTests
 	[Test]
 	public async Task SensorRecords_AreSelectedByTypeRegardlessOfOrder ()
 		{
-		JObject json = DeviceHttp.Payload ();
-		JArray conditions = (JArray)json["data"]!["conditions"]!;
-		json["data"]!["conditions"] = new JArray (conditions.Reverse ());
+		JsonObject json = DeviceHttp.Payload ();
+		JsonArray conditions = (JsonArray)json["data"]!["conditions"]!;
+		json["data"]!["conditions"] = new JsonArray (conditions.Reverse ().Select (node => node!.DeepClone ()).ToArray ());
 		using var http = new DeviceHttp ();
 		http.Reply (json.ToString ());
 		using Client client = http.Create ();
@@ -233,8 +233,8 @@ public sealed class LifecycleTests
 	[TestCase (3)]
 	public async Task MissingSensorType_UsesExistingUnavailableDefaults (int type)
 		{
-		JObject json = DeviceHttp.Payload ();
-		json["data"]!["conditions"] = new JArray (((JArray)json["data"]!["conditions"]!).Where (c => (int)c["data_structure_type"]! != type));
+		JsonObject json = DeviceHttp.Payload ();
+		json["data"]!["conditions"] = new JsonArray (((JsonArray)json["data"]!["conditions"]!).Where (c => (int)c!["data_structure_type"]! != type).Select (node => node!.DeepClone ()).ToArray ());
 		using var http = new DeviceHttp ();
 		http.Reply (json.ToString ());
 		using Client client = http.Create ();
@@ -245,7 +245,7 @@ public sealed class LifecycleTests
 	[Test]
 	public async Task Refresh_UpdatesReadingsAndRainCollectorSizeTogether ()
 		{
-		JObject json = DeviceHttp.Payload ();
+		JsonObject json = DeviceHttp.Payload ();
 		json["data"]!["conditions"]![0]!["rain_size"] = 3;
 		json["data"]!["conditions"]![0]!["temp"] = 80;
 		using var http = new DeviceHttp ();

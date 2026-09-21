@@ -5,12 +5,14 @@
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<TargetFrameworks>net472;net10.0</TargetFrameworks>
 		<IsPackable>true</IsPackable>
+		<Version>2.0.0</Version>
+		<AssemblyVersion>2.0.0.0</AssemblyVersion>
 		<PackageId>WeatherLinkLiveLibrary</PackageId>
 		<Authors>Neil Colvin</Authors>
 		<Company>Neil Colvin</Company>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageReleaseNotes>Fix sensor ordering, refresh timing, cache recovery, disposal and metric wind conversion. Add 127 offline and three opt-in live NUnit tests. See CHANGELOG.md for details.</PackageReleaseNotes>
+		<PackageReleaseNotes>Use typed System.Text.Json sensor responses and optional host-provided logging. Existing weather-reading APIs remain available; see the 2.0 migration guide for dependency and exception changes.</PackageReleaseNotes>
 		<PackageTags>weather;weatherlink;weatherlink-live;api;library</PackageTags>
 		<RepositoryUrl>https://github.com/oznetmaster/WeatherLinkLiveLibrary</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/oznetmaster/WeatherLinkLiveLibrary</PackageProjectUrl>
@@ -53,8 +55,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="log4net" Version="3.4.0" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.5-beta1" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.12" />
+		<PackageReference Include="System.Text.Json" Version="10.0.12" Condition="'$(TargetFramework)' == 'net472'" />
 	</ItemGroup>
 
 	<ItemGroup>

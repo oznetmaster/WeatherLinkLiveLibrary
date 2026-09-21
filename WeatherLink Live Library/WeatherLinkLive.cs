@@ -11,10 +11,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-using log4net;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
 
 namespace WeatherLinkLive;
 
@@ -29,7 +29,6 @@ public static class WeatherLinkLiveAPI
 	private static readonly CompositeFormat _weatherLinkDataRequestCompositeFormat = CompositeFormat.Parse (WEATHER_LINK_DATA_REQUEST);
 	private static string GetCurrentConditionsRequest (IPAddress weatherLinkLiveIP) => string.Format (CultureInfo.InvariantCulture, _weatherLinkDataRequestCompositeFormat, weatherLinkLiveIP);
 #endif
-	private static readonly ILog _logger = log4net.LogManager.GetLogger (typeof (WeatherLinkLiveAPI));
 	private static readonly string[] _windDirections = [
 	"N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S",
  "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW", "N"
@@ -41,6 +40,12 @@ public static class WeatherLinkLiveAPI
 	/// </summary>
 	public class WeatherLinkLive : IDisposable
 		{
+		private static readonly Action<ILogger, IPAddress, Exception?> _logCreated = LoggerMessage.Define<IPAddress> (LogLevel.Debug, new EventId (1, "Created"), "WeatherLink Live client created for {Address}.");
+		private static readonly Action<ILogger, Exception?> _logDisposed = LoggerMessage.Define (LogLevel.Debug, new EventId (2, "Disposed"), "WeatherLink Live client disposed.");
+		private static readonly Action<ILogger, Exception?> _logRefreshing = LoggerMessage.Define (LogLevel.Debug, new EventId (3, "Refreshing"), "Refreshing WeatherLink Live readings.");
+		private static readonly Action<ILogger, int, Exception?> _logReceived = LoggerMessage.Define<int> (LogLevel.Debug, new EventId (4, "Received"), "WeatherLink Live response received with {SensorCount} sensor records.");
+		private static readonly Action<ILogger, Exception?> _logFailed = LoggerMessage.Define (LogLevel.Warning, new EventId (5, "RefreshFailed"), "Unable to refresh WeatherLink Live readings.");
+		private readonly ILogger<WeatherLinkLive> _logger;
 		private readonly TimeSpan _forceRefreshInterval;
 		private readonly TimeSpan _refreshInterval;
 		private readonly IPAddress _weatherLinkLiveIP;
@@ -50,7 +55,7 @@ public static class WeatherLinkLiveAPI
 		private bool _disposed;
 		private readonly Func<DateTime> _utcNow;
 		private bool _initialized;
-		private JArray? _jCurrentConditions;
+		private SensorConditions?[]? _currentConditions;
 		private DateTime _lastRefresh = DateTime.MinValue;
 		private int _rainSize;
 
@@ -88,7 +93,35 @@ public static class WeatherLinkLiveAPI
 			{
 			}
 
-		internal WeatherLinkLive (IPAddress weatherLinkLiveIP, HttpMessageHandler handler, Func<DateTime> utcNow, int refreshIntervalSeconds = 30, int forceRefreshIntervalSeconds = 60, bool celciusTemperature = false, bool metricRain = false, bool metricWind = false, bool metricBarometer = false)
+		/// <summary>Creates a local weather client with optional host-supplied logging.</summary>
+		/// <param name="iPAddress">The device IPv4 address.</param>
+		/// <param name="logger">Logger supplied by the host; null disables logging.</param>
+		/// <param name="refreshIntervalSeconds">Minimum refresh interval, at least ten seconds.</param>
+		/// <param name="forceRefreshIntervalSeconds">Maximum age of cached readings.</param>
+		/// <param name="celciusTemperature">Return Celsius temperatures.</param>
+		/// <param name="metricRain">Return metric rainfall.</param>
+		/// <param name="metricWind">Return metric wind speed.</param>
+		/// <param name="metricBarometer">Return metric pressure.</param>
+		public WeatherLinkLive (string iPAddress, ILogger<WeatherLinkLive>? logger, int refreshIntervalSeconds = 30, int forceRefreshIntervalSeconds = 60, bool celciusTemperature = false, bool metricRain = false, bool metricWind = false, bool metricBarometer = false)
+			: this (IPAddress.Parse (iPAddress), new HttpClientHandler (), () => DateTime.UtcNow, refreshIntervalSeconds, forceRefreshIntervalSeconds, celciusTemperature, metricRain, metricWind, metricBarometer, logger)
+			{
+			}
+
+		/// <summary>Creates a local weather client with optional host-supplied logging.</summary>
+		/// <param name="weatherLinkLiveIP">The device IPv4 address.</param>
+		/// <param name="logger">Logger supplied by the host; null disables logging.</param>
+		/// <param name="refreshIntervalSeconds">Minimum refresh interval, at least ten seconds.</param>
+		/// <param name="forceRefreshIntervalSeconds">Maximum age of cached readings.</param>
+		/// <param name="celciusTemperature">Return Celsius temperatures.</param>
+		/// <param name="metricRain">Return metric rainfall.</param>
+		/// <param name="metricWind">Return metric wind speed.</param>
+		/// <param name="metricBarometer">Return metric pressure.</param>
+		public WeatherLinkLive (IPAddress weatherLinkLiveIP, ILogger<WeatherLinkLive>? logger, int refreshIntervalSeconds = 30, int forceRefreshIntervalSeconds = 60, bool celciusTemperature = false, bool metricRain = false, bool metricWind = false, bool metricBarometer = false)
+			: this (weatherLinkLiveIP, new HttpClientHandler (), () => DateTime.UtcNow, refreshIntervalSeconds, forceRefreshIntervalSeconds, celciusTemperature, metricRain, metricWind, metricBarometer, logger)
+			{
+			}
+
+		internal WeatherLinkLive (IPAddress weatherLinkLiveIP, HttpMessageHandler handler, Func<DateTime> utcNow, int refreshIntervalSeconds = 30, int forceRefreshIntervalSeconds = 60, bool celciusTemperature = false, bool metricRain = false, bool metricWind = false, bool metricBarometer = false, ILogger<WeatherLinkLive>? logger = null)
 			{
 #if NET10_0_OR_GREATER
 			ArgumentNullException.ThrowIfNull (weatherLinkLiveIP);
@@ -99,7 +132,8 @@ public static class WeatherLinkLiveAPI
 				}
 #endif
 
-			_logger.InfoFormat ("WeatherLink Live API Initialised : IPAddress {0}", weatherLinkLiveIP);
+			_logger = logger ?? NullLogger<WeatherLinkLive>.Instance;
+			_logCreated (_logger, weatherLinkLiveIP, null);
 
 			if (refreshIntervalSeconds < 10)
 				{
@@ -128,7 +162,7 @@ public static class WeatherLinkLiveAPI
 		/// <value>
 		/// Pressure in inches of mercury, or millimeters when <see cref="MetricBarometer"/> is true.
 		/// </value>
-		public float BarometerAtSeaLevel => EnsureInitializedAndGet (() => GetPressure ((float?)GetConditions (3)?["bar_sea_level"]));
+		public float BarometerAtSeaLevel => EnsureInitializedAndGet (() => GetPressure (GetConditions (3)?.BarometerAtSeaLevel));
 
 		/// <summary>
 		/// Gets the textual barometer trend.
@@ -136,7 +170,7 @@ public static class WeatherLinkLiveAPI
 		/// <value>
 		/// A string such as "Rising", "Falling", or "Steady".
 		/// </value>
-		public string BarometerTrend => EnsureInitializedAndGet (() => GetBarometerTrend ((float?)GetConditions (3)?["bar_trend"]));
+		public string BarometerTrend => EnsureInitializedAndGet (() => GetBarometerTrend (GetConditions (3)?.BarometerTrend));
 
 		/// <summary>
 		/// Gets or sets a value indicating whether temperatures are returned in Celsius (true) or Fahrenheit (false).
@@ -155,7 +189,7 @@ public static class WeatherLinkLiveAPI
 		/// <value>
 		/// Dew point in Fahrenheit, or Celsius when <see cref="CelciusTemperature"/> is true.
 		/// </value>
-		public float DewPoint => EnsureInitializedAndGet (() => GetTemperature ((float?)GetConditions (1)?["dew_point"]));
+		public float DewPoint => EnsureInitializedAndGet (() => GetTemperature (GetConditions (1)?.DewPoint));
 
 		/// <summary>
 		/// Gets the heat index.
@@ -163,7 +197,7 @@ public static class WeatherLinkLiveAPI
 		/// <value>
 		/// Heat index in Fahrenheit, or Celsius when <see cref="CelciusTemperature"/> is true.
 		/// </value>
-		public float HeatIndex => EnsureInitializedAndGet (() => GetTemperature ((float?)GetConditions (1)?["heat_index"]));
+		public float HeatIndex => EnsureInitializedAndGet (() => GetTemperature (GetConditions (1)?.HeatIndex));
 
 		/// <summary>
 		/// Gets the current relative humidity.
@@ -171,7 +205,7 @@ public static class WeatherLinkLiveAPI
 		/// <value>
 		/// Relative humidity as a percentage in the range0–100.
 		/// </value>
-		public float Humidity => EnsureInitializedAndGet (() => (float?)GetConditions (1)?["hum"] ?? 0);
+		public float Humidity => EnsureInitializedAndGet (() => GetConditions (1)?.Humidity ?? 0);
 
 		/// <summary>
 		/// Gets or sets a value indicating whether barometric pressure values are returned in metric units.
@@ -212,7 +246,7 @@ public static class WeatherLinkLiveAPI
 		/// <value>
 		/// Rainfall in device units; output is metric when <see cref="MetricRain"/> is true.
 		/// </value>
-		public float RainfallLast24Hours => EnsureInitializedAndGet (() => GetRainFall ((int?)GetConditions (1)?["rainfall_last_24_hr"]));
+		public float RainfallLast24Hours => EnsureInitializedAndGet (() => GetRainFall (GetConditions (1)?.RainfallLast24Hours));
 
 		/// <summary>
 		/// Gets the current rain rate.
@@ -220,7 +254,7 @@ public static class WeatherLinkLiveAPI
 		/// <value>
 		/// Rain rate in device units; output is metric when <see cref="MetricRain"/> is true.
 		/// </value>
-		public float RainRate => EnsureInitializedAndGet (() => GetRainFall ((int?)GetConditions (1)?["rain_rate_last"]));
+		public float RainRate => EnsureInitializedAndGet (() => GetRainFall (GetConditions (1)?.RainRate));
 
 		/// <summary>
 		/// Gets the current temperature.
@@ -228,7 +262,7 @@ public static class WeatherLinkLiveAPI
 		/// <value>
 		/// Temperature in Fahrenheit, or Celsius when <see cref="CelciusTemperature"/> is true.
 		/// </value>
-		public float Temperature => EnsureInitializedAndGet (() => GetTemperature ((float?)GetConditions (1)?["temp"]));
+		public float Temperature => EnsureInitializedAndGet (() => GetTemperature (GetConditions (1)?.Temperature));
 
 		/// <summary>
 		/// Gets the THSW index (Temperature-Humidity-Sun-Wind).
@@ -236,7 +270,7 @@ public static class WeatherLinkLiveAPI
 		/// <value>
 		/// THSW index in Fahrenheit, or Celsius when <see cref="CelciusTemperature"/> is true.
 		/// </value>
-		public float ThswIndex => EnsureInitializedAndGet (() => GetTemperature ((float?)GetConditions (1)?["thsw_index"]));
+		public float ThswIndex => EnsureInitializedAndGet (() => GetTemperature (GetConditions (1)?.ThswIndex));
 
 		/// <summary>
 		/// Gets the THW index (Temperature-Humidity-Wind).
@@ -244,7 +278,7 @@ public static class WeatherLinkLiveAPI
 		/// <value>
 		/// THW index in Fahrenheit, or Celsius when <see cref="CelciusTemperature"/> is true.
 		/// </value>
-		public float ThwIndex => EnsureInitializedAndGet (() => GetTemperature ((float?)GetConditions (1)?["thw_index"]));
+		public float ThwIndex => EnsureInitializedAndGet (() => GetTemperature (GetConditions (1)?.ThwIndex));
 
 		/// <summary>
 		/// Gets the wet bulb temperature.
@@ -252,7 +286,7 @@ public static class WeatherLinkLiveAPI
 		/// <value>
 		/// Wet bulb temperature in Fahrenheit, or Celsius when <see cref="CelciusTemperature"/> is true.
 		/// </value>
-		public float WetBulb => EnsureInitializedAndGet (() => GetTemperature ((float?)GetConditions (1)?["wet_bulb"]));
+		public float WetBulb => EnsureInitializedAndGet (() => GetTemperature (GetConditions (1)?.WetBulb));
 
 		/// <summary>
 		/// Gets the wind chill.
@@ -260,7 +294,7 @@ public static class WeatherLinkLiveAPI
 		/// <value>
 		/// Wind chill in Fahrenheit, or Celsius when <see cref="CelciusTemperature"/> is true.
 		/// </value>
-		public float WindChill => EnsureInitializedAndGet (() => GetTemperature ((float?)GetConditions (1)?["wind_chill"]));
+		public float WindChill => EnsureInitializedAndGet (() => GetTemperature (GetConditions (1)?.WindChill));
 
 		/// <summary>
 		/// Gets the1 minute scalar average wind direction.
@@ -268,7 +302,7 @@ public static class WeatherLinkLiveAPI
 		/// <value>
 		/// Average wind direction in degrees (0–360).
 		/// </value>
-		public float WindDirectionAverage1Minute => EnsureInitializedAndGet (() => (float?)GetConditions (1)?["wind_dir_scalar_avg_last_1_min"] ?? 0);
+		public float WindDirectionAverage1Minute => EnsureInitializedAndGet (() => GetConditions (1)?.WindDirectionAverage1Minute ?? 0);
 
 		/// <summary>
 		/// Gets the compass direction string for the1 minute average wind direction.
@@ -284,7 +318,7 @@ public static class WeatherLinkLiveAPI
 		/// <value>
 		/// Wind direction in degrees (0–360).
 		/// </value>
-		public float WindDirectionLast => EnsureInitializedAndGet (() => (float?)GetConditions (1)?["wind_dir_last"] ?? 0);
+		public float WindDirectionLast => EnsureInitializedAndGet (() => GetConditions (1)?.WindDirectionLast ?? 0);
 
 		/// <summary>
 		/// Gets the compass direction string for the last wind direction.
@@ -300,7 +334,7 @@ public static class WeatherLinkLiveAPI
 		/// <value>
 		/// Wind speed in MPH, or KPH when <see cref="MetricWind"/> is true.
 		/// </value>
-		public float WindSpeedHighLast10Minutes => EnsureInitializedAndGet (() => GetWindSpeed ((float?)GetConditions (1)?["wind_speed_hi_last_10_min"]));
+		public float WindSpeedHighLast10Minutes => EnsureInitializedAndGet (() => GetWindSpeed (GetConditions (1)?.WindSpeedHighLast10Minutes));
 
 		/// <summary>
 		/// Gets the most recent wind speed.
@@ -308,9 +342,9 @@ public static class WeatherLinkLiveAPI
 		/// <value>
 		/// Wind speed in MPH, or KPH when <see cref="MetricWind"/> is true.
 		/// </value>
-		public float WindSpeedLast => EnsureInitializedAndGet (() => GetWindSpeed ((float?)GetConditions (1)?["wind_speed_last"]));
+		public float WindSpeedLast => EnsureInitializedAndGet (() => GetWindSpeed (GetConditions (1)?.WindSpeedLast));
 
-		private JArray? CurrentConditions
+		private SensorConditions?[]? CurrentConditions
 			{
 			get
 				{
@@ -322,7 +356,7 @@ public static class WeatherLinkLiveAPI
 				TimeSpan interval = _utcNow () - _lastRefresh;
 				return interval > _forceRefreshInterval
 				? throw new InvalidOperationException ("Weather data is stale. Please call RefreshAsync() to update.")
-				: _jCurrentConditions;
+				: _currentConditions;
 				}
 			}
 
@@ -339,10 +373,10 @@ public static class WeatherLinkLiveAPI
 					}
 				_disposed = true;
 				_initialized = false;
-				_jCurrentConditions = null;
+				_currentConditions = null;
 				}
 			_client.Dispose ();
-			_logger.Info ("WeatherLinkLive API disposed.");
+			_logDisposed (_logger, null);
 			GC.SuppressFinalize (this);
 			}
 
@@ -356,7 +390,7 @@ public static class WeatherLinkLiveAPI
 		/// A task that represents the asynchronous initialization operation.
 		/// </returns>
 		/// <exception cref="HttpRequestException">Thrown on network errors while contacting the device.</exception>
-		/// <exception cref="JsonException">Thrown when the received JSON cannot be parsed.</exception>
+		/// <exception cref="InvalidDataException">Thrown when the device response is malformed or reports an API error.</exception>
 		public Task InitializeAsync (CancellationToken cancellationToken = default) => UpdateAsync (true, cancellationToken);
 
 		/// <summary>
@@ -369,7 +403,7 @@ public static class WeatherLinkLiveAPI
 		/// A task that represents the asynchronous refresh operation.
 		/// </returns>
 		/// <exception cref="HttpRequestException">Thrown on network errors while contacting the device.</exception>
-		/// <exception cref="JsonException">Thrown when the received JSON cannot be parsed.</exception>
+		/// <exception cref="InvalidDataException">Thrown when the device response is malformed or reports an API error.</exception>
 		public Task RefreshAsync (CancellationToken cancellationToken = default) => UpdateAsync (false, cancellationToken);
 
 		private async Task UpdateAsync (bool initialize, CancellationToken cancellationToken)
@@ -395,22 +429,22 @@ public static class WeatherLinkLiveAPI
 						}
 					}
 
-				JObject data = await RefreshDataAsync (cancellationToken).ConfigureAwait (false);
-				if (data["error"] is JToken error && error.Type != JTokenType.Null)
+				ConditionsResponse data = await RefreshDataAsync (cancellationToken).ConfigureAwait (false);
+				if (data.Error.ValueKind is not (JsonValueKind.Undefined or JsonValueKind.Null))
 					{
 					throw new InvalidDataException ("WeatherLink Live returned an API error.");
 					}
-				if (data["data"] is not JObject body || body["conditions"] is not JArray conditions ||
-					 conditions.Count == 0 || conditions.Any (condition => condition is not JObject))
+				SensorConditions?[]? conditions = data.Data?.Conditions;
+				if (conditions == null || conditions.Length == 0 || conditions.Any (condition => condition == null))
 					{
 					throw new InvalidDataException ("WeatherLink Live response must contain a nonempty data.conditions array of sensor records.");
 					}
-				int rainSize = (int?)FindConditions (conditions, 1)?["rain_size"] ?? 0;
+				int rainSize = FindConditions (conditions, 1)?.RainSize ?? 0;
 				lock (_stateLock)
 					{
 					ThrowIfDisposed ();
 					cancellationToken.ThrowIfCancellationRequested ();
-					_jCurrentConditions = conditions;
+					_currentConditions = conditions;
 					_rainSize = rainSize;
 					_lastRefresh = _utcNow ();
 					_initialized = true;
@@ -423,10 +457,10 @@ public static class WeatherLinkLiveAPI
 				}
 			}
 
-		private static JObject? FindConditions (JArray? conditions, int type) =>
-			 conditions?.OfType<JObject> ().FirstOrDefault (condition => (int?)condition["data_structure_type"] == type);
+		private static SensorConditions? FindConditions (SensorConditions?[]? conditions, int type) =>
+			 conditions?.FirstOrDefault (condition => condition?.DataStructureType == type);
 
-		private JObject? GetConditions (int type) => FindConditions (CurrentConditions, type);
+		private SensorConditions? GetConditions (int type) => FindConditions (CurrentConditions, type);
 
 		private void ThrowIfDisposed ()
 			{
@@ -507,11 +541,11 @@ public static class WeatherLinkLiveAPI
 
 		private float GetWindSpeed (float? speedMPH) => !speedMPH.HasValue ? 0 : MetricWind ? speedMPH.Value * 1.609344f : speedMPH.Value;
 
-		private async Task<JObject> RefreshDataAsync (CancellationToken cancellationToken = default)
+		private async Task<ConditionsResponse> RefreshDataAsync (CancellationToken cancellationToken = default)
 			{
-			JObject weatherLinkLiveData;
+			ConditionsResponse weatherLinkLiveData;
 
-			_logger.Info ("Updating WeatherLinkLive data");
+			_logRefreshing (_logger, null);
 
 			try
 				{
@@ -526,14 +560,20 @@ public static class WeatherLinkLiveAPI
 					cancellationToken
 #endif
 					).ConfigureAwait (false);
-				using var reader = new StreamReader (stream, Encoding.UTF8);
-				using var jsonReader = new JsonTextReader (reader);
-				weatherLinkLiveData = await JObject.LoadAsync (jsonReader, cancellationToken).ConfigureAwait (false);
-				_logger.DebugFormat ("WeatherLink Live data received {0} ", weatherLinkLiveData);
+				try
+					{
+					weatherLinkLiveData = await JsonSerializer.DeserializeAsync<ConditionsResponse> (stream, ConditionsResponse.JsonOptions, cancellationToken).ConfigureAwait (false)
+						?? throw new InvalidDataException ("WeatherLink Live returned a null response.");
+					}
+				catch (JsonException ex)
+					{
+					throw new InvalidDataException ("WeatherLink Live returned malformed sensor data.", ex);
+					}
+				_logReceived (_logger, weatherLinkLiveData.Data?.Conditions?.Length ?? 0, null);
 				}
 			catch (Exception ex)
 				{
-				_logger.Warn ("Connection error trying to update from WeatherLink Live:", ex);
+				_logFailed (_logger, ex);
 				throw;
 				}
 

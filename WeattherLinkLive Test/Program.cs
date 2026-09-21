@@ -1,4 +1,7 @@
-﻿using log4net.Config;
+// Copyright (c) 2026 Neil Colvin.
+// Licensed under the MIT License. See LICENSE in the repository root.
+
+using Microsoft.Extensions.Logging;
 
 using System;
 using System.IO;
@@ -6,12 +9,12 @@ using System.Threading.Tasks;
 
 using WeatherLinkLive;
 
-_ = BasicConfigurator.Configure ();
+using ILoggerFactory logging = LoggerFactory.Create (builder => builder.AddSimpleConsole ().SetMinimumLevel (LogLevel.Debug));
 
 var weatherLinkLiveIp = Environment.GetEnvironmentVariable ("WEATHERLINK_LIVE_IP")
 	?? ReadLocalWeatherLinkIp ();
 
-var wll = new WeatherLinkLiveAPI.WeatherLinkLive (weatherLinkLiveIp, 10, 30, true);
+using var wll = new WeatherLinkLiveAPI.WeatherLinkLive (weatherLinkLiveIp, logging.CreateLogger<WeatherLinkLiveAPI.WeatherLinkLive> (), 10, 30, true);
 await wll.InitializeAsync ();
 
 do
@@ -48,4 +51,3 @@ static string ReadLocalWeatherLinkIp ()
 
 	throw new InvalidOperationException ("Set WEATHERLINK_LIVE_IP or create .local/weatherlink-live-ip.txt with the device IP address before running the test harness.");
 	}
-

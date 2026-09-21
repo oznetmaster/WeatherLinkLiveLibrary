@@ -5,7 +5,9 @@ items:
   id: WeatherLinkLiveAPI.WeatherLinkLive
   parent: WeatherLinkLive
   children:
+  - WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.#ctor(System.Net.IPAddress,Microsoft.Extensions.Logging.ILogger{WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive},System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
   - WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.#ctor(System.Net.IPAddress,System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  - WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.#ctor(System.String,Microsoft.Extensions.Logging.ILogger{WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive},System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
   - WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.#ctor(System.String,System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
   - WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.BarometerAtSeaLevel
   - WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.BarometerTrend
@@ -173,6 +175,114 @@ items:
   - public
   modifiers.vb:
   - Public
+- uid: WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.#ctor(System.String,Microsoft.Extensions.Logging.ILogger{WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive},System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  commentId: M:WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.#ctor(System.String,Microsoft.Extensions.Logging.ILogger{WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive},System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  id: '#ctor(System.String,Microsoft.Extensions.Logging.ILogger{WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive},System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)'
+  parent: WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive
+  langs:
+  - csharp
+  - vb
+  name: WeatherLinkLive(String, ILogger<WeatherLinkLiveAPI.WeatherLinkLive>, Int32, Int32, Boolean, Boolean, Boolean, Boolean)
+  nameWithType: WeatherLinkLiveAPI.WeatherLinkLive.WeatherLinkLive(String, ILogger<WeatherLinkLiveAPI.WeatherLinkLive>, Int32, Int32, Boolean, Boolean, Boolean, Boolean)
+  fullName: WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.WeatherLinkLive(System.String, Microsoft.Extensions.Logging.ILogger<WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive>, System.Int32, System.Int32, System.Boolean, System.Boolean, System.Boolean, System.Boolean)
+  type: Constructor
+  source:
+    path: WeatherLink Live Library
+    isExternal: true
+  assemblies:
+  - WeatherLink Live Library
+  namespace: WeatherLinkLive
+  summary: Creates a local weather client with optional host-supplied logging.
+  syntax:
+    content: public WeatherLinkLive(string iPAddress, ILogger<WeatherLinkLiveAPI.WeatherLinkLive> logger, int refreshIntervalSeconds = 30, int forceRefreshIntervalSeconds = 60, bool celciusTemperature = false, bool metricRain = false, bool metricWind = false, bool metricBarometer = false)
+    parameters:
+    - id: iPAddress
+      type: System.String
+      description: The device IPv4 address.
+    - id: logger
+      type: Microsoft.Extensions.Logging.ILogger{WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive}
+      description: Logger supplied by the host; null disables logging.
+    - id: refreshIntervalSeconds
+      type: System.Int32
+      description: Minimum refresh interval, at least ten seconds.
+    - id: forceRefreshIntervalSeconds
+      type: System.Int32
+      description: Maximum age of cached readings.
+    - id: celciusTemperature
+      type: System.Boolean
+      description: Return Celsius temperatures.
+    - id: metricRain
+      type: System.Boolean
+      description: Return metric rainfall.
+    - id: metricWind
+      type: System.Boolean
+      description: Return metric wind speed.
+    - id: metricBarometer
+      type: System.Boolean
+      description: Return metric pressure.
+    content.vb: Public Sub New(iPAddress As String, logger As ILogger(Of WeatherLinkLiveAPI.WeatherLinkLive), refreshIntervalSeconds As Integer = 30, forceRefreshIntervalSeconds As Integer = 60, celciusTemperature As Boolean = False, metricRain As Boolean = False, metricWind As Boolean = False, metricBarometer As Boolean = False)
+  overload: WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.#ctor*
+  nameWithType.vb: WeatherLinkLiveAPI.WeatherLinkLive.WeatherLinkLive(String, ILogger(Of WeatherLinkLiveAPI.WeatherLinkLive), Int32, Int32, Boolean, Boolean, Boolean, Boolean)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+  fullName.vb: WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.WeatherLinkLive(System.String, Microsoft.Extensions.Logging.ILogger(Of WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive), System.Int32, System.Int32, System.Boolean, System.Boolean, System.Boolean, System.Boolean)
+  name.vb: WeatherLinkLive(String, ILogger(Of WeatherLinkLiveAPI.WeatherLinkLive), Int32, Int32, Boolean, Boolean, Boolean, Boolean)
+- uid: WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.#ctor(System.Net.IPAddress,Microsoft.Extensions.Logging.ILogger{WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive},System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  commentId: M:WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.#ctor(System.Net.IPAddress,Microsoft.Extensions.Logging.ILogger{WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive},System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)
+  id: '#ctor(System.Net.IPAddress,Microsoft.Extensions.Logging.ILogger{WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive},System.Int32,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Boolean)'
+  parent: WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive
+  langs:
+  - csharp
+  - vb
+  name: WeatherLinkLive(IPAddress, ILogger<WeatherLinkLiveAPI.WeatherLinkLive>, Int32, Int32, Boolean, Boolean, Boolean, Boolean)
+  nameWithType: WeatherLinkLiveAPI.WeatherLinkLive.WeatherLinkLive(IPAddress, ILogger<WeatherLinkLiveAPI.WeatherLinkLive>, Int32, Int32, Boolean, Boolean, Boolean, Boolean)
+  fullName: WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.WeatherLinkLive(System.Net.IPAddress, Microsoft.Extensions.Logging.ILogger<WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive>, System.Int32, System.Int32, System.Boolean, System.Boolean, System.Boolean, System.Boolean)
+  type: Constructor
+  source:
+    path: WeatherLink Live Library
+    isExternal: true
+  assemblies:
+  - WeatherLink Live Library
+  namespace: WeatherLinkLive
+  summary: Creates a local weather client with optional host-supplied logging.
+  syntax:
+    content: public WeatherLinkLive(IPAddress weatherLinkLiveIP, ILogger<WeatherLinkLiveAPI.WeatherLinkLive> logger, int refreshIntervalSeconds = 30, int forceRefreshIntervalSeconds = 60, bool celciusTemperature = false, bool metricRain = false, bool metricWind = false, bool metricBarometer = false)
+    parameters:
+    - id: weatherLinkLiveIP
+      type: System.Net.IPAddress
+      description: The device IPv4 address.
+    - id: logger
+      type: Microsoft.Extensions.Logging.ILogger{WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive}
+      description: Logger supplied by the host; null disables logging.
+    - id: refreshIntervalSeconds
+      type: System.Int32
+      description: Minimum refresh interval, at least ten seconds.
+    - id: forceRefreshIntervalSeconds
+      type: System.Int32
+      description: Maximum age of cached readings.
+    - id: celciusTemperature
+      type: System.Boolean
+      description: Return Celsius temperatures.
+    - id: metricRain
+      type: System.Boolean
+      description: Return metric rainfall.
+    - id: metricWind
+      type: System.Boolean
+      description: Return metric wind speed.
+    - id: metricBarometer
+      type: System.Boolean
+      description: Return metric pressure.
+    content.vb: Public Sub New(weatherLinkLiveIP As IPAddress, logger As ILogger(Of WeatherLinkLiveAPI.WeatherLinkLive), refreshIntervalSeconds As Integer = 30, forceRefreshIntervalSeconds As Integer = 60, celciusTemperature As Boolean = False, metricRain As Boolean = False, metricWind As Boolean = False, metricBarometer As Boolean = False)
+  overload: WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.#ctor*
+  nameWithType.vb: WeatherLinkLiveAPI.WeatherLinkLive.WeatherLinkLive(IPAddress, ILogger(Of WeatherLinkLiveAPI.WeatherLinkLive), Int32, Int32, Boolean, Boolean, Boolean, Boolean)
+  modifiers.csharp:
+  - public
+  modifiers.vb:
+  - Public
+  fullName.vb: WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.WeatherLinkLive(System.Net.IPAddress, Microsoft.Extensions.Logging.ILogger(Of WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive), System.Int32, System.Int32, System.Boolean, System.Boolean, System.Boolean, System.Boolean)
+  name.vb: WeatherLinkLive(IPAddress, ILogger(Of WeatherLinkLiveAPI.WeatherLinkLive), Int32, Int32, Boolean, Boolean, Boolean, Boolean)
 - uid: WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.Dispose
   commentId: M:WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.Dispose
   id: Dispose
@@ -218,7 +328,7 @@ items:
   assemblies:
   - WeatherLink Live Library
   namespace: WeatherLinkLive
-  summary: "\nPerforms asynchronous initialization by fetching the initial dataset.\nMust be called before accessing any data properties.\n"
+  summary: "\nPerforms asynchronous initialization by fetching the initial dataset.\nMust be called before accessing any data properties.\nRepeated calls within the minimum refresh interval reuse the last successful snapshot.\n"
   syntax:
     content: public Task InitializeAsync(CancellationToken cancellationToken = default(CancellationToken))
     parameters:
@@ -234,9 +344,9 @@ items:
   - type: System.Net.Http.HttpRequestException
     commentId: T:System.Net.Http.HttpRequestException
     description: Thrown on network errors while contacting the device.
-  - type: Newtonsoft.Json.JsonException
-    commentId: T:Newtonsoft.Json.JsonException
-    description: Thrown when the received JSON cannot be parsed.
+  - type: System.IO.InvalidDataException
+    commentId: T:System.IO.InvalidDataException
+    description: Thrown when the device response is malformed or reports an API error.
   modifiers.csharp:
   - public
   modifiers.vb:
@@ -258,7 +368,7 @@ items:
   assemblies:
   - WeatherLink Live Library
   namespace: WeatherLinkLive
-  summary: "\nRefreshes the cached data asynchronously.\nCall periodically, or when accessing data becomes stale.\n"
+  summary: "\nRefreshes the cached data asynchronously after initialization.\nCalls within the configured minimum refresh interval reuse the last successful snapshot.\nConcurrent requests are serialized; a failed request preserves the previous snapshot and its age.\n"
   syntax:
     content: public Task RefreshAsync(CancellationToken cancellationToken = default(CancellationToken))
     parameters:
@@ -274,9 +384,9 @@ items:
   - type: System.Net.Http.HttpRequestException
     commentId: T:System.Net.Http.HttpRequestException
     description: Thrown on network errors while contacting the device.
-  - type: Newtonsoft.Json.JsonException
-    commentId: T:Newtonsoft.Json.JsonException
-    description: Thrown when the received JSON cannot be parsed.
+  - type: System.IO.InvalidDataException
+    commentId: T:System.IO.InvalidDataException
+    description: Thrown when the device response is malformed or reports an API error.
   modifiers.csharp:
   - public
   modifiers.vb:
@@ -1322,11 +1432,91 @@ references:
   nameWithType: Boolean
   fullName: System.Boolean
 - uid: System.Net.IPAddress
-  commentId: '!:System.Net.IPAddress'
   isExternal: true
   name: IPAddress
   nameWithType: IPAddress
   fullName: System.Net.IPAddress
+- uid: Microsoft.Extensions.Logging.ILogger{WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive}
+  commentId: '!:Microsoft.Extensions.Logging.ILogger{WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive}'
+  definition: Microsoft.Extensions.Logging.ILogger`1
+  name: ILogger<WeatherLinkLiveAPI.WeatherLinkLive>
+  nameWithType: ILogger<WeatherLinkLiveAPI.WeatherLinkLive>
+  fullName: Microsoft.Extensions.Logging.ILogger<WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive>
+  nameWithType.vb: ILogger(Of WeatherLinkLiveAPI.WeatherLinkLive)
+  fullName.vb: Microsoft.Extensions.Logging.ILogger(Of WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive)
+  name.vb: ILogger(Of WeatherLinkLiveAPI.WeatherLinkLive)
+  spec.csharp:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    nameWithType: ILogger
+    fullName: Microsoft.Extensions.Logging.ILogger
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - uid: WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive
+    name: WeatherLinkLiveAPI.WeatherLinkLive
+    nameWithType: WeatherLinkLiveAPI.WeatherLinkLive
+    fullName: WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive
+    isExternal: true
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    nameWithType: ILogger
+    fullName: Microsoft.Extensions.Logging.ILogger
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - uid: WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive
+    name: WeatherLinkLiveAPI.WeatherLinkLive
+    nameWithType: WeatherLinkLiveAPI.WeatherLinkLive
+    fullName: WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive
+    isExternal: true
+  - name: )
+    nameWithType: )
+    fullName: )
+- uid: Microsoft.Extensions.Logging.ILogger`1
+  isExternal: true
+  name: ILogger<>
+  nameWithType: ILogger<>
+  fullName: Microsoft.Extensions.Logging.ILogger<>
+  nameWithType.vb: ILogger(Of )
+  fullName.vb: Microsoft.Extensions.Logging.ILogger(Of )
+  name.vb: ILogger(Of )
+  spec.csharp:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    nameWithType: ILogger
+    fullName: Microsoft.Extensions.Logging.ILogger
+    isExternal: true
+  - name: <
+    nameWithType: <
+    fullName: <
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: '>'
+    nameWithType: '>'
+    fullName: '>'
+  spec.vb:
+  - uid: Microsoft.Extensions.Logging.ILogger`1
+    name: ILogger
+    nameWithType: ILogger
+    fullName: Microsoft.Extensions.Logging.ILogger
+    isExternal: true
+  - name: '(Of '
+    nameWithType: '(Of '
+    fullName: '(Of '
+  - name: ''
+    nameWithType: ''
+    fullName: ''
+  - name: )
+    nameWithType: )
+    fullName: )
 - uid: WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.Dispose*
   commentId: Overload:WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive.Dispose
   isExternal: true
@@ -1373,8 +1563,8 @@ references:
 - uid: System.Net.Http.HttpRequestException
   commentId: T:System.Net.Http.HttpRequestException
   isExternal: true
-- uid: Newtonsoft.Json.JsonException
-  commentId: T:Newtonsoft.Json.JsonException
+- uid: System.IO.InvalidDataException
+  commentId: T:System.IO.InvalidDataException
   isExternal: true
 - uid: System.Threading.CancellationToken
   commentId: T:System.Threading.CancellationToken
