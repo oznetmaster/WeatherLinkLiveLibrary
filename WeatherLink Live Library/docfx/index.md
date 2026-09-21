@@ -18,4 +18,4 @@ This site is generated from:
 
 For repository-oriented guidance, setup instructions, and release notes, see the main repository documentation in `docs/` and the project `README.md`.
 
-WeatherLink Live is a trademark of Davis Instruments. This project is an independent client library and is not affiliated with or endorsed by Davis Instruments.
+WeatherLink and WeatherLink Live are trademarks of Davis Instruments Corp. This independent client library is not affiliated with, endorsed by, or sponsored by Davis Instruments Corp. See the [Davis Instruments trademark list](https://www.davisinstruments.com/pages/davis-instruments-trademark-list) and [brand guidelines](https://www.davisinstruments.com/pages/davis-instruments-logo-permissions-and-guidelines).

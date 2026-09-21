@@ -87,7 +87,7 @@ See [CHANGELOG.md](CHANGELOG.md) for changes and [GitHub releases](https://githu
 
 The automated test project uses [NUnit](https://github.com/nunit/nunit), licensed under the MIT license. NUnit is a test dependency and is not required by users of the library.
 
-This independent client library is not affiliated with or endorsed by Davis Instruments. WeatherLink Live is a trademark of Davis Instruments.
+WeatherLink and WeatherLink Live are trademarks of Davis Instruments Corp. This independent client library is not affiliated with, endorsed by, or sponsored by Davis Instruments Corp. See the [Davis Instruments trademark list](https://www.davisinstruments.com/pages/davis-instruments-trademark-list) and [brand guidelines](https://www.davisinstruments.com/pages/davis-instruments-logo-permissions-and-guidelines).
 
 ## Publishing when local hardware is unavailable
 
