@@ -27,7 +27,7 @@
   },
   "Configuration": "Debug",
   "ConfigurationEvidence": {
-    "BuildStartedUtc": "2026-09-21T13:31:14.5983035+01:00",
+    "BuildStartedUtc": "2026-09-21T12:31:14.5983035Z",
     "BuildIdentitySha256": "57C079FAE3BD4061719B3FABE4D490F825689ED173CD5C5D564256C4897CFC16",
     "BuildLogSha256": "8BCA9DE8D282DD0AEC727A249C9918F28C2547DD6070387F6257195B5EA08670",
     "Observation": "Retained workflow BuildIdentity.json reports Configuration Debug; compiler output and merge input/output paths independently use bin/Debug/net472. Private absolute paths omitted.",
