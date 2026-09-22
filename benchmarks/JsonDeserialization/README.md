@@ -52,6 +52,12 @@ System.Text.Json uses `AllowReadingFromString`; Newtonsoft uses its default sett
 
 The processor package merges private copies of **both** serializers. The availability probe also found a resident Newtonsoft assembly (`13.0.0.0` assembly version); that is a separate observation, not the copy used for these measured calls. System.Text.Json did not resolve through the same shared-assembly lookup. This does not establish a Crestron compatibility guarantee on other firmware.
 
+### Newtonsoft.Json versus Newtonsoft.Json.Compact
+
+The measured dependency is the standard **`Newtonsoft.Json` NuGet package, version 13.0.5-beta1**. This benchmark does **not** measure **`Newtonsoft.Json.Compact`**, the separate assembly named in [Crestron's SIMPL# API documentation](https://help.crestron.com/SimplSharp/html/66438ce3-17d5-8de3-92a3-a20697ff0e76.htm). Sharing the `Newtonsoft.Json` namespace does not make those assemblies or their performance interchangeable.
+
+The separate availability probe requested `Newtonsoft.Json` by assembly name and resolved `Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed` at `/simpl/app00/Newtonsoft.Json.dll`. It did not request `Newtonsoft.Json.Compact`, establish Compact's availability, or identify the resident assembly's exact NuGet patch version. The timing results therefore compare the bundled standard Newtonsoft package with bundled System.Text.Json; they do not compare either with Crestron's Compact assembly or the resident Newtonsoft copy.
+
 The Newtonsoft prerelease is pinned because it was the previous dependency being evaluated, not as a recommendation to adopt a beta. On .NET 10 the project uses the runtime-provided System.Text.Json; use the .NET 10.0.12 runtime for comparison with the original desktop check. That desktop check also favored System.Text.Json, but its short timings varied substantially. The table above contains only the processor measurements.
 
 ## Run on Windows
