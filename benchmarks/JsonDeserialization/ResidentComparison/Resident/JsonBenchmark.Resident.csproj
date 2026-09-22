@@ -1,11 +1,11 @@
-<!-- Copyright (c) 2026 Neil Colvin. Licensed under the MIT License; see ../../../LICENSE. -->
+<!-- Copyright (c) 2026 Neil Colvin. Licensed under the MIT License; see ../../../../LICENSE. -->
 <Project>
   <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
     <IsPackable>false</IsPackable>
     <IsTestProject>false</IsTestProject>
-    <AssemblyName>JsonDeserialization.Processor</AssemblyName>
+    <AssemblyName>JsonBenchmark.Resident</AssemblyName>
     <RootNamespace>CrestronHomeNUnit.Driver</RootNamespace>
     <Version>1.0.0</Version>
     <ProcessorExpectedTestCount>1</ProcessorExpectedTestCount>
@@ -18,9 +18,9 @@
     <LocalCrestronSdkLibDir Condition="'$(LocalCrestronSdkLibDir)' == ''">$(NuGetPackageRoot)crestron.devicedrivers.manifestutil\29.0.10\tools\net8.0\any</LocalCrestronSdkLibDir>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\RuntimeAssemblyProbe.cs" Link="RuntimeAssemblyProbe.cs" />
+    <Compile Include="..\ResidentComparison.cs" Link="ResidentComparison.cs" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.5-beta1" />
-    <PackageReference Include="System.Text.Json" Version="10.0.12" />
+
     <PackageDownload Include="Crestron.DeviceDrivers.ManifestUtil" Version="[29.0.10]" />
   </ItemGroup>
   <Import Project="$(ProcessorTestSdkRoot)\ProcessorTestPackage\ProcessorTestPackage.targets" Condition="Exists('$(ProcessorTestSdkRoot)\ProcessorTestPackage\ProcessorTestPackage.targets')" />
@@ -28,11 +28,12 @@
   <Target Name="RequireProcessorTestSdk" BeforeTargets="PrepareForBuild">
     <Error Condition="!Exists('$(ProcessorTestSdkRoot)\ProcessorTestPackage\ProcessorTestPackage.targets')" Text="Set ProcessorTestSdkRoot to a CrestronHomeNUnit checkout containing ProcessorTestPackage." />
   </Target>
+
+  <Target Name="UseResidentNewtonsoft" BeforeTargets="MergeDependencies">
+    <ItemGroup><ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(Filename)' == 'Newtonsoft.Json'" /></ItemGroup>
+  </Target>
   <ItemGroup>
-    <ProcessorTestData Include="..\..\..\LICENSE" TargetPath="Licenses\JsonDeserialization\LICENSE" />
-    <ProcessorTestData Include="..\licenses\Newtonsoft.Json-LICENSE.md" TargetPath="Licenses\JsonDeserialization\Newtonsoft.Json-LICENSE.md" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProcessorTestData Include="..\..\..\..\LICENSE" TargetPath="Licenses\JsonDeserialization\LICENSE" />
     <ProcessorTestData Include="$(ProcessorTestSdkRoot)\CrestronHomeNUnit.Driver\IncludeInPkg\**\*" TargetPath="%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 </Project>

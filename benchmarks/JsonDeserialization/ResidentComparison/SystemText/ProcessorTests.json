@@ -1,0 +1,13 @@
+{
+  "Name": "JSON Benchmark SystemText",
+  "Port": 0,
+  "Suites": [
+    {
+      "Name": "JSON resident comparison",
+      "ExpectedCount": 1,
+      "Id": "resident-comparison",
+      "ManualOnly": false,
+      "FilterXml": "<filter><namespace>ProcessorResidentComparison</namespace></filter>"
+    }
+  ]
+}

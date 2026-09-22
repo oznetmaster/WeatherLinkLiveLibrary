@@ -1,0 +1,52 @@
+{
+  "FixtureSha256": "D007604ABDFAD934AC4A9382B1BBE1C08E3EB7BBE77A712E397A7B8A7EDF8504",
+  "PayloadSha256": "1A5F5BE474A6998241D2BA5A6A5FE488AC556ADE220B49FC44DE21A11BF5D155",
+  "Processor": "MC4-R hardware revision 2",
+  "Firmware": "2.8000.00057",
+  "Home": "4.011.0322",
+  "Mono": "6.12.0.107",
+  "SystemInformationObservation": "2026-09-22; implemented DevTools VERSION -v reader, not yet a released CLI command",
+  "Sdk": "CrestronHomeNUnit v1.12.1",
+  "Target": "net472",
+  "Language": "C# 13",
+  "Configuration": "Debug",
+  "ParsesPerRound": 3000,
+  "Warmup": 200,
+  "RoundsPerVariant": 4,
+  "NuGetCompileReferences": {
+    "SystemTextJson": "10.0.12",
+    "Newtonsoft": "13.0.5-beta1"
+  },
+  "Runs": [
+    {
+      "Variant": "Resident",
+      "StartUtc": "2026-09-22T12:43:43.135248Z",
+      "Result": "Passed",
+      "TestResult": "resident-newtonsoft-2026-09-22.xml",
+      "TestResultSha256": "B459A84A628E7183DE6169D2B511ED94B2266937A42AD057A1A1F484D98E8764",
+      "Package": "JsonBenchmark.Resident.pkg",
+      "PackageVersion": "1.000.000.0002",
+      "PackageSha256": "9BA85B482D16F1820E34410F34E76DC3C7313ADCC7072716535963A9EB72D390",
+      "PackageBytes": 410124,
+      "Cleanup": "Instance removed, uploaded package removed, reservation released; catalogue cache retained",
+      "TestResultSha256Lf": "B459A84A628E7183DE6169D2B511ED94B2266937A42AD057A1A1F484D98E8764"
+    },
+    {
+      "Variant": "SystemText",
+      "StartUtc": "2026-09-22T12:45:39.010997Z",
+      "Result": "Passed",
+      "TestResult": "bundled-systemtext-2026-09-22.xml",
+      "TestResultSha256": "4D49F4E35D6E3C139F91E34D82B619072C8A785BB52A18DA930B2CBFFAA7955E",
+      "Package": "JsonBenchmark.SystemText.pkg",
+      "PackageVersion": "1.000.000.0001",
+      "PackageSha256": "4CF2038445ADF2707248BE5616D6F026310C8FD0AA9C38831C11BE727B2C73CA",
+      "PackageBytes": 779466,
+      "Cleanup": "Instance removed, uploaded package removed, reservation released; catalogue cache retained",
+      "TestResultSha256Lf": "4D49F4E35D6E3C139F91E34D82B619072C8A785BB52A18DA930B2CBFFAA7955E"
+    }
+  ],
+  "ReproductionDifference": "Published projects additionally package the repository MIT notice; no change to the measured C# fixture. Rebuilding a package does not reproduce the recorded package hash.",
+  "MemoryLimitation": "Different host processes and starting heaps; no serializer-specific working-set attribution.",
+  "FixtureSha256Lf": "D007604ABDFAD934AC4A9382B1BBE1C08E3EB7BBE77A712E397A7B8A7EDF8504",
+  "HashConvention": "Unqualified SHA-256 values refer to captured local bytes; Lf suffix normalizes CRLF to LF for Git checkouts."
+}
