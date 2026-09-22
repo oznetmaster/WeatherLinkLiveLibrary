@@ -48,6 +48,8 @@ dotnet test .\WeatherLinkLive.Tests\WeatherLinkLive.Tests.csproj --settings .\We
 
 Use `-f net472` or `-f net10.0` to run one target. CI runs the offline suite for both targets, and the release workflow requires it to pass before publishing.
 
+For the reproducible processor serializer comparison, including its NUnit fixture, synthetic payload and per-round MC4-R results, see [JSON deserialization on Crestron Mono](benchmarks/JsonDeserialization/README.md). It is a separate developer benchmark, outside the normal unit suite.
+
 ## Live device tests
 
 Three read-only tests check current readings, cached metric conversions and a fresh response after a ten-second polling interval. They do not modify the station or assume the weather will change. The test computer must be able to reach the device's local HTTP endpoint.

@@ -1,0 +1,28 @@
+{
+  "MeasurementUtc": "2026-09-21T12:32:11Z",
+  "Result": "Passed",
+  "Fixture": "ProcessorRuntimeProbe.AssemblyAvailability.ReportSharedJsonAndLoggingAssemblies",
+  "SourceFixtureSha256OriginalCrLf": "d867cba49e69ea000b6e7ef5aec279542662202e11018b496db061b08411a9c1",
+  "SourceFixtureSha256Lf": "047aa519191ab03d78cc2bbb47d993e1ec915b34b0c227dd5a5c4a7bb8a3a222",
+  "PayloadSha256": "1a5f5be474a6998241d2ba5a6a5fe488ac556ade220b49fc44de21a11bf5d155",
+  "OriginalPrivateNUnitXmlSha256": "6cef0240c32b4705c3376de898238b0f2c4f675bc1d089f8210b16f8c1139cce",
+  "PublishedOutput": "mono-2026-09-21.txt",
+  "Extraction": "Only BENCH output lines from original NUnit test-case/output, preserved in execution order. Private run paths and process metadata omitted.",
+  "RoundCount": 4,
+  "ParsesPerRoundPerSerializer": 3000,
+  "WarmupParsesPerSerializer": 200,
+  "NewtonsoftPackageVersion": "13.0.5-beta1",
+  "SystemTextJsonPackageVersion": "10.0.12",
+  "Data": "Synthetic WeatherLink-shaped response; the embedded fixture string and payload.json are identical.",
+  "OperatorConsoleObservation": {
+    "Mono": "6.12.0.107",
+    "FirmwareBuildDate": "2025-09-17",
+    "ObservationDate": "2026-09-22",
+    "Source": "Processor owner provided console version output; not captured by the benchmark",
+    "ControlEngineFirmware": "2.8000.00057",
+    "Model": "MC4-R",
+    "CrestronHomeProgramVersion": "4.011.0322",
+    "HardwareVersion": "2",
+    "DeviceIdentifiersOmitted": true
+  }
+}
