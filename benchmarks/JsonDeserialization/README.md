@@ -16,6 +16,8 @@ The fixture's name, `ProcessorRuntimeProbe.AssemblyAvailability.ReportSharedJson
 
 Measured on September 21, 2026, at 12:32 UTC. Each round contains 3,000 parses; the order alternates between serializers. Times below are for the whole round.
 
+The original processor package was built in **Debug** configuration, confirmed by its retained build identity and build/merge output. The September 22 follow-up also used Debug. This records the harness configuration; it does not mean the precompiled NuGet dependencies were rebuilt as Debug binaries. The two experiments still differ in host process, dependency deployment and execution order.
+
 | Round (zero-based) | System.Text.Json | Newtonsoft.Json |
 | --- | ---: | ---: |
 | 0 | 324.553 ms | 440.976 ms |
@@ -85,7 +87,7 @@ A lookup performed **after** timing and memory collection also resolved the sepa
 
 All four rounds are retained, including the slower System.Text.Json round. Both follow-up packages were built in Debug configuration, targeting `net472` with C# 13. These are sequential runs in different host processes, with no control of other Home activity. They corroborate the allocation difference and faster parsing for this workload, but are not a controlled comparison of resident versus merged assembly overhead. Do not combine these rounds with the September 21 table as one experiment.
 
-Full [resident NUnit result](results/resident-newtonsoft-2026-09-22.xml), [System.Text.Json NUnit result](results/bundled-systemtext-2026-09-22.xml), and [follow-up provenance](results/resident-comparison-provenance.json) retain the output. The follow-up reports process memory too, but the processes started with different managed heaps (about 20 MB and 67 MB, respectively, before the comparison method). RSS/PSS include host activity, mapped assemblies and runtime state. **Subtracting these process snapshots would not measure the serializer's memory cost.** Allocation per parse, package bytes and total resident memory are distinct measures; lower parse allocations do not establish a smaller whole-driver working set.
+Full [resident NUnit result](results/resident-newtonsoft-2026-09-22.xml), [System.Text.Json NUnit result](results/bundled-systemtext-2026-09-22.xml), and [follow-up provenance](results/resident-comparison-provenance.json) retain the output. The follow-up reports process memory too: the first RSS snapshots were 81,736 KiB (about 80 MiB) for resident Newtonsoft and 470,584 KiB (about 460 MiB) for System.Text.Json. The processes already had different managed heaps (about 20 MB and 67 MB, respectively, before the comparison method). RSS/PSS include host activity, mapped assemblies and runtime state. **Subtracting these process snapshots would not measure the serializer's memory cost.** This experiment does not establish the cause of the large gap. Allocation per parse, package bytes and total resident memory are distinct measures; lower parse allocations do not establish a smaller whole-driver working set.
 
 To reproduce the two follow-up packages, use the same prerequisites and SDK checkout described below:
 
