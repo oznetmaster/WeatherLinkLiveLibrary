@@ -1,0 +1,22 @@
+{
+  "SchemaVersion": "2.0",
+  "GeneralInformation": {
+    "MinSdkVersion": "27.0000.0000",
+    "Guid": "1e37bb86-823e-438f-99fa-c3d54a389f3f",
+    "DeviceType": "Utility",
+    "Manufacturer": "Neil Colvin",
+    "BaseModel": "JSON Benchmark SystemText",
+    "OtherSupportedModels": [],
+    "SupportedSeries": [],
+    "DependencyGroup": "",
+    "Developer": {
+      "Company": "Neil Colvin",
+      "Contact": "Neil Colvin",
+      "Email": "",
+      "Website": "https://github.com/oznetmaster/WeatherLinkLiveLibrary",
+      "PhoneNumber": ""
+    },
+    "DriverVersion": "1.000.000.0001",
+    "VersionDate": "2026-09-22 13:44:42.321"
+  }
+}

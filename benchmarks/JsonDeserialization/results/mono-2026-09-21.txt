@@ -1,0 +1,8 @@
+BENCH System.Text.Json round=0 count=3000 ms=324.553 allocatedBytes=3072000 checksum=205500
+BENCH Newtonsoft.Json round=0 count=3000 ms=440.976 allocatedBytes=11448000 checksum=205500
+BENCH Newtonsoft.Json round=1 count=3000 ms=442.914 allocatedBytes=11448000 checksum=205500
+BENCH System.Text.Json round=1 count=3000 ms=324.821 allocatedBytes=3072000 checksum=205500
+BENCH System.Text.Json round=2 count=3000 ms=323.404 allocatedBytes=3072000 checksum=205500
+BENCH Newtonsoft.Json round=2 count=3000 ms=440.126 allocatedBytes=11448000 checksum=205500
+BENCH Newtonsoft.Json round=3 count=3000 ms=441.608 allocatedBytes=11448000 checksum=205500
+BENCH System.Text.Json round=3 count=3000 ms=324.255 allocatedBytes=3072000 checksum=205500

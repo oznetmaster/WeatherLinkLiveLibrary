@@ -1,0 +1,38 @@
+<test-run id="0" name="JsonBenchmark.Resident.dll" fullname="/user/Data/UsedThirdPartyDrivers/neilcolvin.jsonbenchmarkresident.cloud.neilcolvin/1.000.000.0002/JsonBenchmark.Resident.dll" testcasecount="1" result="Passed" total="1" passed="1" failed="0" skipped="0" inconclusive="0" warnings="0" start-time="2026-09-22T12:43:43.1352480Z" end-time="2026-09-22T12:43:45.5902260Z" duration="2.4529324"><test-suite type="Assembly" id="1002" name="JsonBenchmark.Resident.dll" fullname="/user/Data/UsedThirdPartyDrivers/neilcolvin.jsonbenchmarkresident.cloud.neilcolvin/1.000.000.0002/JsonBenchmark.Resident.dll" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-22T12:43:43.1352480Z" end-time="2026-09-22T12:43:45.5902260Z" duration="2.452932" total="1" initiated="1" passed="1" failed="0" warnings="0" completed="1" skipped="0" inconclusive="0" asserts="4"><properties><property name="_PID" value="17909" /><property name="_APPDOMAIN" value="Crestron.UnifiedPlatform.Drivers.Host.Process.exe" /></properties><test-suite type="TestSuite" id="1003" name="ProcessorResidentComparison" fullname="ProcessorResidentComparison" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-22T12:43:43.2293820Z" end-time="2026-09-22T12:43:45.5901560Z" duration="2.360775" total="1" initiated="1" passed="1" failed="0" warnings="0" completed="1" skipped="0" inconclusive="0" asserts="4"><test-suite type="TestFixture" id="1000" name="ResidentComparison" fullname="ProcessorResidentComparison.ResidentComparison" classname="ProcessorResidentComparison.ResidentComparison" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-22T12:43:43.2318280Z" end-time="2026-09-22T12:43:45.5852670Z" duration="2.353439" total="1" initiated="1" passed="1" failed="0" warnings="0" completed="1" skipped="0" inconclusive="0" asserts="4"><test-case id="1001" name="VerifyIdentityAndMeasureDeserialization" fullname="ProcessorResidentComparison.ResidentComparison.VerifyIdentityAndMeasureDeserialization" methodname="VerifyIdentityAndMeasureDeserialization" classname="ProcessorResidentComparison.ResidentComparison" runstate="Runnable" seed="241666893" result="Passed" start-time="2026-09-22T12:43:43.2632710Z" end-time="2026-09-22T12:43:45.5596790Z" duration="2.298030" asserts="4"><output><![CDATA[PROCESS pid=17909 runtime=4.0.30319.42000 os=Unix 4.19.35.5149
+BASELINE managedBytes=20074408
+IDENTITY Resident.Newtonsoft.Json => Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed | /simpl/app00/Newtonsoft.Json.dll
+VERSION file=13.0.2.27524 product=13.0.2+4fba53a324c445f06ee08e45a015c346000a7ef2
+BENCH Resident.Newtonsoft.Json round=0 count=3000 ms=431.950 allocatedBytes=11448000 checksum=205500
+MEMORY round=0 managedBytesAfterGc=19949296
+PROCESS_MEMORY_KIB round=0 Rss=81736
+PROCESS_MEMORY_KIB round=0 Pss=56237
+PROCESS_MEMORY_KIB round=0 Shared_Clean=31496
+PROCESS_MEMORY_KIB round=0 Shared_Dirty=80
+PROCESS_MEMORY_KIB round=0 Private_Clean=12
+PROCESS_MEMORY_KIB round=0 Private_Dirty=50148
+BENCH Resident.Newtonsoft.Json round=1 count=3000 ms=430.408 allocatedBytes=11448000 checksum=205500
+MEMORY round=1 managedBytesAfterGc=19951688
+PROCESS_MEMORY_KIB round=1 Rss=81744
+PROCESS_MEMORY_KIB round=1 Pss=56245
+PROCESS_MEMORY_KIB round=1 Shared_Clean=31496
+PROCESS_MEMORY_KIB round=1 Shared_Dirty=80
+PROCESS_MEMORY_KIB round=1 Private_Clean=12
+PROCESS_MEMORY_KIB round=1 Private_Dirty=50156
+BENCH Resident.Newtonsoft.Json round=2 count=3000 ms=430.696 allocatedBytes=11448000 checksum=205500
+MEMORY round=2 managedBytesAfterGc=19953104
+PROCESS_MEMORY_KIB round=2 Rss=81744
+PROCESS_MEMORY_KIB round=2 Pss=56245
+PROCESS_MEMORY_KIB round=2 Shared_Clean=31496
+PROCESS_MEMORY_KIB round=2 Shared_Dirty=80
+PROCESS_MEMORY_KIB round=2 Private_Clean=12
+PROCESS_MEMORY_KIB round=2 Private_Dirty=50156
+BENCH Resident.Newtonsoft.Json round=3 count=3000 ms=431.120 allocatedBytes=11448000 checksum=205500
+MEMORY round=3 managedBytesAfterGc=19954176
+PROCESS_MEMORY_KIB round=3 Rss=81744
+PROCESS_MEMORY_KIB round=3 Pss=56245
+PROCESS_MEMORY_KIB round=3 Shared_Clean=31496
+PROCESS_MEMORY_KIB round=3 Shared_Dirty=80
+PROCESS_MEMORY_KIB round=3 Private_Clean=12
+PROCESS_MEMORY_KIB round=3 Private_Dirty=50156
+COMPACT Newtonsoft.Json.Compact, Version=4.0.8.0, Culture=neutral, PublicKeyToken=1099c178b3b54c3b | /simpl/app00/Newtonsoft.Json.Compact.dll
+]]></output></test-case></test-suite></test-suite></test-suite></test-run>

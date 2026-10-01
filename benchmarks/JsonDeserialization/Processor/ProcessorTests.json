@@ -1,0 +1,13 @@
+{
+  "Name": "JSON Deserialization Benchmark",
+  "Port": 0,
+  "Suites": [
+    {
+      "Id": "json-comparison",
+      "Name": "JSON deserialization and assembly availability",
+      "FilterXml": "<filter><namespace>ProcessorRuntimeProbe</namespace></filter>",
+      "ManualOnly": false,
+      "ExpectedCount": 1
+    }
+  ]
+}

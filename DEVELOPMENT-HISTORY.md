@@ -11,9 +11,17 @@ See the [product changelog](CHANGELOG.md) for shipped changes. This document pre
 
 <!-- development-history -->
 
+
 ## Local dependency maintenance - 2026-09-22
 
 - Update the local NUnit test project to Microsoft.NET.Test.Sdk 18.10.1. Library runtime dependencies and API versions are unchanged.
+
+## Processor serializer benchmark - 2026-09-22 (no package release)
+
+- Publish the September 21 [MC4-R comparison](benchmarks/JsonDeserialization/README.md), its original NUnit fixture, synthetic payload and per-round results, with environment provenance and measurement limitations.
+- Include isolated desktop and processor reproduction projects. Normal library dependencies and release behavior are unchanged.
+
+
 
 ## 2.0.0 - 2026-09-21
 
