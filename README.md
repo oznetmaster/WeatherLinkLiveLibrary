@@ -1,12 +1,12 @@
 # WeatherLink Live™ Library
 
-For shipped changes, see the [changelog](CHANGELOG.md). Test, CI and build history is recorded separately in [development and validation history](DEVELOPMENT-HISTORY.md).
+For shipped changes, see the [changelog](https://github.com/oznetmaster/WeatherLinkLiveLibrary/blob/master/CHANGELOG.md). Test, CI and build history is recorded separately in [development and validation history](https://github.com/oznetmaster/WeatherLinkLiveLibrary/blob/master/DEVELOPMENT-HISTORY.md).
 
 
 WeatherLink Live™ Library queries the current conditions from a local WeatherLink Live device. It supports .NET Framework 4.7.2 and .NET 10, with compatibility support isolated to the .NET Framework build.
 
 - [Usage](#usage)
-- [Upgrading to 2.0](docs/migration-v2.md)
+- [Upgrading to 2.0](https://github.com/oznetmaster/WeatherLinkLiveLibrary/blob/master/docs/migration-v2.md)
 - [Logging](#logging)
 - [Automated tests](#automated-tests)
 - [Live device tests](#live-device-tests)
@@ -52,7 +52,7 @@ await client.InitializeAsync();
 
 Logging is optional and disabled by default. Supply an `ILogger<WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive>` through the new constructor overload to use your application's existing logging provider. The library does not create files, configure global logging or require a console provider. Routine refresh messages use Debug; failures use Warning. Raw sensor responses are not logged.
 
-The console test harness demonstrates Microsoft.Extensions.Logging.Console. Your application can choose a different provider. See the [migration guide](docs/migration-v2.md) for an example and the removal of the former log4net configuration.
+The console test harness demonstrates Microsoft.Extensions.Logging.Console. Your application can choose a different provider. See the [migration guide](https://github.com/oznetmaster/WeatherLinkLiveLibrary/blob/master/docs/migration-v2.md) for an example and the removal of the former log4net configuration.
 
 ## Automated tests
 
@@ -68,7 +68,7 @@ dotnet test .\WeatherLinkLive.Tests\WeatherLinkLive.Tests.csproj --settings .\We
 
 Use `-f net472` or `-f net10.0` to run one target. CI runs the offline suite for both targets, and the release workflow requires it to pass before publishing.
 
-For the reproducible processor serializer comparison, including its NUnit fixture, synthetic payload and per-round MC4-R results, see [JSON deserialization on Crestron Mono](benchmarks/JsonDeserialization/README.md). It is a separate developer benchmark, outside the normal unit suite.
+For the reproducible processor serializer comparison, including its NUnit fixture, synthetic payload and per-round MC4-R results, see [JSON deserialization on Crestron Mono](https://github.com/oznetmaster/WeatherLinkLiveLibrary/blob/master/benchmarks/JsonDeserialization/README.md). It is a separate developer benchmark, outside the normal unit suite.
 
 ## Live device tests
 
@@ -107,13 +107,13 @@ dotnet build ".\WeatherLink Live Library.sln" -c Release
 
 Release builds can generate DocFX documentation. Pass `-p:GenerateApiDocumentation=false` when only building or testing binaries. The GitHub `release-nuget.yml` workflow builds and tests both frameworks, publishes the library package and creates a GitHub release from version tags. Live tests are disabled in CI.
 
-See [CHANGELOG.md](CHANGELOG.md) for changes and [GitHub releases](https://github.com/oznetmaster/WeatherLinkLiveLibrary/releases) for released versions.
+See [CHANGELOG.md](https://github.com/oznetmaster/WeatherLinkLiveLibrary/blob/master/CHANGELOG.md) for changes and [GitHub releases](https://github.com/oznetmaster/WeatherLinkLiveLibrary/releases) for released versions.
 
 ## Documentation and license
 
 - [Published API documentation](https://oznetmaster.github.io/WeatherLinkLiveLibrary/)
 - [Davis WeatherLink Live local API specification](https://github.com/weatherlink/weatherlink-live-local-api/blob/master/API.md)
-- [MIT license](LICENSE)
+- [MIT license](https://github.com/oznetmaster/WeatherLinkLiveLibrary/blob/master/LICENSE)
 
 The automated test project uses [NUnit](https://github.com/nunit/nunit), licensed under the MIT license. NUnit is a test dependency and is not required by users of the library.
 
