@@ -5,7 +5,7 @@
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<TargetFrameworks>net472;net10.0</TargetFrameworks>
 		<IsPackable>true</IsPackable>
-		<Version>2.1.0-preview.2</Version>
+		<Version>2.1.0</Version>
 		<AssemblyVersion>2.0.0.0</AssemblyVersion>
 		<PackageId>WeatherLinkLiveLibrary</PackageId>
 		<Authors>Neil Colvin</Authors>

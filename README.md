@@ -28,7 +28,11 @@ Temperatures default to Fahrenheit; `CelciusTemperature` selects Celsius (the ex
 
 The existing non-nullable numeric API returns zero for unavailable readings, so zero alone cannot distinguish missing sensor data from a measured zero. Missing pressure trend returns `Unknown`.
 
-## Connection recovery (2.1 preview)
+## Compatibility
+
+Version 2.1 preserves the 2.0 public constructors, methods, properties, target frameworks and assembly version. Existing callers do not need to subscribe to the new events. Automatic background retries after a previously successful refresh fails are new behavior; dispose the client to stop them. Initial initialization failures still propagate and require caller retry.
+
+## Connection recovery (2.1)
 
 Keep one client instance for the lifetime of the device connection. After a previously successful device becomes unavailable, the client raises `Disconnected` once and retries in the background after 10, 20, 30, 40, 50, 60 and 120 seconds, then every 300 seconds. Delays start after each failed request completes. A valid response updates the readings, resets the sequence and raises `Reconnected` once. Initial connection does not raise `Reconnected`; failures before the first successful initialization still require the caller to retry initialization.
 

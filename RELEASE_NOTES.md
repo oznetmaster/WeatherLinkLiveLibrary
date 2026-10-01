@@ -1,12 +1,14 @@
-# WeatherLinkLiveLibrary 2.0.0
+# WeatherLinkLiveLibrary 2.1.0
 
-Weather readings now come from typed System.Text.Json response models. Newtonsoft.Json and log4net are no longer library dependencies. Existing constructors, weather properties, unit conversion and asynchronous methods remain available on net472 and .NET 10.
+This minor release adds automatic recovery after a previously working station stops returning valid readings. Existing public constructors, methods, properties, supported target frameworks and assembly version are retained.
 
-This major release changes two integration contracts:
+- New Disconnected and Reconnected events fire once per transition. Initial connection does not produce Reconnected.
+- Recovery delays are 10, 20, 30, 40, 50, 60 and 120 seconds, then 300 seconds repeatedly, measured after each failed attempt. Successful recovery resets the sequence.
+- The failed refresh still throws to its caller and preserves the prior snapshot and its original age. Initial initialization failures still require caller retry. Caller cancellation does not announce an outage; disposal cancels recovery.
+- Events run outside client locks. Handler failures are isolated; callers should marshal UI work to their own UI thread.
 
-- Catch System.IO.InvalidDataException for malformed device responses instead of Newtonsoft.Json.JsonException. Failed refreshes preserve the previous valid snapshot and its age.
-- Logging is disabled by default. Pass an ILogger to the new constructor overloads to use the host application's chosen provider. Routine refresh messages use Debug, failures use Warning, and raw sensor responses are omitted.
+Automatic background retries are new behavior, even for existing callers that do not subscribe to events. Keep one client per station and dispose it when finished. No new runtime dependency is required. Supported frameworks remain .NET Framework 4.7.2 and .NET 10.
 
-The console example uses Microsoft.Extensions.Logging.Console; the library requires only its logging abstractions. Rebuild and deploy the full updated dependency set, including System.Text.Json dependencies for .NET Framework applications.
+The maintained library tests use NUnit 5.0.0 and NUnit3TestAdapter 6.3.0; 135 offline tests passed on each framework. Test sources ship in the repository, not in the runtime NuGet package. Historical benchmark reproduction projects retain the versions used for those measurements.
 
-See [migration instructions](https://github.com/oznetmaster/WeatherLinkLiveLibrary/blob/master/docs/migration-v2.md) and the [changelog](https://github.com/oznetmaster/WeatherLinkLiveLibrary/blob/master/CHANGELOG.md).
+See [usage and recovery](https://github.com/oznetmaster/WeatherLinkLiveLibrary/blob/master/README.md#connection-recovery-21) and the [changelog](https://github.com/oznetmaster/WeatherLinkLiveLibrary/blob/master/CHANGELOG.md).
