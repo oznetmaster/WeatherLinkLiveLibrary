@@ -28,6 +28,22 @@ Temperatures default to Fahrenheit; `CelciusTemperature` selects Celsius (the ex
 
 The existing non-nullable numeric API returns zero for unavailable readings, so zero alone cannot distinguish missing sensor data from a measured zero. Missing pressure trend returns `Unknown`.
 
+## Connection recovery (2.1 preview)
+
+Keep one client instance for the lifetime of the device connection. After a previously successful device becomes unavailable, the client raises `Disconnected` once and retries in the background after 10, 20, 30, 40, 50, 60 and 120 seconds, then every 300 seconds. Delays start after each failed request completes. A valid response updates the readings, resets the sequence and raises `Reconnected` once. Initial connection does not raise `Reconnected`; failures before the first successful initialization still require the caller to retry initialization.
+
+Subscribe before initialization. Both events run outside client locks on the calling/background thread; marshal UI updates as needed and keep handlers short. Exceptions from individual handlers are logged and do not stop other handlers or recovery. An event describes whether valid device readings are available, not a persistent HTTP connection. Timeouts, HTTP/transport failures and invalid responses count as failed attempts. Cancellation requested by the caller does not mark the device disconnected. Disposing the client cancels background recovery.
+
+The original failed refresh still throws, allowing the application to use fallback data immediately. During recovery, let the client own retry timing instead of repeatedly calling refresh; explicit refresh calls remain supported. Cached readings retain their original age and are never presented as newly fetched data.
+
+```csharp
+using var client = new WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive("192.0.2.10");
+client.Disconnected += (_, _) => Console.WriteLine("Weather station unavailable");
+client.Reconnected += (_, _) => Console.WriteLine($"Recovered: {client.Temperature}");
+await client.InitializeAsync();
+// Retain this instance and refresh periodically during normal operation.
+```
+
 ## Logging
 
 Logging is optional and disabled by default. Supply an `ILogger<WeatherLinkLive.WeatherLinkLiveAPI.WeatherLinkLive>` through the new constructor overload to use your application's existing logging provider. The library does not create files, configure global logging or require a console provider. Routine refresh messages use Debug; failures use Warning. Raw sensor responses are not logged.

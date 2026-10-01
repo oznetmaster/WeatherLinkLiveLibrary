@@ -34,7 +34,7 @@ public sealed class ModelAndLoggingTests
 		using Client client = http.Create ();
 		await client.InitializeAsync ();
 		http.Now = http.Now.AddSeconds (10);
-		Assert.ThrowsAsync<InvalidDataException> (() => client.RefreshAsync ());
+		await Assert.ThrowsAsync<InvalidDataException> (() => client.RefreshAsync ());
 		Assert.That (client.Temperature, Is.EqualTo (68));
 		Assert.That (http.Contents.All (content => content.Disposed), Is.True);
 		}
@@ -51,7 +51,7 @@ public sealed class ModelAndLoggingTests
 			{
 			await client.InitializeAsync ();
 			http.Now = http.Now.AddSeconds (31);
-			Assert.That (Assert.ThrowsAsync<HttpRequestException> (() => client.RefreshAsync ()), Is.SameAs (failure));
+			Assert.That (await Assert.ThrowsAsync<HttpRequestException> (() => client.RefreshAsync ()), Is.SameAs (failure));
 			}
 		Assert.That (logger.Events.Select (item => item.Id), Does.Contain (1).And.Contain (2).And.Contain (3).And.Contain (4).And.Contain (5));
 		Assert.That (logger.Events.Single (item => item.Id == 5).Exception, Is.SameAs (failure));

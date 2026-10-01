@@ -53,24 +53,24 @@ public sealed class LifecycleTests
 	[TestCase (404)]
 	[TestCase (500)]
 	[TestCase (503)]
-	public void Initialize_PropagatesHttpFailuresAndDisposesResponse (int status)
+	public async Task Initialize_PropagatesHttpFailuresAndDisposesResponse (int status)
 		{
 		using var http = new DeviceHttp ();
 		http.Reply (status: (HttpStatusCode)status);
 		using Client client = http.Create ();
-		Assert.ThrowsAsync<HttpRequestException> (() => client.InitializeAsync ());
+		await Assert.ThrowsAsync<HttpRequestException> (() => client.InitializeAsync ());
 		Assert.That (http.Contents.Single ().Disposed, Is.True);
 		Assert.Throws<InvalidOperationException> (() => _ = client.Temperature);
 		}
 
 	[Test]
-	public void Initialize_PropagatesTransportFailure ()
+	public async Task Initialize_PropagatesTransportFailure ()
 		{
 		using var http = new DeviceHttp ();
 		var failure = new HttpRequestException ("Synthetic connection failure");
 		http.Fail (failure);
 		using Client client = http.Create ();
-		Assert.That (Assert.ThrowsAsync<HttpRequestException> (() => client.InitializeAsync ()), Is.SameAs (failure));
+		Assert.That (await Assert.ThrowsAsync<HttpRequestException> (() => client.InitializeAsync ()), Is.SameAs (failure));
 		}
 
 	[TestCase ("{}")]
@@ -79,24 +79,24 @@ public sealed class LifecycleTests
 	[TestCase ("{\"data\":{\"conditions\":{}}}")]
 	[TestCase ("{\"data\":{\"conditions\":[]}}")]
 	[TestCase ("{\"data\":{\"conditions\":[null]}}")]
-	public void Initialize_RejectsInvalidResponseShape (string json)
+	public async Task Initialize_RejectsInvalidResponseShape (string json)
 		{
 		using var http = new DeviceHttp ();
 		http.Reply (json);
 		using Client client = http.Create ();
-		Assert.ThrowsAsync<InvalidDataException> (() => client.InitializeAsync ());
+		await Assert.ThrowsAsync<InvalidDataException> (() => client.InitializeAsync ());
 		Assert.Throws<InvalidOperationException> (() => _ = client.Temperature);
 		}
 
 	[Test]
-	public void Initialize_RejectsApiErrorEvenWithConditions ()
+	public async Task Initialize_RejectsApiErrorEvenWithConditions ()
 		{
 		JsonObject json = DeviceHttp.Payload ();
 		json["error"] = "Device unavailable";
 		using var http = new DeviceHttp ();
 		http.Reply (json.ToString ());
 		using Client client = http.Create ();
-		Assert.ThrowsAsync<InvalidDataException> (() => client.InitializeAsync ());
+		await Assert.ThrowsAsync<InvalidDataException> (() => client.InitializeAsync ());
 		}
 
 	[TestCase (0, 1)]
@@ -142,7 +142,7 @@ public sealed class LifecycleTests
 		await client.InitializeAsync ();
 		http.Now = http.Now.AddSeconds (61);
 		Assert.Throws<InvalidOperationException> (() => _ = client.Temperature);
-		Assert.ThrowsAsync<HttpRequestException> (() => client.RefreshAsync ());
+		await Assert.ThrowsAsync<HttpRequestException> (() => client.RefreshAsync ());
 		Assert.Throws<InvalidOperationException> (() => _ = client.Temperature);
 		await client.RefreshAsync ();
 		Assert.That (client.Temperature, Is.EqualTo (68));
@@ -164,11 +164,11 @@ public sealed class LifecycleTests
 		}
 
 	[Test]
-	public void Refresh_RequiresInitialization ()
+	public async Task Refresh_RequiresInitialization ()
 		{
 		using var http = new DeviceHttp ();
 		using Client client = http.Create ();
-		Assert.ThrowsAsync<InvalidOperationException> (() => client.RefreshAsync ());
+		await Assert.ThrowsAsync<InvalidOperationException> (() => client.RefreshAsync ());
 		Assert.That (http.Requests, Is.Empty);
 		}
 
@@ -209,8 +209,8 @@ public sealed class LifecycleTests
 		client.Dispose ();
 		Assert.That (http.Disposed, Is.True);
 		Assert.Throws<ObjectDisposedException> (() => _ = client.Temperature);
-		Assert.ThrowsAsync<ObjectDisposedException> (() => client.InitializeAsync ());
-		Assert.ThrowsAsync<ObjectDisposedException> (() => client.RefreshAsync ());
+		await Assert.ThrowsAsync<ObjectDisposedException> (() => client.InitializeAsync ());
+		await Assert.ThrowsAsync<ObjectDisposedException> (() => client.RefreshAsync ());
 		}
 
 	[Test]

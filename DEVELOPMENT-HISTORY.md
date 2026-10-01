@@ -11,6 +11,10 @@ See the [product changelog](CHANGELOG.md) for shipped changes. This document pre
 
 <!-- development-history -->
 
+## Local dependency maintenance - 2026-09-22
+
+- Update the local NUnit test project to Microsoft.NET.Test.Sdk 18.10.1. Library runtime dependencies and API versions are unchanged.
+
 ## 2.0.0 - 2026-09-21
 
 - Migrate test fixtures to System.Text.Json, preserving the existing offline and opt-in live coverage.
@@ -38,3 +42,9 @@ See the [product changelog](CHANGELOG.md) for shipped changes. This document pre
 - Testing and lifecycle documentation, a root MIT license file, and an option to skip DocFX generation during binary-only builds.
 
 [1.0.3]: https://github.com/oznetmaster/WeatherLinkLiveLibrary/releases/tag/v1.0.3
+
+## Unreleased recovery candidate — 2026-10-01
+
+- Add automatic local-device recovery and Disconnected/Reconnected events. Delays: 10, 20, 30, 40, 50, 60, 120, then 300 seconds repeatedly. Initial connection, cancellation, snapshot freshness and subscriber isolation are covered.
+- Migrate this test project from NUnit 4.6.1 to NUnit 5.0.0 and await asynchronous exception assertions.
+- HPNEIL offline validation: 135 passed on net472 and 135 passed on net10.0. Private 2.1.0-preview.2 package only; not published.

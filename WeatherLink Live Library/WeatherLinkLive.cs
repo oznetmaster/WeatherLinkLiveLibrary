@@ -22,7 +22,7 @@ namespace WeatherLinkLive;
 /// Entry point and container for the WeatherLink Live API.
 /// Contains the <see cref="WeatherLinkLive"/> client used to query a local WeatherLink Live device.
 /// </summary>
-public static class WeatherLinkLiveAPI
+public static partial class WeatherLinkLiveAPI
 	{
 	private const string WEATHER_LINK_DATA_REQUEST = "http://{0}/v1/current_conditions";
 #if NET10_0_OR_GREATER
@@ -38,7 +38,7 @@ public static class WeatherLinkLiveAPI
 	/// Client for a local WeatherLink Live device. Construct, call <see cref="InitializeAsync(CancellationToken)"/>,
 	/// then use the exposed properties to read the latest values.
 	/// </summary>
-	public class WeatherLinkLive : IDisposable
+	public partial class WeatherLinkLive : IDisposable
 		{
 		private static readonly Action<ILogger, IPAddress, Exception?> _logCreated = LoggerMessage.Define<IPAddress> (LogLevel.Debug, new EventId (1, "Created"), "WeatherLink Live client created for {Address}.");
 		private static readonly Action<ILogger, Exception?> _logDisposed = LoggerMessage.Define (LogLevel.Debug, new EventId (2, "Disposed"), "WeatherLink Live client disposed.");
@@ -375,7 +375,9 @@ public static class WeatherLinkLiveAPI
 				_initialized = false;
 				_currentConditions = null;
 				}
+			_recoveryCancellation.Cancel ();
 			_client.Dispose ();
+			_ = RecoveryCompletion.ContinueWith (_ => _recoveryCancellation.Dispose (), TaskScheduler.Default);
 			_logDisposed (_logger, null);
 			GC.SuppressFinalize (this);
 			}
@@ -413,6 +415,8 @@ public static class WeatherLinkLiveAPI
 				ThrowIfDisposed ();
 				}
 			await _refreshGate.WaitAsync (cancellationToken).ConfigureAwait (false);
+			bool disconnected = false;
+			bool reconnected = false;
 			try
 				{
 				lock (_stateLock)
@@ -448,12 +452,34 @@ public static class WeatherLinkLiveAPI
 					_rainSize = rainSize;
 					_lastRefresh = _utcNow ();
 					_initialized = true;
+					reconnected = _disconnected;
+					_disconnected = false;
+					if (reconnected)
+						{
+						_recoveryGeneration++;
+						_recoveryDelayCancellation?.Cancel ();
+						}
 					}
+				}
+			catch (Exception ex) when (IsRecoveryFailure (ex) && !cancellationToken.IsCancellationRequested)
+				{
+				lock (_stateLock)
+					{
+					if (!_disposed && _initialized && !_disconnected)
+						{
+						disconnected = true;
+						_disconnected = true;
+						}
+					}
+				throw;
 				}
 			finally
 				{
 				// Keep the gate alive so disposal cannot break callers already waiting on it.
 				_refreshGate.Release ();
+				if (disconnected) RaiseConnectionEvent (Disconnected);
+				if (reconnected) RaiseConnectionEvent (Reconnected);
+				StartRecoveryIfNeeded ();
 				}
 			}
 

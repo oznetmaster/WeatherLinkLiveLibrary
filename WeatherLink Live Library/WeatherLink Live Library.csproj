@@ -5,14 +5,14 @@
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<TargetFrameworks>net472;net10.0</TargetFrameworks>
 		<IsPackable>true</IsPackable>
-		<Version>2.0.0</Version>
+		<Version>2.1.0-preview.2</Version>
 		<AssemblyVersion>2.0.0.0</AssemblyVersion>
 		<PackageId>WeatherLinkLiveLibrary</PackageId>
 		<Authors>Neil Colvin</Authors>
 		<Company>Neil Colvin</Company>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageReleaseNotes>Use typed System.Text.Json sensor responses and optional host-provided logging. Existing weather-reading APIs remain available; see the 2.0 migration guide for dependency and exception changes.</PackageReleaseNotes>
+		<PackageReleaseNotes>Add automatic recovery after a previously successful device becomes unavailable, with Disconnected and Reconnected events and cancellation on disposal. Recovery delays are 10, 20, 30, 40, 50, 60, 120 seconds, then 300 seconds repeatedly.</PackageReleaseNotes>
 		<PackageTags>weather;weatherlink;weatherlink-live;api;library</PackageTags>
 		<RepositoryUrl>https://github.com/oznetmaster/WeatherLinkLiveLibrary</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/oznetmaster/WeatherLinkLiveLibrary</PackageProjectUrl>
