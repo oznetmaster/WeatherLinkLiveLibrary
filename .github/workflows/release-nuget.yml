@@ -28,8 +28,9 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: true
+  group: public-release
+  cancel-in-progress: false
+  queue: max
 
 jobs:
   pack-and-publish:
@@ -55,6 +56,13 @@ jobs:
           RELEASE_SKIP_HARDWARE_CHECKS: ${{ inputs.skip_hardware_checks }}
           RELEASE_HARDWARE_SKIP_REASON: ${{ inputs.hardware_skip_reason }}
         run: '& ./.github/scripts/Wait-RequiredReleaseChecks.ps1'
+      - name: Verify shared release policy
+        uses: oznetmaster/CrestronHomeNUnit/.github/actions/release-validation@2ae8197c6685099c2133e7bb962d1f3568aae9c3
+        with:
+          required-checks: "${{ vars.RELEASE_REQUIRED_CHECKS }}"
+          hosted-workflows: "[\"tests.yml\"]"
+          skip-hardware-checks: "${{ inputs.skip_hardware_checks }}"
+          hardware-skip-reason: "${{ inputs.hardware_skip_reason }}"
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
