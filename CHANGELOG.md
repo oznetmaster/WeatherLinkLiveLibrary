@@ -2,7 +2,7 @@
 
 This changelog records shipped features, fixes, compatibility and runtime dependency changes. See [development and validation history](DEVELOPMENT-HISTORY.md) for tests, CI, build tooling and work not yet released.
 
-## 2.1.0 — 2026-10-01
+## [2.1.0](https://github.com/oznetmaster/WeatherLinkLiveLibrary/releases/tag/v2.1.0) — 2026-10-01
 
 [Compare changes][2.1.0]
 
@@ -10,7 +10,7 @@ This changelog records shipped features, fixes, compatibility and runtime depend
 - Retry after 10, 20, 30, 40, 50, 60 and 120 seconds, then 300 seconds repeatedly; reset after success and cancel on disposal.
 - Retain the public 2.0 API, assembly version and supported frameworks. Background retry is a new behavior; initial connection failures still require caller retry.
 
-## 2.0.0 — 2026-09-21
+## [2.0.0](https://github.com/oznetmaster/WeatherLinkLiveLibrary/releases/tag/v2.0.0) — 2026-09-21
 
 [Compare changes][2.0.0]
 
@@ -23,7 +23,7 @@ This changelog records shipped features, fixes, compatibility and runtime depend
 
 See the [2.0 migration guide](docs/migration-v2.md) for dependency, exception and logging changes.
 
-## 1.0.3 — 2026-09-12
+## [1.0.3](https://github.com/oznetmaster/WeatherLinkLiveLibrary/releases/tag/v1.0.3) — 2026-09-12
 
 [Compare changes][1.0.3]
 
