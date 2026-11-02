@@ -1,9 +1,10 @@
-- name: Getting Started
-  href: articles/getting-started.md
-- name: Overview
-  href: articles/overview.md
-- name: Key Types
-  href: articles/key-types.md
+- name: Home
+  href: index.md
+- name: Guides
+  href: guides/
 - name: API Reference
-  href: api/toc.yml
-
+  href: reference/
+- name: GitHub
+  href: https://github.com/oznetmaster/WeatherLinkLiveLibrary
+- name: NuGet
+  href: https://www.nuget.org/profiles/oznetmaster

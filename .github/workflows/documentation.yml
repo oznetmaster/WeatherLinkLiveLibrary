@@ -1,0 +1,39 @@
+name: Publish Documentation Site
+'on':
+  push:
+    branches:
+    - master
+  workflow_dispatch: null
+permissions:
+  contents: read
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
+    - name: Build and verify standard documentation
+      uses: oznetmaster/BuildAutomation@c0a215e202dc1e05a37707720ab12032be610518
+      with:
+        task: documentation
+    - uses: actions/upload-pages-artifact@v3
+      with:
+        path: docfx-site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+    - uses: actions/configure-pages@v5
+    - uses: actions/deploy-pages@v4
+      id: deployment

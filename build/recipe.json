@@ -41,6 +41,43 @@
       "results": [
         "TestResults/**/*.trx"
       ]
+    },
+    "documentation": {
+      "commands": [
+        {
+          "executable": "dotnet",
+          "arguments": [
+            "build",
+            "WeatherLink Live Library/WeatherLink Live Library.csproj",
+            "-c",
+            "Release",
+            "-f",
+            "net472",
+            "-p:GenerateApiDocumentation=false"
+          ]
+        },
+        {
+          "executable": "dotnet",
+          "arguments": [
+            "tool",
+            "restore"
+          ]
+        },
+        {
+          "executable": "dotnet",
+          "arguments": [
+            "tool",
+            "run",
+            "docfx",
+            "WeatherLink Live Library/docfx/docfx.json"
+          ]
+        }
+      ],
+      "documentation": {
+        "config": "WeatherLink Live Library/docfx/docfx.json",
+        "site": "docfx-site",
+        "title": "WeatherLinkLiveLibrary"
+      }
     }
   }
 }

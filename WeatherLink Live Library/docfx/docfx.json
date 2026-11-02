@@ -1,40 +1,81 @@
 {
-	"metadata": [
-		{
-			"src": [
-				{
-					"cwd": "../bin/Release/net472",
-					"files": [
-						"WeatherLink Live Library.dll"
-					],
-					"exclude": [
-						"**/bin/**",
-						"**/obj/**"
-					]
-				}
-			],
-			"dest": "api",
-			"disableGitFeatures": false
-		}
-	],
-	"build": {
-		"content": [
-			{ "files": [ "api/**.yml" ] },
-			{ "files": [ "articles/**.md" ] },
-			{ "files": [ "references/**.md" ] },
-			{ "files": [ "index.md" ] },
-			{ "files": [ "toc.yml" ] }
-		],
-		"resource": [
-			{ "files": [ "images/**" ] },
-			{ "files": [ "styles/**" ] }
-		],
-		"globalMetadata": {
-			"_appTitle": "WeatherLink Live API"
-		},
-		"template": [
-			"default",
-			"modern"
-		]
-	}
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "..",
+          "files": [
+            "WeatherLink Live Library.csproj"
+          ]
+        }
+      ],
+      "dest": "api",
+      "disableGitFeatures": false,
+      "properties": {
+        "TargetFramework": "net472",
+        "GenerateApiDocumentation": "false"
+      }
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [
+          "api/**.yml"
+        ]
+      },
+      {
+        "files": [
+          "articles/**.md"
+        ]
+      },
+      {
+        "files": [
+          "references/**.md"
+        ]
+      },
+      {
+        "files": [
+          "index.md"
+        ]
+      },
+      {
+        "files": [
+          "toc.yml"
+        ]
+      },
+      {
+        "files": [
+          "toc.yml",
+          "guides/**.md",
+          "guides/**/toc.yml",
+          "reference/**.md",
+          "reference/**/toc.yml"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+          "images/**"
+        ]
+      },
+      {
+        "files": [
+          "styles/**"
+        ]
+      }
+    ],
+    "globalMetadata": {
+      "_appTitle": "WeatherLinkLiveLibrary",
+      "_appName": "WeatherLinkLiveLibrary",
+      "_appFooter": "Copyright (c) 2026 Neil Colvin.",
+      "_enableSearch": true
+    },
+    "template": [
+      "default",
+      "modern"
+    ],
+    "dest": "../../docfx-site"
+  }
 }
