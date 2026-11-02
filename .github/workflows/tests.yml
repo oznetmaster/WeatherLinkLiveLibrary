@@ -19,8 +19,9 @@ jobs:
         with:
           dotnet-version: 10.0.x
       - name: Build library and console consumer
-        run: dotnet build "WeatherLink Live Library.sln" -c Release -p:GenerateApiDocumentation=false
-
+        uses: oznetmaster/BuildAutomation@6f20e1937d3bab8ba7e545a3a77b6fe689f63f2e
+        with:
+          task: tests-build-console-build-library-and-console-consumer
   offline:
     runs-on: windows-latest
     strategy:
@@ -32,7 +33,11 @@ jobs:
         with:
           dotnet-version: 10.0.x
       - name: Run offline tests
-        run: dotnet test WeatherLinkLive.Tests/WeatherLinkLive.Tests.csproj -c Release -f ${{ matrix.framework }} -p:GenerateApiDocumentation=false --settings WeatherLinkLive.Tests/offline.runsettings --filter "TestCategory!=Live" --logger trx --results-directory TestResults
+        uses: oznetmaster/BuildAutomation@6f20e1937d3bab8ba7e545a3a77b6fe689f63f2e
+        with:
+          task: tests-offline-run-offline-tests
+        env:
+          BUILD_INPUT_0: ${{ matrix.framework }}
       - name: Upload results
         if: always()
         uses: actions/upload-artifact@v4

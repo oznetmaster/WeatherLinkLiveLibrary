@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "tasks": {
+    "tests-build-console-build-library-and-console-consumer": {
+      "commands": [
+        {
+          "executable": "dotnet",
+          "arguments": [
+            "build",
+            "WeatherLink Live Library.sln",
+            "-c",
+            "Release",
+            "-p:GenerateApiDocumentation=false"
+          ]
+        }
+      ]
+    },
+    "tests-offline-run-offline-tests": {
+      "commands": [
+        {
+          "executable": "dotnet",
+          "arguments": [
+            "test",
+            "WeatherLinkLive.Tests/WeatherLinkLive.Tests.csproj",
+            "-c",
+            "Release",
+            "-f",
+            "${env:BUILD_INPUT_0}",
+            "-p:GenerateApiDocumentation=false",
+            "--settings",
+            "WeatherLinkLive.Tests/offline.runsettings",
+            "--filter",
+            "TestCategory!=Live",
+            "--logger",
+            "trx",
+            "--results-directory",
+            "TestResults"
+          ]
+        }
+      ],
+      "results": [
+        "TestResults/**/*.trx"
+      ]
+    }
+  }
+}
