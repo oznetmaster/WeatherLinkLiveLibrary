@@ -78,6 +78,21 @@
         "site": "docfx-site",
         "title": "WeatherLinkLiveLibrary"
       }
+    },
+    "xml-documentation": {
+      "commands": [
+        {
+          "executable": "dotnet",
+          "arguments": [
+            "--version"
+          ]
+        }
+      ]
     }
+  },
+  "xmlDocumentation": {
+    "projects": [
+      "WeatherLink Live Library/WeatherLink Live Library.csproj"
+    ]
   }
 }
