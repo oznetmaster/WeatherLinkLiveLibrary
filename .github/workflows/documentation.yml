@@ -14,16 +14,11 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-dotnet@v4
+    - name: Build, verify and retain standard documentation
+      uses: oznetmaster/BuildAutomation/.github/actions/documentation-build@c650afeb23c584d68580440ef0f7baaf737cdfd0
       with:
-        dotnet-version: 10.0.x
-    - name: Build and verify standard documentation
-      uses: oznetmaster/BuildAutomation@cb36bb30b23e58aff85435f23ad0c8428d86ecdd
-      with:
-        task: documentation
-    - uses: actions/upload-pages-artifact@v3
-      with:
-        path: docfx-site
+        site: docfx-site
+        configure-pages: 'false'
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -35,5 +30,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
     - uses: actions/configure-pages@v5
-    - uses: actions/deploy-pages@v4
+    - name: Deploy documentation
       id: deployment
+      uses: oznetmaster/BuildAutomation/.github/actions/documentation-deploy@c650afeb23c584d68580440ef0f7baaf737cdfd0
+      with:
+        attempts: '1'

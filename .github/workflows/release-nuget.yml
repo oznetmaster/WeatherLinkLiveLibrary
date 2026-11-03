@@ -168,7 +168,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Build and verify standard documentation
-        uses: oznetmaster/BuildAutomation@cb36bb30b23e58aff85435f23ad0c8428d86ecdd
+        uses: oznetmaster/BuildAutomation@c650afeb23c584d68580440ef0f7baaf737cdfd0
         with:
           task: documentation
       - name: Upload Pages artifact
