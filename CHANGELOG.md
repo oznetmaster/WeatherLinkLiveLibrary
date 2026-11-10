@@ -2,6 +2,10 @@
 
 This changelog records shipped features, fixes, compatibility and runtime dependency changes. See [development and validation history](DEVELOPMENT-HISTORY.md) for tests, CI, build tooling and work not yet released.
 
+## Unreleased
+
+- Future binary library releases include separate portable-PDB symbol packages on GitHub and NuGet, verified against the matching Release DLLs for each framework.
+
 ## [2.1.1](https://github.com/oznetmaster/WeatherLinkLiveLibrary/releases/tag/v2.1.1) — 2026-11-10
 
 - Debug builds treat ordinary compiler and analyzer warnings as errors. Release builds retain warnings without promoting all of them to errors. Strict XML documentation validation remains independently enforced.

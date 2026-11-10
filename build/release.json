@@ -12,7 +12,8 @@
         "net472",
         "net10.0"
       ],
-      "project": "WeatherLink Live Library/WeatherLink Live Library.csproj"
+      "project": "WeatherLink Live Library/WeatherLink Live Library.csproj",
+      "symbols": true
     }
   ],
   "applications": [],
