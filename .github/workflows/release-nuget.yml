@@ -1,201 +1,107 @@
-name: Release Package
-
+name: Publish public library release
 on:
   push:
-    tags:
-      - 'v*'
+    tags: ['v*']
   workflow_dispatch:
     inputs:
+      version:
+        description: Three-part public version
+        required: true
+        type: string
       skip_desktop_checks:
-        description: Reuse reviewed desktop results; package integrity checks still run
-        required: false
+        description: Reuse reviewed workstation validation
         type: boolean
         default: false
       desktop_skip_reason:
-        description: Tested source, completion time, frameworks, counts and evidence
-        required: false
-        type: string
-      validation_commit:
-        description: Reuse recent CI from an ancestor SHA with only docs or release-automation changes
-        required: false
-        type: string
-      version:
-        description: Version or tag to publish, for example 1.2.3 or v1.2.3
-        required: true
+        description: Validated source, time, frameworks, counts and provenance
         type: string
       skip_hardware_checks:
-        description: Publish without hardware validation when the processor or local runner is unavailable
-        required: false
+        description: Reuse reviewed processor validation
         type: boolean
         default: false
       hardware_skip_reason:
-        description: Reason for skipping hardware checks (required when selected)
-        required: false
+        description: Validated source, time, selected tests, limitations and cleanup
+        type: string
+      validation_commit:
+        description: Optional ancestor CI source permitted by the shared policy
         type: string
 
 permissions:
-  actions: read
-  checks: read
-  contents: write
-  pages: write
-  id-token: write
-
+  contents: read
 concurrency:
   group: public-release
   cancel-in-progress: false
   queue: max
-
 jobs:
-  pack-and-publish:
+  build:
+
     runs-on: windows-latest
-    env:
-      PROJECT_PATH: .\WeatherLink Live Library\WeatherLink Live Library.csproj
-      ARTIFACT_DIR: ${{ github.workspace }}\artifacts
-      DOCFX_CONFIG: .\WeatherLink Live Library\docfx\docfx.json
-
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      actions: read
+      checks: read
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
+          ref: ${{ github.sha }}
           fetch-depth: 0
-
-      - name: Verify configured release checks
-        shell: pwsh
-        working-directory: ${{ github.workspace }}/.
-        env:
-          GH_TOKEN: ${{ github.token }}
-          REQUIRED_RELEASE_CHECKS: ${{ vars.RELEASE_REQUIRED_CHECKS }}
-          REQUIRED_HOSTED_WORKFLOWS: '["tests.yml"]'
-          RELEASE_SKIP_HARDWARE_CHECKS: ${{ inputs.skip_hardware_checks }}
-          RELEASE_HARDWARE_SKIP_REASON: ${{ inputs.hardware_skip_reason }}
-        run: |
-          Write-Output 'Configured checks are verified by the following shared-policy action.'
-      - name: Verify shared release policy
-        uses: oznetmaster/CrestronHomeNUnit/.github/actions/release-validation@2ae8197c6685099c2133e7bb962d1f3568aae9c3
-        with:
-          required-checks: "${{ vars.RELEASE_REQUIRED_CHECKS }}"
-          hosted-workflows: "[\"tests.yml\"]"
-          skip-hardware-checks: "${{ inputs.skip_hardware_checks }}"
-          hardware-skip-reason: "${{ inputs.hardware_skip_reason }}"
-          skip-desktop-checks: "${{ inputs.skip_desktop_checks }}"
-          desktop-skip-reason: "${{ inputs.desktop_skip_reason }}"
-          validation-commit: "${{ inputs.validation_commit }}"
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
+            8.0.x
             10.0.x
 
-      - name: Verify strict XML documentation before publication
-        shell: pwsh
-        run: ./build/Invoke.ps1 -Task xml-documentation
-
-      - name: Determine package version
+      - name: Resolve public version
         id: version
         shell: pwsh
+        env:
+          REQUESTED_VERSION: ${{ inputs.version }}
         run: |
-          $rawVersion = switch ('${{ github.event_name }}') {
-              'workflow_dispatch' { '${{ inputs.version }}'; break }
-              'push' { '${{ github.ref_name }}'; break }
-              default { '' }
-          }
-          if ([string]::IsNullOrWhiteSpace($rawVersion)) {
-              throw 'No release tag or manual version was provided.'
-          }
-
-          $packageVersion = $rawVersion.Trim()
-          if ($packageVersion.StartsWith('v', [System.StringComparison]::OrdinalIgnoreCase)) {
-              $packageVersion = $packageVersion.Substring(1)
-          }
-
-          if ($packageVersion -match '^(\d+\.\d+\.\d+)([A-Za-z][0-9A-Za-z\.-]*)$') {
-              $packageVersion = "$($Matches[1])-$($Matches[2])"
-          }
-
-          if ($packageVersion -notmatch '^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z\.-]+)?$') {
-              throw "Version '$packageVersion' is not a supported NuGet semantic version."
-          }
-
-          "raw_version=$rawVersion" >> $env:GITHUB_OUTPUT
-          "package_version=$packageVersion" >> $env:GITHUB_OUTPUT
-
-      - name: Restore
-        run: dotnet restore ".\WeatherLink Live Library.sln"
-
-      - name: Build Release
-        run: dotnet build ".\WeatherLink Live Library.sln" -c Release --no-restore -p:ContinuousIntegrationBuild=true -p:GenerateApiDocumentation=false -p:Version=${{ steps.version.outputs.package_version }}
-
-      - name: Test .NET Framework
-        if: ${{ inputs.skip_desktop_checks != true }}
-        run: dotnet test WeatherLinkLive.Tests/WeatherLinkLive.Tests.csproj -c Release -f net472 --no-build --settings WeatherLinkLive.Tests/offline.runsettings --filter "TestCategory!=Live"
-
-      - name: Test .NET 10
-        if: ${{ inputs.skip_desktop_checks != true }}
-        run: dotnet test WeatherLinkLive.Tests/WeatherLinkLive.Tests.csproj -c Release -f net10.0 --no-build --settings WeatherLinkLive.Tests/offline.runsettings --filter "TestCategory!=Live"
-
-      - name: Pack library
-        shell: pwsh
-        run: |
-          New-Item -ItemType Directory -Path "${{ env.ARTIFACT_DIR }}" -Force | Out-Null
-          dotnet pack "${{ env.PROJECT_PATH }}" -c Release --no-build -o "${{ env.ARTIFACT_DIR }}" /p:ContinuousIntegrationBuild=true /p:Version=${{ steps.version.outputs.package_version }} /p:PackageVersion=${{ steps.version.outputs.package_version }}
-
-      - name: Push NuGet package
-        shell: pwsh
-        run: |
-          $packages = Get-ChildItem -Path "${{ env.ARTIFACT_DIR }}" -Filter '*.nupkg' | Where-Object { $_.Name -notlike '*.symbols.nupkg' }
-          if (-not $packages) {
-              throw 'No NuGet package was produced.'
-          }
-
-          foreach ($package in $packages) {
-              dotnet nuget push $package.FullName --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
-          }
-
-      - name: Push symbol package
-        shell: pwsh
-        run: |
-          $packages = Get-ChildItem -Path "${{ env.ARTIFACT_DIR }}" -Filter '*.snupkg'
-          if (-not $packages) {
-              Write-Host 'No symbol package was produced.'
-              exit 0
-          }
-
-          foreach ($package in $packages) {
-              dotnet nuget push $package.FullName --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
-          }
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Build and verify standard documentation
-        uses: oznetmaster/BuildAutomation@c650afeb23c584d68580440ef0f7baaf737cdfd0
+          $version = if ($env:GITHUB_EVENT_NAME -eq 'push') { $env:GITHUB_REF_NAME } else { $env:REQUESTED_VERSION }
+          $version = $version -creplace '^v', ''
+          if ($version -cnotmatch '^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$') { throw 'Use a canonical three-part stable public version.' }
+          "version=$version" >> $env:GITHUB_OUTPUT
+      - uses: oznetmaster/BuildAutomation/.github/actions/release-prepare@5d8006f140a59c8d1dd92ab70723fe8338650bd2
         with:
-          task: documentation
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+          version: ${{ steps.version.outputs.version }}
+      - name: Verify shared validation policy
+        uses: oznetmaster/CrestronHomeNUnit/.github/actions/release-validation@2ae8197c6685099c2133e7bb962d1f3568aae9c3
         with:
-          path: .\docfx-site
-
-      - name: Create GitHub release from tag
-        if: github.event_name == 'push'
-        uses: softprops/action-gh-release@v2
+          required-checks: ${{ vars.RELEASE_REQUIRED_CHECKS }}
+          hosted-workflows: '["tests.yml"]'
+          skip-desktop-checks: ${{ inputs.skip_desktop_checks }}
+          desktop-skip-reason: ${{ inputs.desktop_skip_reason }}
+          skip-hardware-checks: ${{ inputs.skip_hardware_checks }}
+          hardware-skip-reason: ${{ inputs.hardware_skip_reason }}
+          validation-commit: ${{ inputs.validation_commit }}
+      - name: Stage packages and companion applications through Cake
+        uses: oznetmaster/BuildAutomation@5d8006f140a59c8d1dd92ab70723fe8338650bd2
+        env:
+          RELEASE_VERSION: ${{ steps.version.outputs.version }}
         with:
-          tag_name: ${{ steps.version.outputs.raw_version }}
-          name: ${{ steps.version.outputs.raw_version }}
-          body_path: RELEASE_NOTES.md
-          prerelease: ${{ contains(steps.version.outputs.package_version, '-') }}
-          files: |
-            artifacts/*.nupkg
-            artifacts/*.snupkg
+          task: release-assets
+      - uses: oznetmaster/BuildAutomation/.github/actions/release-freeze@5d8006f140a59c8d1dd92ab70723fe8338650bd2
+        with:
+          version: ${{ steps.version.outputs.version }}
+  publish:
+    needs: build
+    runs-on: windows-latest
+    timeout-minutes: 30
 
-  deploy-docs:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: pack-and-publish
-
+    permissions:
+      contents: write
+      id-token: write
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - uses: oznetmaster/BuildAutomation/.github/actions/release-publish@5d8006f140a59c8d1dd92ab70723fe8338650bd2
+        with:
+          version: ${{ needs.build.outputs.version }}

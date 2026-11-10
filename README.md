@@ -124,3 +124,9 @@ WeatherLink and WeatherLink Live are trademarks of Davis Instruments Corp. This 
 The publish/release workflows support an explicit manual override when the processor or local self-hosted GitHub Actions runner is unavailable. Select `skip_hardware_checks` and provide a single-line `hardware_skip_reason`. Use the workflow's normal source and version controls. The override applies only to that invocation and is recorded with the exact source revision in its warning and job summary; it does not create a passing hardware-test result.
 
 GitHub-hosted validation remains mandatory for the checked-out source, and the normal build, tests and packaging steps still run. Wait for the configured hosted workflows to pass, or run them on the same source revision first. None of these hosted checks needs the local runner or processor. Automatic tag/release-triggered runs retain the normal hardware checks; use a manual invocation of the updated release workflow when an offline override is needed.
+
+## Changes in 2.1.1
+
+Debug builds treat ordinary compiler and analyzer warnings as errors. Release builds retain warnings without promoting all of them to errors. Strict XML documentation validation remains independently enforced.
+
+Release packaging and publication use the [shared publication component](https://github.com/oznetmaster/BuildAutomation/tree/5d8006f140a59c8d1dd92ab70723fe8338650bd2/ReleasePublishing). Set `RELEASE_VERSION=2.1.1` and run `./build/Invoke.ps1 -Task release-assets` for local preparation; it publishes nothing. GitHub publication reuses retained, hash-verified artifacts and the repository's existing NuGet trust identity.

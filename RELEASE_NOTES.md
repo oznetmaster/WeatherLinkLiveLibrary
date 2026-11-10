@@ -1,14 +1,14 @@
-# WeatherLinkLiveLibrary 2.1.0
+# WeatherLinkLiveLibrary 2.1.1
 
-This minor release adds automatic recovery after a previously working station stops returning valid readings. Existing public constructors, methods, properties, supported target frameworks and assembly version are retained.
+This patch aligns build and documentation checks. It changes no station polling, recovery behavior or public API.
 
-- New Disconnected and Reconnected events fire once per transition. Initial connection does not produce Reconnected.
-- Recovery delays are 10, 20, 30, 40, 50, 60 and 120 seconds, then 300 seconds repeatedly, measured after each failed attempt. Successful recovery resets the sequence.
-- The failed refresh still throws to its caller and preserves the prior snapshot and its original age. Initial initialization failures still require caller retry. Caller cancellation does not announce an outage; disposal cancels recovery.
-- Events run outside client locks. Handler failures are isolated; callers should marshal UI work to their own UI thread.
+- Debug builds treat ordinary compiler and analyzer warnings as errors. Release builds retain warnings without promoting all of them to errors. Strict XML documentation validation remains independently enforced.
 
-Automatic background retries are new behavior, even for existing callers that do not subscribe to events. Keep one client per station and dispose it when finished. No new runtime dependency is required. Supported frameworks remain .NET Framework 4.7.2 and .NET 10.
+## Validation
 
-The maintained library tests use NUnit 5.0.0 and NUnit3TestAdapter 6.3.0; 135 offline tests passed on each framework. Test sources ship in the repository, not in the runtime NuGet package. Historical benchmark reproduction projects retain the versions used for those measurements.
+- Offline workstation tests passed in Debug and Release on .NET 10 and .NET Framework 4.7.2: WeatherLink net10.0: 135; WeatherLink net472: 135. No failures or skips.
+- 57 selected tests passed in the shared 374-case processor run on Mono 6.12.0.107 (32-bit), with no failures or skips. The merged host's resolved dependency graph was tested; these are not eight independent release-package tests.
+- Fake transports and credentials exercised ordering, cancellation, shutdown and failure recovery. No new household-device or cloud control was performed. Pairing storage is unchanged.
+- Strict XML, formatting and style checks passed. Package and companion-app preparation is verified separately by the shared release pipeline.
 
-See [usage and recovery](https://github.com/oznetmaster/WeatherLinkLiveLibrary/blob/master/README.md#connection-recovery-21) and the [changelog](https://github.com/oznetmaster/WeatherLinkLiveLibrary/blob/master/CHANGELOG.md).
+See [the changelog](https://github.com/oznetmaster/WeatherLinkLiveLibrary/blob/v2.1.1/CHANGELOG.md) and [validation provenance](https://github.com/oznetmaster/WeatherLinkLiveLibrary/blob/v2.1.1/release-validation/v2.1.1.json).

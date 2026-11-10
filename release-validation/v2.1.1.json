@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "version": "2.1.1",
+  "completedUtc": "2026-11-09T23:12:44.6184403Z",
+  "workstation": [
+    {
+      "configurations": [
+        "Debug",
+        "Release"
+      ],
+      "passed": 135,
+      "suite": "WeatherLink",
+      "failed": 0,
+      "framework": "net10.0",
+      "skipped": 0
+    },
+    {
+      "configurations": [
+        "Debug",
+        "Release"
+      ],
+      "passed": 135,
+      "suite": "WeatherLink",
+      "failed": 0,
+      "framework": "net472",
+      "skipped": 0
+    }
+  ],
+  "processor": {
+    "selectedPassed": 57.0,
+    "aggregatePassed": 374,
+    "scope": "Merged offline host with recorded resolved dependencies; fake services and credentials only",
+    "runtime": "Mono 6.12.0.107, 32-bit",
+    "firmware": "4.013.0134",
+    "failed": 0,
+    "skipped": 0
+  },
+  "validatedSourceFiles": [],
+  "publicationChanges": "Version metadata, documentation and shared publication tooling added after validation; runtime source hashes retained."
+}
